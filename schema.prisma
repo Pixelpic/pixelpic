@@ -20,6 +20,16 @@ model User {
   posts    Post[] @relation("Post_author")
 }
 
+model Color {
+  id   String @id @default(cuid())
+  name String @default("")
+}
+
+model Palette {
+  id   String @id @default(cuid())
+  name String @default("")
+}
+
 model Post {
   id          String    @id @default(cuid())
   title       String    @default("")

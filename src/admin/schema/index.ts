@@ -16,16 +16,13 @@ A field: The individual bits of data on your list, each with its own type.
 // for putting in our config so we get useful errors. With typescript,
 // we get these even before code runs.
 import { list } from '@keystone-6/core';
-import {User} from './User/User'
+import { User } from './User/User';
+import { Color } from './Color/Color';
+import { Palette } from './Palette/Palette';
 
 // We're using some common fields in the starter. Check out https://keystonejs.com/docs/apis/fields#fields-api
 // for the full list of fields.
-import {
-  text,
-  relationship,
-  timestamp,
-  select,
-} from '@keystone-6/core/fields';
+import { text, relationship, timestamp, select } from '@keystone-6/core/fields';
 // The document field is a more complicated field, so it's in its own package
 // Keystone aims to have all the base field types, but you can make your own
 // custom ones.
@@ -35,14 +32,15 @@ import { document } from '@keystone-6/fields-document';
 // By providing the Keystone generated `Lists` type to our lists object, we refine
 // our types to a stricter subset that is type-aware of other lists in our schema
 // that Typescript cannot easily infer.
-import { Lists } from '.keystone/types';
 
 // We have a users list, a blogs list, and tags for blog posts, so they can be filtered.
 // Each property on the exported object will become the name of a list (a.k.a. the `listKey`),
 // with the value being the definition of the list, including the fields.
-export const lists: Lists = {
+export const lists = {
   // Here we define the user list.
   User,
+  Color,
+  Palette,
   // Our second list is the Posts list. We've got a few more fields here
   // so we have all the info we need for displaying posts.
   Post: list({

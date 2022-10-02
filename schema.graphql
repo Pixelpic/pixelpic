@@ -121,6 +121,76 @@ input PostRelateToManyForCreateInput {
   connect: [PostWhereUniqueInput!]
 }
 
+type Color {
+  id: ID!
+  name: String
+}
+
+input ColorWhereUniqueInput {
+  id: ID
+}
+
+input ColorWhereInput {
+  AND: [ColorWhereInput!]
+  OR: [ColorWhereInput!]
+  NOT: [ColorWhereInput!]
+  id: IDFilter
+  name: StringFilter
+}
+
+input ColorOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input ColorUpdateInput {
+  name: String
+}
+
+input ColorUpdateArgs {
+  where: ColorWhereUniqueInput!
+  data: ColorUpdateInput!
+}
+
+input ColorCreateInput {
+  name: String
+}
+
+type Palette {
+  id: ID!
+  name: String
+}
+
+input PaletteWhereUniqueInput {
+  id: ID
+}
+
+input PaletteWhereInput {
+  AND: [PaletteWhereInput!]
+  OR: [PaletteWhereInput!]
+  NOT: [PaletteWhereInput!]
+  id: IDFilter
+  name: StringFilter
+}
+
+input PaletteOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input PaletteUpdateInput {
+  name: String
+}
+
+input PaletteUpdateArgs {
+  where: PaletteWhereUniqueInput!
+  data: PaletteUpdateInput!
+}
+
+input PaletteCreateInput {
+  name: String
+}
+
 type Post {
   id: ID!
   title: String
@@ -318,6 +388,21 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createColor(data: ColorCreateInput!): Color
+  createColors(data: [ColorCreateInput!]!): [Color]
+  updateColor(where: ColorWhereUniqueInput!, data: ColorUpdateInput!): Color
+  updateColors(data: [ColorUpdateArgs!]!): [Color]
+  deleteColor(where: ColorWhereUniqueInput!): Color
+  deleteColors(where: [ColorWhereUniqueInput!]!): [Color]
+  createPalette(data: PaletteCreateInput!): Palette
+  createPalettes(data: [PaletteCreateInput!]!): [Palette]
+  updatePalette(
+    where: PaletteWhereUniqueInput!
+    data: PaletteUpdateInput!
+  ): Palette
+  updatePalettes(data: [PaletteUpdateArgs!]!): [Palette]
+  deletePalette(where: PaletteWhereUniqueInput!): Palette
+  deletePalettes(where: [PaletteWhereUniqueInput!]!): [Palette]
   createPost(data: PostCreateInput!): Post
   createPosts(data: [PostCreateInput!]!): [Post]
   updatePost(where: PostWhereUniqueInput!, data: PostUpdateInput!): Post
@@ -368,6 +453,22 @@ type Query {
   ): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
+  colors(
+    where: ColorWhereInput! = {}
+    orderBy: [ColorOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Color!]
+  color(where: ColorWhereUniqueInput!): Color
+  colorsCount(where: ColorWhereInput! = {}): Int
+  palettes(
+    where: PaletteWhereInput! = {}
+    orderBy: [PaletteOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Palette!]
+  palette(where: PaletteWhereUniqueInput!): Palette
+  palettesCount(where: PaletteWhereInput! = {}): Int
   posts(
     where: PostWhereInput! = {}
     orderBy: [PostOrderByInput!]! = []
