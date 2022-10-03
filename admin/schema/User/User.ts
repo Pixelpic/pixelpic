@@ -1,5 +1,6 @@
 import { list } from '@keystone-6/core';
-import { text, relationship, password } from '@keystone-6/core/fields';
+import { text, relationship, password, select } from '@keystone-6/core/fields';
+import { UserRole } from '../../constants';
 
 export const User = list({
   fields: {
@@ -9,12 +10,15 @@ export const User = list({
       isIndexed: 'unique',
       isFilterable: true,
     }),
+    role: select({
+      type: 'enum',
+      options: [UserRole.ADMIN, UserRole.MANAGER],
+    }),
     password: password({ validation: { isRequired: true } }),
-    posts: relationship({ ref: 'Post.author', many: true }),
   },
   ui: {
     listView: {
-      initialColumns: ['name', 'posts'],
+      initialColumns: ['name', 'role'],
     },
   },
 });

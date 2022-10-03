@@ -13,16 +13,20 @@ generator client {
 }
 
 model User {
-  id       String @id @default(cuid())
-  name     String @default("")
-  email    String @unique @default("")
+  id       String  @id @default(cuid())
+  name     String  @default("")
+  email    String  @unique @default("")
+  role     String?
   password String
-  posts    Post[] @relation("Post_author")
 }
 
 model Color {
-  id   String @id @default(cuid())
-  name String @default("")
+  id    String @id @default(cuid())
+  name  String @default("")
+  key   String @default("")
+  red   Int
+  green Int
+  blue  Int
 }
 
 model Palette {
@@ -36,11 +40,7 @@ model Post {
   status      String?   @default("draft")
   content     String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   publishDate DateTime?
-  author      User?     @relation("Post_author", fields: [authorId], references: [id])
-  authorId    String?   @map("author")
   tags        Tag[]     @relation("Post_tags")
-
-  @@index([authorId])
 }
 
 model Tag {

@@ -5,14 +5,13 @@ type User {
   id: ID!
   name: String
   email: String
+  role: UserRoleType
   password: PasswordState
-  posts(
-    where: PostWhereInput! = {}
-    orderBy: [PostOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Post!]
-  postsCount(where: PostWhereInput! = {}): Int
+}
+
+enum UserRoleType {
+  admin
+  manager
 }
 
 type PasswordState {
@@ -31,7 +30,7 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
-  posts: PostManyRelationFilter
+  role: UserRoleTypeNullableFilter
 }
 
 input IDFilter {
@@ -73,16 +72,18 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input PostManyRelationFilter {
-  every: PostWhereInput
-  some: PostWhereInput
-  none: PostWhereInput
+input UserRoleTypeNullableFilter {
+  equals: UserRoleType
+  in: [UserRoleType!]
+  notIn: [UserRoleType!]
+  not: UserRoleTypeNullableFilter
 }
 
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  role: OrderDirection
 }
 
 enum OrderDirection {
@@ -93,15 +94,8 @@ enum OrderDirection {
 input UserUpdateInput {
   name: String
   email: String
+  role: UserRoleType
   password: String
-  posts: PostRelateToManyForUpdateInput
-}
-
-input PostRelateToManyForUpdateInput {
-  disconnect: [PostWhereUniqueInput!]
-  set: [PostWhereUniqueInput!]
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -112,18 +106,17 @@ input UserUpdateArgs {
 input UserCreateInput {
   name: String
   email: String
+  role: UserRoleType
   password: String
-  posts: PostRelateToManyForCreateInput
-}
-
-input PostRelateToManyForCreateInput {
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
 }
 
 type Color {
   id: ID!
   name: String
+  key: String
+  red: Int
+  green: Int
+  blue: Int
 }
 
 input ColorWhereUniqueInput {
@@ -136,15 +129,38 @@ input ColorWhereInput {
   NOT: [ColorWhereInput!]
   id: IDFilter
   name: StringFilter
+  key: StringFilter
+  red: IntFilter
+  green: IntFilter
+  blue: IntFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
 }
 
 input ColorOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  key: OrderDirection
+  red: OrderDirection
+  green: OrderDirection
+  blue: OrderDirection
 }
 
 input ColorUpdateInput {
   name: String
+  key: String
+  red: Int
+  green: Int
+  blue: Int
 }
 
 input ColorUpdateArgs {
@@ -154,6 +170,10 @@ input ColorUpdateArgs {
 
 input ColorCreateInput {
   name: String
+  key: String
+  red: Int
+  green: Int
+  blue: Int
 }
 
 type Palette {
@@ -197,7 +217,6 @@ type Post {
   status: String
   content: Post_content_Document
   publishDate: DateTime
-  author: User
   tags(
     where: TagWhereInput! = {}
     orderBy: [TagOrderByInput!]! = []
@@ -226,7 +245,6 @@ input PostWhereInput {
   title: StringFilter
   status: StringNullableFilter
   publishDate: DateTimeNullableFilter
-  author: UserWhereInput
   tags: TagManyRelationFilter
 }
 
@@ -287,14 +305,7 @@ input PostUpdateInput {
   status: String
   content: JSON
   publishDate: DateTime
-  author: UserRelateToOneForUpdateInput
   tags: TagRelateToManyForUpdateInput
-}
-
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
 }
 
 input TagRelateToManyForUpdateInput {
@@ -314,13 +325,7 @@ input PostCreateInput {
   status: String
   content: JSON
   publishDate: DateTime
-  author: UserRelateToOneForCreateInput
   tags: TagRelateToManyForCreateInput
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 input TagRelateToManyForCreateInput {
@@ -353,6 +358,12 @@ input TagWhereInput {
   posts: PostManyRelationFilter
 }
 
+input PostManyRelationFilter {
+  every: PostWhereInput
+  some: PostWhereInput
+  none: PostWhereInput
+}
+
 input TagOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -363,6 +374,13 @@ input TagUpdateInput {
   posts: PostRelateToManyForUpdateInput
 }
 
+input PostRelateToManyForUpdateInput {
+  disconnect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
 input TagUpdateArgs {
   where: TagWhereUniqueInput!
   data: TagUpdateInput!
@@ -371,6 +389,11 @@ input TagUpdateArgs {
 input TagCreateInput {
   name: String
   posts: PostRelateToManyForCreateInput
+}
+
+input PostRelateToManyForCreateInput {
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
 }
 
 """

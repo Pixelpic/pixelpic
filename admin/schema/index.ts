@@ -16,6 +16,7 @@ A field: The individual bits of data on your list, each with its own type.
 // for putting in our config so we get useful errors. With typescript,
 // we get these even before code runs.
 import { list } from '@keystone-6/core';
+import { Lists } from '.keystone/types';
 import { User } from './User/User';
 import { Color } from './Color/Color';
 import { Palette } from './Palette/Palette';
@@ -78,16 +79,6 @@ export const lists = {
       publishDate: timestamp(),
       // Here is the link from post => author.
       // We've configured its UI display quite a lot to make the experience of editing posts better.
-      author: relationship({
-        ref: 'User.posts',
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['name', 'email'],
-          inlineEdit: { fields: ['name', 'email'] },
-          linkToItem: true,
-          inlineConnect: true,
-        },
-      }),
       // We also link posts to tags. This is a many <=> many linking.
       tags: relationship({
         ref: 'Tag.posts',
