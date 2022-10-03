@@ -22,11 +22,11 @@ model User {
 
 model Color {
   id    String @id @default(cuid())
-  name  String @default("")
-  key   String @default("")
+  name  String @unique @default("")
   red   Int
   green Int
   blue  Int
+  hex   String @unique @default("")
 }
 
 model Palette {

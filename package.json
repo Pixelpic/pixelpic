@@ -27,6 +27,7 @@
     "next": "12.2.4"
   },
   "devDependencies": {
-    "prettier": "2.7.1"
+    "prettier": "2.7.1",
+    "rgb-hex": "^4.0.0"
   }
 }

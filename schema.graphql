@@ -113,14 +113,16 @@ input UserCreateInput {
 type Color {
   id: ID!
   name: String
-  key: String
   red: Int
   green: Int
   blue: Int
+  hex: String
 }
 
 input ColorWhereUniqueInput {
   id: ID
+  name: String
+  hex: String
 }
 
 input ColorWhereInput {
@@ -129,10 +131,10 @@ input ColorWhereInput {
   NOT: [ColorWhereInput!]
   id: IDFilter
   name: StringFilter
-  key: StringFilter
   red: IntFilter
   green: IntFilter
   blue: IntFilter
+  hex: StringFilter
 }
 
 input IntFilter {
@@ -149,18 +151,18 @@ input IntFilter {
 input ColorOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  key: OrderDirection
   red: OrderDirection
   green: OrderDirection
   blue: OrderDirection
+  hex: OrderDirection
 }
 
 input ColorUpdateInput {
   name: String
-  key: String
   red: Int
   green: Int
   blue: Int
+  hex: String
 }
 
 input ColorUpdateArgs {
@@ -170,10 +172,10 @@ input ColorUpdateArgs {
 
 input ColorCreateInput {
   name: String
-  key: String
   red: Int
   green: Int
   blue: Int
+  hex: String
 }
 
 type Palette {
