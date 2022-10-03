@@ -59,4 +59,4 @@ export const COLORS: Required<ColorCreateInput>[] = [
   { red: 150, green: 172, blue: 203, hex: '#96accb', name: 'Rock Blue' },
   { red: 119, green: 139, blue: 152, hex: '#778b98', name: 'Slate Gray' },
   { red: 87, green: 108, blue: 122, hex: '#576c7a', name: 'Shuttle Gray' },
-];
+].map(({ hex, ...props }) => ({ ...props, hex: hex.toLowerCase() }));

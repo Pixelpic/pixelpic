@@ -181,6 +181,13 @@ input ColorCreateInput {
 type Palette {
   id: ID!
   name: String
+  colors(
+    where: ColorWhereInput! = {}
+    orderBy: [ColorOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Color!]
+  colorsCount(where: ColorWhereInput! = {}): Int
 }
 
 input PaletteWhereUniqueInput {
@@ -193,6 +200,13 @@ input PaletteWhereInput {
   NOT: [PaletteWhereInput!]
   id: IDFilter
   name: StringFilter
+  colors: ColorManyRelationFilter
+}
+
+input ColorManyRelationFilter {
+  every: ColorWhereInput
+  some: ColorWhereInput
+  none: ColorWhereInput
 }
 
 input PaletteOrderByInput {
@@ -202,6 +216,14 @@ input PaletteOrderByInput {
 
 input PaletteUpdateInput {
   name: String
+  colors: ColorRelateToManyForUpdateInput
+}
+
+input ColorRelateToManyForUpdateInput {
+  disconnect: [ColorWhereUniqueInput!]
+  set: [ColorWhereUniqueInput!]
+  create: [ColorCreateInput!]
+  connect: [ColorWhereUniqueInput!]
 }
 
 input PaletteUpdateArgs {
@@ -211,6 +233,12 @@ input PaletteUpdateArgs {
 
 input PaletteCreateInput {
   name: String
+  colors: ColorRelateToManyForCreateInput
+}
+
+input ColorRelateToManyForCreateInput {
+  create: [ColorCreateInput!]
+  connect: [ColorWhereUniqueInput!]
 }
 
 type Post {
