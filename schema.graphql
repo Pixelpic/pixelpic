@@ -246,6 +246,7 @@ type Frame {
   name: String
   width: Int
   height: Int
+  price: Float
 }
 
 input FrameWhereUniqueInput {
@@ -261,6 +262,18 @@ input FrameWhereInput {
   name: StringFilter
   width: IntFilter
   height: IntFilter
+  price: FloatFilter
+}
+
+input FloatFilter {
+  equals: Float
+  in: [Float!]
+  notIn: [Float!]
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+  not: FloatFilter
 }
 
 input FrameOrderByInput {
@@ -268,12 +281,14 @@ input FrameOrderByInput {
   name: OrderDirection
   width: OrderDirection
   height: OrderDirection
+  price: OrderDirection
 }
 
 input FrameUpdateInput {
   name: String
   width: Int
   height: Int
+  price: Float
 }
 
 input FrameUpdateArgs {
@@ -285,6 +300,7 @@ input FrameCreateInput {
   name: String
   width: Int
   height: Int
+  price: Float
 }
 
 type Presale {

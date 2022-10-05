@@ -41,6 +41,7 @@ model Frame {
   name   String @unique @default("")
   width  Int
   height Int
+  price  Float
 }
 
 model Presale {

@@ -14,6 +14,7 @@
     "@keystone-6/fields-document": "^4.0.1",
     "graphql": "^15.8.0",
     "next": "12.2.4",
+    "styled-components": "^5.3.6",
     "typescript": "^4.7.4"
   },
   "// npm": "this is a temporary workaround for npm users, see https://github.com/keystonejs/create-keystone-app/pull/350",
@@ -27,6 +28,7 @@
     "next": "12.2.4"
   },
   "devDependencies": {
+    "@types/styled-components": "^5.1.26",
     "prettier": "2.7.1",
     "rgb-hex": "^4.0.0"
   }

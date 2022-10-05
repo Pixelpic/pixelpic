@@ -1,5 +1,5 @@
 import { list } from '@keystone-6/core';
-import { text, integer, select } from '@keystone-6/core/fields';
+import { text, integer, select, float } from '@keystone-6/core/fields';
 import { OPTIONS } from './Frame.const';
 
 export const Frame = list({
@@ -23,6 +23,9 @@ export const Frame = list({
       ui: {
         description: 'Vertical number of plates',
       },
+    }),
+    price: float({
+      validation: { isRequired: true },
     }),
   },
   ui: {
