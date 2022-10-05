@@ -1,7 +1,7 @@
 import { config } from '@keystone-6/core';
 import { Context, TypeInfo } from '.keystone/types';
 import { lists } from './admin/schema';
-import { insertColors, insertPalette } from './admin/data';
+import { insertColors, insertPalette, insertFrames } from './admin/data';
 
 import { withAuth, session } from './auth';
 
@@ -14,6 +14,7 @@ export default withAuth(
       onConnect: async (context) => {
         await insertColors(context);
         await insertPalette(context);
+        await insertFrames(context);
       },
     },
     // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui

@@ -36,17 +36,19 @@ model Palette {
   colors Color[] @relation("Palette_colors")
 }
 
-model Post {
-  id          String    @id @default(cuid())
-  title       String    @default("")
-  status      String?   @default("draft")
-  content     String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  publishDate DateTime?
-  tags        Tag[]     @relation("Post_tags")
+model Frame {
+  id     String @id @default(cuid())
+  name   String @unique @default("")
+  width  Int
+  height Int
 }
 
-model Tag {
-  id    String @id @default(cuid())
-  name  String @default("")
-  posts Post[] @relation("Post_tags")
+model Presale {
+  id   String @id @default(cuid())
+  name String @default("")
+}
+
+model Sale {
+  id   String @id @default(cuid())
+  name String @default("")
 }
