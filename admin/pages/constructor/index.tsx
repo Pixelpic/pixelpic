@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Button } from 'antd';
 import { Heading } from '@keystone-ui/core';
 import { Step, StepLabel } from '@mui/material';
 import { Root, Container, Stepper, Content } from './Constructor.style';
@@ -22,7 +23,9 @@ export default function Constructor() {
             );
           })}
         </Stepper>
-        <Content></Content>
+        <Content>
+          <Button>123</Button>
+        </Content>
       </Container>
     </Root>
   );

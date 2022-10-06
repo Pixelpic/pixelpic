@@ -1,7 +1,10 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@keystone-ui/core';
+import React from 'react';
+import { Styles } from '../Styles/Styles';
 
 export const Logo = () => {
-  return <h3>PiXi PiC</h3>;
+  return (
+    <Styles>
+      <h3>PiXi PiC</h3>
+    </Styles>
+  );
 };
