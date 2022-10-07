@@ -1,5 +1,4 @@
 import { config } from '@keystone-6/core';
-import { Context, TypeInfo } from '.keystone/types';
 import { lists } from './admin/schema';
 import { insertColors, insertPalette, insertFrames } from './admin/data';
 
@@ -24,5 +23,9 @@ export default withAuth(
     },
     lists,
     session,
+    experimental: {
+      generateNodeAPI: true,
+      generateNextGraphqlAPI: true,
+    },
   })
 );
