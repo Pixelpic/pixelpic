@@ -6,7 +6,11 @@ type StyleProps = PropsWithChildren<unknown>;
 export const Styles: FC<StyleProps> = ({ children }) => {
   return (
     <>
-      {document && createPortal(<link rel="stylesheet" href="/static/css/antd.min.css" />, document.head)}
+      {document &&
+        createPortal(
+          <link media="screen" rel="stylesheet" type="text/css" href="static/css/antd.min.css" />,
+          document.head
+        )}
       {children}
     </>
   );
