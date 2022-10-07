@@ -6,7 +6,8 @@
     "dev": "keystone dev",
     "start": "keystone start",
     "build": "keystone build",
-    "postinstall": "keystone postinstall"
+    "postinstall": "keystone postinstall",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -35,9 +36,12 @@
     "next": "12.2.4"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.13.5",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",
     "prettier": "2.7.1",
-    "rgb-hex": "^4.0.0"
+    "rgb-hex": "^4.0.0",
+    "@graphql-codegen/typescript-resolvers": "2.7.3",
+    "@graphql-codegen/typescript": "2.7.3"
   }
 }
