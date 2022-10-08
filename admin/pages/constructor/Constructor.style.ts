@@ -35,4 +35,5 @@ export const Footer = styled(Box)<{ justify?: CSSProperties['justifyContent'] }>
   flex: 0 0 auto;
   display: flex;
   justify-content: ${({ justify = 'flex-end' }) => justify};
+  gap: 48px;
 `;

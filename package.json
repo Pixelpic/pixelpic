@@ -37,11 +37,10 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.13.5",
+    "@graphql-codegen/typescript": "2.7.3",
+    "@graphql-codegen/typescript-resolvers": "2.7.3",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",
-    "prettier": "2.7.1",
-    "rgb-hex": "^4.0.0",
-    "@graphql-codegen/typescript-resolvers": "2.7.3",
-    "@graphql-codegen/typescript": "2.7.3"
+    "prettier": "2.7.1"
   }
 }

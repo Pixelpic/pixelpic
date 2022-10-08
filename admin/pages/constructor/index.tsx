@@ -10,7 +10,7 @@ import { CONSTRUCTOR_STEPS } from './Constructor.const';
 import { ConstructorStepId } from './Constructor.types';
 import { ConstructorContext } from './Constructor.context';
 import { isCompeted } from './Constructor.utils';
-import {} from './Constructor.gql';
+import { GET_ALL_FRAMES } from './Constructor.gql';
 
 export default function Constructor() {
   const [step, setStep] = useState<ConstructorStepId>(ConstructorStepId.FILE);
@@ -22,7 +22,9 @@ export default function Constructor() {
 
   return (
     <Root header={<Heading type="h3">Constructor</Heading>}>
-      <ConstructorContext.Provider value={{ files, onFilesChange }}>
+      <ConstructorContext.Provider
+        value={{ files, onFilesChange, frames: data?.frames, palettes: data?.palettes }}
+      >
         <Container>
           <Stepper nonLinear activeStep={activeStep}>
             {CONSTRUCTOR_STEPS.map(({ label, id }) => {
@@ -33,7 +35,9 @@ export default function Constructor() {
               );
             })}
           </Stepper>
-          {step === ConstructorStepId.FILE && <ConstructorFile onNext={() => setStep(ConstructorStepId.CROP)} />}
+          {step === ConstructorStepId.FILE && (
+            <ConstructorFile onNext={() => setStep(ConstructorStepId.CROP)} />
+          )}
           {step === ConstructorStepId.CROP && (
             <ConstructorCrop
               onNext={() => setStep(ConstructorStepId.PALETTE)}

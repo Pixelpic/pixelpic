@@ -5,6 +5,12 @@ export const GET_ALL_FRAMES = gql`
     frames(where: {}) {
       id
       name
+      width
+      height
+    }
+    palettes(where: {}) {
+      id
+      name
     }
   }
 `;
