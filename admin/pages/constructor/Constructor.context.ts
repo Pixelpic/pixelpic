@@ -3,15 +3,13 @@ import { noop } from 'lodash';
 import { DTO } from '@admin/api';
 
 interface ConstructorContextProps {
-  files: File[];
+  source: File[];
   frames?: DTO.Query['frames'];
   palettes?: DTO.Query['palettes'];
-  onFilesChange: (v: File[]) => void;
 }
 
 export const ConstructorContext = createContext<ConstructorContextProps>({
-  files: [],
+  source: [],
   palettes: [],
   frames: [],
-  onFilesChange: noop,
 });

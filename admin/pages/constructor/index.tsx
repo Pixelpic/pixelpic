@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { Heading } from '@keystone-ui/core';
 import { Step, StepLabel } from '@mui/material';
 import { useQuery } from '@keystone-6/core/admin-ui/apollo';
@@ -11,36 +11,49 @@ import { ConstructorStepId } from './Constructor.types';
 import { ConstructorContext } from './Constructor.context';
 import { isCompeted } from './Constructor.utils';
 import { GET_ALL_FRAMES } from './Constructor.gql';
+import { constructorReducer } from './Constructor.reducer';
+import { ConstructorActions as Actions } from './Constructor.actions';
 
 export default function Constructor() {
-  const [step, setStep] = useState<ConstructorStepId>(ConstructorStepId.FILE);
-  const [files, onFilesChange] = useState<File[]>([]);
+  const [, setStep] = useState<ConstructorStepId>(ConstructorStepId.FILE);
+  const [{ source, step, frame, crop }, dispatch] = useReducer(constructorReducer, {
+    step: ConstructorStepId.FILE,
+    source: [],
+    crop: '',
+    frame: '',
+  });
 
   const { data } = useQuery<DTO.Query>(GET_ALL_FRAMES);
 
-  const activeStep = CONSTRUCTOR_STEPS.findIndex(({ id }) => id === step);
+  const active = CONSTRUCTOR_STEPS.findIndex(({ id }) => id === step);
+
+  const handleOnFileNext = (v: File[]) => {
+    dispatch(new Actions.SetImage(v));
+  };
+
+  const handleOnCropNext = ({ frame, image }: { frame: string; image: string }) => {
+    dispatch(new Actions.SetCrop(frame, image));
+  };
 
   return (
     <Root header={<Heading type="h3">Constructor</Heading>}>
       <ConstructorContext.Provider
-        value={{ files, onFilesChange, frames: data?.frames, palettes: data?.palettes }}
+        value={{ source, frames: data?.frames, palettes: data?.palettes }}
       >
         <Container>
-          <Stepper nonLinear activeStep={activeStep}>
+          <Stepper nonLinear activeStep={active}>
             {CONSTRUCTOR_STEPS.map(({ label, id }) => {
               return (
-                <Step key={id} completed={isCompeted[id]({ step, files })}>
+                <Step key={id} completed={isCompeted[id]({ source, step, frame, crop })}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
               );
             })}
           </Stepper>
-          {step === ConstructorStepId.FILE && (
-            <ConstructorFile onNext={() => setStep(ConstructorStepId.CROP)} />
-          )}
+          {step === ConstructorStepId.FILE && <ConstructorFile onNext={handleOnFileNext} />}
           {step === ConstructorStepId.CROP && (
             <ConstructorCrop
-              onNext={() => setStep(ConstructorStepId.PALETTE)}
+              onNext={handleOnCropNext}
               onBack={() => setStep(ConstructorStepId.FILE)}
             />
           )}

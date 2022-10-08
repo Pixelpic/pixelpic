@@ -1,14 +1,12 @@
 import { ConstructorStepId } from './Constructor.types';
+import { ConstructorState } from './Constructor.reducer';
 
-interface IsCompletedParams {
-  step: ConstructorStepId;
-  files: File[];
-}
-
-type IsCompleted = (params: IsCompletedParams) => boolean;
+type IsCompleted = (params: Partial<ConstructorState>) => boolean;
 
 export const isCompeted: Record<ConstructorStepId, IsCompleted> = {
-  [ConstructorStepId.FILE]: ({ step, files }) => step !== ConstructorStepId.FILE && !!files.length,
-  [ConstructorStepId.CROP]: () => false,
+  [ConstructorStepId.FILE]: ({ step, source }) =>
+    step !== ConstructorStepId.FILE && !!source && !!source.length,
+  [ConstructorStepId.CROP]: ({ step, frame, crop }) =>
+    step !== ConstructorStepId.CROP && !!frame && !!crop,
   [ConstructorStepId.PALETTE]: () => false,
 };

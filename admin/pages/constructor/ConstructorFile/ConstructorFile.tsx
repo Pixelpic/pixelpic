@@ -1,15 +1,16 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { Button } from '@mui/material';
 import FileUpload from 'react-material-file-upload';
 import { Section, Content, Footer } from '../Constructor.style';
 import { ConstructorContext } from '../Constructor.context';
 
 interface ConstructorFileProps {
-  onNext: () => void;
+  onNext: (v: File[]) => void;
 }
 
 export const ConstructorFile: FC<ConstructorFileProps> = ({ onNext }) => {
-  const { files, onFilesChange } = useContext(ConstructorContext);
+  const { source } = useContext(ConstructorContext);
+  const [files, onFilesChange] = useState(source);
 
   return (
     <Section>
@@ -24,7 +25,12 @@ export const ConstructorFile: FC<ConstructorFileProps> = ({ onNext }) => {
         />
       </Content>
       <Footer>
-        <Button disabled={!files.length} variant="contained" onClick={onNext} disableElevation>
+        <Button
+          disabled={!files.length}
+          variant="contained"
+          onClick={() => onNext(files)}
+          disableElevation
+        >
           Next
         </Button>
       </Footer>

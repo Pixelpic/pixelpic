@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState, ChangeEvent, useReducer } from 'react';
-import { get, toNumber } from 'lodash';
+import { get } from 'lodash';
 import { FormControl, Button, Select, MenuItem, InputLabel, Slider } from '@mui/material';
 import Cropper from 'react-easy-crop';
 import { Section, Content, Footer } from '../Constructor.style';
@@ -12,15 +12,14 @@ import { constructorCropReducer } from './ConstructorCrop.reducer';
 import { ConstructorCropActions as Actions } from './ConstructorCrop.actions';
 
 interface ConstructorCropProps {
-  onNext: () => void;
+  onNext: (v: { frame: string; image: string }) => void;
   onBack: () => void;
 }
 
 export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) => {
   const {
-    files: [file],
+    source: [file],
     frames,
-    onFilesChange,
   } = useContext(ConstructorContext);
 
   const [{ crop, frame, source, area, zoom }, dispatch] = useReducer(constructorCropReducer, {
@@ -40,10 +39,9 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
   const handleOnNext = async () => {
     try {
       if (area !== null) {
-        const croppedImage = await getCroppedImg(source, area);
-        console.log(croppedImage);
+        const image = await getCroppedImg(source, area);
+        if (typeof image === 'string') onNext({ frame, image });
       }
-      // setCroppedImage(croppedImage);
     } catch (e) {
       console.error(e);
     }
