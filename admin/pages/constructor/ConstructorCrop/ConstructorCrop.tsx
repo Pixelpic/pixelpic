@@ -1,13 +1,15 @@
-import React, { FC, useContext, useEffect, useState, ChangeEvent } from 'react';
-import { get, toNumber, flow } from 'lodash';
+import React, { FC, useContext, useEffect, useState, ChangeEvent, useReducer } from 'react';
+import { get, toNumber } from 'lodash';
 import { FormControl, Button, Select, MenuItem, InputLabel, Slider } from '@mui/material';
-import Cropper, { Area } from 'react-easy-crop';
+import Cropper from 'react-easy-crop';
 import { Section, Content, Footer } from '../Constructor.style';
 import { ConstructorContext } from '../Constructor.context';
 import { Controls } from './ConstructorCrop.style';
-import { Aspect } from './ConstructorCrop.types';
+import { ConstructorCropArea, ConstructorCropPoint } from './ConstructorCrop.types';
 import { DEFAULT_IMAGE } from './ConstructorCrop.const';
 import { getCroppedImg } from './ConstructorCrop.utils';
+import { constructorCropReducer } from './ConstructorCrop.reducer';
+import { ConstructorCropActions as Actions } from './ConstructorCrop.actions';
 
 interface ConstructorCropProps {
   onNext: () => void;
@@ -20,24 +22,24 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
     frames,
     onFilesChange,
   } = useContext(ConstructorContext);
-  const [aspect, setAspect] = useState<Aspect>([
-    get(frames, ['0', 'width']),
-    get(frames, ['0', 'height']),
-  ]);
-  const [zoom, setZoom] = useState(1);
-  const [image, setImage] = useState(DEFAULT_IMAGE);
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [croppedArea, setCroppedArea] = useState<Area | null>(null);
+
+  const [{ crop, aspect, source, area, zoom }, dispatch] = useReducer(constructorCropReducer, {
+    zoom: 1,
+    area: null,
+    source: DEFAULT_IMAGE,
+    aspect: [get(frames, ['0', 'width']), get(frames, ['0', 'height'])],
+    crop: { x: 0, y: 0 },
+  });
 
   const handleOnAspectChange = (v: string) => {
     const [w, h] = v.split(',').map((v) => toNumber(v));
-    setAspect([w, h]);
+    dispatch(new Actions.SetAspect([w, h]));
   };
 
   const handleOnNext = async () => {
     try {
-      if (croppedArea !== null) {
-        const croppedImage = await getCroppedImg(image, croppedArea);
+      if (area !== null) {
+        const croppedImage = await getCroppedImg(source, area);
         console.log(croppedImage);
       }
       // setCroppedImage(croppedImage);
@@ -46,12 +48,24 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
     }
   };
 
+  const handelOnZoom = (v: number) => {
+    dispatch(new Actions.SetZoom(v));
+  };
+
+  const handleOnCropComplete = (v: ConstructorCropArea) => {
+    dispatch(new Actions.SetArea(v));
+  };
+
+  const handleOnCropChange = (v: ConstructorCropPoint) => {
+    dispatch(new Actions.SetCrop(v));
+  };
+
   useEffect(() => {
     new Promise((resolve) => {
       const reader = new FileReader();
       reader.addEventListener('load', () => resolve(reader.result), false);
       reader.readAsDataURL(file);
-    }).then((v) => typeof v === 'string' && setImage(v));
+    }).then((v) => typeof v === 'string' && dispatch(new Actions.SetSource(v)));
   }, []);
 
   return (
@@ -59,13 +73,13 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
       <Content style={{ position: 'relative' }}>
         <Cropper
           showGrid={false}
-          image={image}
+          image={source}
           crop={crop}
           zoom={zoom}
           aspect={aspect[0] / aspect[1]}
-          onCropChange={setCrop}
-          onZoomChange={setZoom}
-          onCropComplete={(_, v) => setCroppedArea(v)}
+          onCropChange={handleOnCropChange}
+          onZoomChange={handelOnZoom}
+          onCropComplete={(_, v) => handleOnCropComplete(v)}
         />
       </Content>
       <Footer justify="space-between">
@@ -96,7 +110,7 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
             step={0.1}
             size="small"
             defaultValue={50}
-            onChange={(_, value) => typeof value === 'number' && setZoom(value)}
+            onChange={(_, value) => typeof value === 'number' && handelOnZoom(value)}
           />
         </Controls>
         <Button variant="contained" onClick={handleOnNext} disableElevation>
