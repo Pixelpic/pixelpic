@@ -13,6 +13,11 @@ export const constructorReducer = (
   action: ConstructorActions.All
 ): ConstructorState => {
   switch (action.type) {
+    case ConstructorActions.Types.SET_STEP:
+      return {
+        ...state,
+        step: action.step,
+      };
     case ConstructorActions.Types.SET_IMAGE:
       return {
         ...state,

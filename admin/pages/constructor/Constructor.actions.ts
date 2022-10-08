@@ -1,11 +1,19 @@
+import { ConstructorStepId } from './Constructor.types';
+
 export namespace ConstructorActions {
   interface Action<T> {
     type: T;
   }
 
   export enum Types {
+    SET_STEP,
     SET_IMAGE,
     SET_CROP,
+  }
+
+  export class SetStep implements Action<Types> {
+    public readonly type = Types.SET_STEP;
+    constructor(public step: ConstructorStepId) {}
   }
 
   export class SetImage implements Action<Types> {
@@ -18,5 +26,5 @@ export namespace ConstructorActions {
     constructor(public frame: string, public crop: string) {}
   }
 
-  export type All = SetImage | SetCrop;
+  export type All = SetStep | SetImage | SetCrop;
 }

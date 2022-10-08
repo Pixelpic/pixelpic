@@ -35,6 +35,10 @@ export default function Constructor() {
     dispatch(new Actions.SetCrop(frame, image));
   };
 
+  const handleOnCropPrev = () => {
+    dispatch(new Actions.SetStep(ConstructorStepId.FILE));
+  };
+
   return (
     <Root header={<Heading type="h3">Constructor</Heading>}>
       <ConstructorContext.Provider
@@ -52,10 +56,7 @@ export default function Constructor() {
           </Stepper>
           {step === ConstructorStepId.FILE && <ConstructorFile onNext={handleOnFileNext} />}
           {step === ConstructorStepId.CROP && (
-            <ConstructorCrop
-              onNext={handleOnCropNext}
-              onBack={() => setStep(ConstructorStepId.FILE)}
-            />
+            <ConstructorCrop onNext={handleOnCropNext} onBack={handleOnCropPrev} />
           )}
         </Container>
       </ConstructorContext.Provider>
