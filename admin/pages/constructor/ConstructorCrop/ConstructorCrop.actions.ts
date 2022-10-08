@@ -13,7 +13,7 @@ export namespace ConstructorCropActions {
     SET_ZOOM,
     SET_AREA,
     SET_SOURCE,
-    SET_ASPECT,
+    SET_FRAME,
     SET_CROP,
   }
 
@@ -32,9 +32,9 @@ export namespace ConstructorCropActions {
     constructor(public source: string) {}
   }
 
-  export class SetAspect implements Action<Types> {
-    public readonly type = Types.SET_ASPECT;
-    constructor(public aspect: ConstructorCropAspect) {}
+  export class SetFrame implements Action<Types> {
+    public readonly type = Types.SET_FRAME;
+    constructor(public frame: string) {}
   }
 
   export class SetCrop implements Action<Types> {
@@ -42,5 +42,5 @@ export namespace ConstructorCropActions {
     constructor(public crop: ConstructorCropPoint) {}
   }
 
-  export type All = SetZoom | SetArea | SetSource | SetAspect | SetCrop;
+  export type All = SetZoom | SetArea | SetSource | SetFrame | SetCrop;
 }

@@ -23,17 +23,18 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
     onFilesChange,
   } = useContext(ConstructorContext);
 
-  const [{ crop, aspect, source, area, zoom }, dispatch] = useReducer(constructorCropReducer, {
+  const [{ crop, frame, source, area, zoom }, dispatch] = useReducer(constructorCropReducer, {
     zoom: 1,
     area: null,
     source: DEFAULT_IMAGE,
-    aspect: [get(frames, ['0', 'width']), get(frames, ['0', 'height'])],
+    frame: get(frames, ['0', 'id'], ''),
     crop: { x: 0, y: 0 },
   });
 
+  const { width = 0, height = 0 } = frames?.find(({ id }) => id === frame) || {};
+
   const handleOnAspectChange = (v: string) => {
-    const [w, h] = v.split(',').map((v) => toNumber(v));
-    dispatch(new Actions.SetAspect([w, h]));
+    dispatch(new Actions.SetFrame(v));
   };
 
   const handleOnNext = async () => {
@@ -76,7 +77,7 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
           image={source}
           crop={crop}
           zoom={zoom}
-          aspect={aspect[0] / aspect[1]}
+          aspect={width && height ? width / height : undefined}
           onCropChange={handleOnCropChange}
           onZoomChange={handelOnZoom}
           onCropComplete={(_, v) => handleOnCropComplete(v)}
@@ -90,13 +91,13 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
           <FormControl size="small">
             <InputLabel>Size</InputLabel>
             <Select
-              value={aspect.join(',')}
-              label="Age"
+              value={frame}
+              label="Size"
               onChange={({ target: { value } }) => handleOnAspectChange(value)}
             >
               {frames?.map(({ id, name, width, height }) => {
                 return (
-                  <MenuItem key={id} value={[width, height].join(',')}>
+                  <MenuItem key={id} value={id}>
                     {name} ({width}x{height})
                   </MenuItem>
                 );
