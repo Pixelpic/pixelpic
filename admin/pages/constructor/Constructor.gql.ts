@@ -11,6 +11,11 @@ export const GET_ALL_FRAMES = gql`
     palettes(where: {}) {
       id
       name
+      colors {
+        red
+        green
+        blue
+      }
     }
   }
 `;

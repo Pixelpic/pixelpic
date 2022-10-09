@@ -4,7 +4,7 @@ import { ConstructorStepId } from './Constructor.types';
 export interface ConstructorState {
   step: ConstructorStepId;
   source: File[];
-  crop: string;
+  cropped: string;
   frame: string;
 }
 
@@ -29,7 +29,7 @@ export const constructorReducer = (
         ...state,
         step: ConstructorStepId.PALETTE,
         frame: action.frame,
-        crop: action.crop,
+        cropped: action.cropped,
       };
     default:
       return state;

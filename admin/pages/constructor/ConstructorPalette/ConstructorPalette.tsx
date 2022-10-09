@@ -1,11 +1,13 @@
-import React, { FC, useContext, useReducer } from 'react';
+import React, { FC, useContext, useReducer, useRef, useLayoutEffect } from 'react';
 import { get } from 'lodash';
-import { FormControl, Button, Select, MenuItem, InputLabel, Slider } from '@mui/material';
-import { Section, Content, Footer } from '../Constructor.style';
+import { FormControl, Button, Select, MenuItem, InputLabel } from '@mui/material';
+import { Section, Footer } from '../Constructor.style';
 import { ConstructorContext } from '../Constructor.context';
-import { Controls } from './ConstructorPalette.style';
+import { Controls, Content, SourceImage, ResultCanvas } from './ConstructorPalette.style';
 import { constructorPaletteReducer } from './ConstructorPalette.reducer';
 import { ConstructorPaletteActions as Actions } from './ConstructorPalette.actions';
+import { PixelIt } from './ConstructorPalette.services';
+import { getColorPalette } from './ConstructorPalette.utils';
 
 interface ConstructorPaletteProps {
   onNext: (v: { frame: string; image: string }) => void;
@@ -13,11 +15,10 @@ interface ConstructorPaletteProps {
 }
 
 export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack }) => {
-  const {
-    source: [file],
-    frames,
-    palettes,
-  } = useContext(ConstructorContext);
+  const { cropped, palettes } = useContext(ConstructorContext);
+  const image = useRef<HTMLImageElement | null>(null);
+  const canvas = useRef<HTMLCanvasElement | null>(null);
+  const pixelIt = useRef<PixelIt | null>(null);
 
   const [{ palette }, dispatch] = useReducer(constructorPaletteReducer, {
     palette: get(palettes, ['0', 'id'], ''),
@@ -27,9 +28,26 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
     dispatch(new Actions.SetPalette(v));
   };
 
+  const handleOnLoaded = () => {
+    if (image.current && canvas.current && palettes) {
+      pixelIt.current = new PixelIt({
+        from: image.current,
+        to: canvas.current,
+        maxHeight: 500,
+        maxWidth: 500,
+        palette: getColorPalette(palettes, palette),
+        scale: 120,
+      });
+      pixelIt.current.draw().pixelate();
+    }
+  };
+
   return (
     <Section>
-      <Content style={{ position: 'relative' }}></Content>
+      <Content>
+        <SourceImage src={cropped} ref={image} onLoad={handleOnLoaded} />
+        <ResultCanvas ref={canvas} />
+      </Content>
       <Footer justify="space-between">
         <Button variant="outlined" onClick={onBack} disableElevation>
           Back

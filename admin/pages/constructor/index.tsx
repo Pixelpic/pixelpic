@@ -16,10 +16,10 @@ import { constructorReducer } from './Constructor.reducer';
 import { ConstructorActions as Actions } from './Constructor.actions';
 
 export default function Constructor() {
-  const [{ source, step, frame, crop }, dispatch] = useReducer(constructorReducer, {
+  const [{ source, step, frame, cropped }, dispatch] = useReducer(constructorReducer, {
     step: ConstructorStepId.FILE,
     source: [],
-    crop: '',
+    cropped: '',
     frame: '',
   });
 
@@ -42,13 +42,13 @@ export default function Constructor() {
   return (
     <Root header={<Heading type="h3">Constructor</Heading>}>
       <ConstructorContext.Provider
-        value={{ source, frames: data?.frames, palettes: data?.palettes }}
+        value={{ source, cropped, frames: data?.frames, palettes: data?.palettes }}
       >
         <Container>
           <Stepper nonLinear activeStep={active}>
             {CONSTRUCTOR_STEPS.map(({ label, id }) => {
               return (
-                <Step key={id} completed={isCompeted[id]({ source, step, frame, crop })}>
+                <Step key={id} completed={isCompeted[id]({ source, step, frame, cropped })}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
               );

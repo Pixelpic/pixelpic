@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { Box, FormControl } from '@mui/material';
+import { Box } from '@mui/material';
+import { Content as CommonContent } from '../Constructor.style';
 
 export const Controls = styled(Box)`
   display: flex;
@@ -9,4 +10,18 @@ export const Controls = styled(Box)`
   > * {
     flex: 1 1 auto;
   }
+`;
+
+export const Content = styled(CommonContent)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const SourceImage = styled('img')``;
+
+export const ResultCanvas = styled('canvas')`
+  max-width: 100%;
+  max-height: 100%;
 `;

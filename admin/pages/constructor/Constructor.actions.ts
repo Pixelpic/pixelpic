@@ -23,7 +23,7 @@ export namespace ConstructorActions {
 
   export class SetCrop implements Action<Types> {
     public readonly type = Types.SET_CROP;
-    constructor(public frame: string, public crop: string) {}
+    constructor(public frame: string, public cropped: string) {}
   }
 
   export type All = SetStep | SetImage | SetCrop;
