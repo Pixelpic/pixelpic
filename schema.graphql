@@ -244,9 +244,11 @@ input ColorRelateToManyForCreateInput {
 type Frame {
   id: ID!
   name: String
+  horizontal: Int
+  vertical: Int
+  price: Float
   width: Int
   height: Int
-  price: Float
 }
 
 input FrameWhereUniqueInput {
@@ -260,8 +262,8 @@ input FrameWhereInput {
   NOT: [FrameWhereInput!]
   id: IDFilter
   name: StringFilter
-  width: IntFilter
-  height: IntFilter
+  horizontal: IntFilter
+  vertical: IntFilter
   price: FloatFilter
 }
 
@@ -279,15 +281,15 @@ input FloatFilter {
 input FrameOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  width: OrderDirection
-  height: OrderDirection
+  horizontal: OrderDirection
+  vertical: OrderDirection
   price: OrderDirection
 }
 
 input FrameUpdateInput {
   name: String
-  width: Int
-  height: Int
+  horizontal: Int
+  vertical: Int
   price: Float
 }
 
@@ -298,8 +300,8 @@ input FrameUpdateArgs {
 
 input FrameCreateInput {
   name: String
-  width: Int
-  height: Int
+  horizontal: Int
+  vertical: Int
   price: Float
 }
 

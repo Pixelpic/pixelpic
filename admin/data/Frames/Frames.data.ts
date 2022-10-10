@@ -3,32 +3,32 @@ import { FrameCreateInput } from '.keystone/types';
 export const FRAMES: Required<FrameCreateInput>[] = [
   {
     name: 'XS',
-    width: 3,
-    height: 3,
+    horizontal: 3,
+    vertical: 3,
     price: 100,
   },
   {
     name: 'SM',
-    width: 3,
-    height: 4,
+    horizontal: 4,
+    vertical: 3,
     price: 200,
   },
   {
     name: 'MD',
-    width: 4,
-    height: 4,
+    horizontal: 4,
+    vertical: 4,
     price: 300,
   },
   {
     name: 'LG',
-    width: 4,
-    height: 6,
+    horizontal: 6,
+    vertical: 4,
     price: 400,
   },
   {
     name: 'XL',
-    width: 5,
-    height: 7,
+    horizontal: 7,
+    vertical: 5,
     price: 500,
   },
 ];

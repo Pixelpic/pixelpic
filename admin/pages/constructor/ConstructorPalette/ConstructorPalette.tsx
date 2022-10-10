@@ -26,6 +26,10 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
 
   const handleOnPaletteChange = (v: string) => {
     dispatch(new Actions.SetPalette(v));
+    if (pixelIt.current && palettes) {
+      const res = getColorPalette(palettes, v);
+      pixelIt.current.setPalette(res).draw().pixelate();
+    }
   };
 
   const handleOnLoaded = () => {

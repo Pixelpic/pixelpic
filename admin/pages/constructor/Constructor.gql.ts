@@ -7,6 +7,8 @@ export const GET_ALL_FRAMES = gql`
       name
       width
       height
+      vertical
+      horizontal
     }
     palettes(where: {}) {
       id

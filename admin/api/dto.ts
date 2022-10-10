@@ -192,7 +192,6 @@ export type KeystoneAdminMeta = {
   lists: Array<KeystoneAdminUiListMeta>;
 };
 
-
 export type KeystoneAdminMetaListArgs = {
   key: Scalars['String'];
 };
@@ -213,7 +212,6 @@ export type KeystoneAdminUiFieldMeta = {
   viewsIndex: Scalars['Int'];
 };
 
-
 export type KeystoneAdminUiFieldMetaItemViewArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
@@ -225,7 +223,7 @@ export type KeystoneAdminUiFieldMetaCreateView = {
 
 export enum KeystoneAdminUiFieldMetaCreateViewFieldMode {
   Edit = 'edit',
-  Hidden = 'hidden'
+  Hidden = 'hidden',
 }
 
 export type KeystoneAdminUiFieldMetaItemView = {
@@ -236,7 +234,7 @@ export type KeystoneAdminUiFieldMetaItemView = {
 export enum KeystoneAdminUiFieldMetaItemViewFieldMode {
   Edit = 'edit',
   Hidden = 'hidden',
-  Read = 'read'
+  Read = 'read',
 }
 
 export type KeystoneAdminUiFieldMetaListView = {
@@ -246,7 +244,7 @@ export type KeystoneAdminUiFieldMetaListView = {
 
 export enum KeystoneAdminUiFieldMetaListViewFieldMode {
   Hidden = 'hidden',
-  Read = 'read'
+  Read = 'read',
 }
 
 export type KeystoneAdminUiListMeta = {
@@ -277,7 +275,7 @@ export type KeystoneAdminUiSort = {
 
 export enum KeystoneAdminUiSortDirection {
   Asc = 'ASC',
-  Desc = 'DESC'
+  Desc = 'DESC',
 }
 
 export type KeystoneMeta = {
@@ -328,198 +326,160 @@ export type Mutation = {
   updateUsers?: Maybe<Array<Maybe<User>>>;
 };
 
-
 export type MutationAuthenticateUserWithPasswordArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
 
-
 export type MutationCreateColorArgs = {
   data: ColorCreateInput;
 };
-
 
 export type MutationCreateColorsArgs = {
   data: Array<ColorCreateInput>;
 };
 
-
 export type MutationCreateFrameArgs = {
   data: FrameCreateInput;
 };
-
 
 export type MutationCreateFramesArgs = {
   data: Array<FrameCreateInput>;
 };
 
-
 export type MutationCreateInitialUserArgs = {
   data: CreateInitialUserInput;
 };
-
 
 export type MutationCreatePaletteArgs = {
   data: PaletteCreateInput;
 };
 
-
 export type MutationCreatePalettesArgs = {
   data: Array<PaletteCreateInput>;
 };
-
 
 export type MutationCreatePresaleArgs = {
   data: PresaleCreateInput;
 };
 
-
 export type MutationCreatePresalesArgs = {
   data: Array<PresaleCreateInput>;
 };
-
 
 export type MutationCreateSaleArgs = {
   data: SaleCreateInput;
 };
 
-
 export type MutationCreateSalesArgs = {
   data: Array<SaleCreateInput>;
 };
-
 
 export type MutationCreateUserArgs = {
   data: UserCreateInput;
 };
 
-
 export type MutationCreateUsersArgs = {
   data: Array<UserCreateInput>;
 };
-
 
 export type MutationDeleteColorArgs = {
   where: ColorWhereUniqueInput;
 };
 
-
 export type MutationDeleteColorsArgs = {
   where: Array<ColorWhereUniqueInput>;
 };
-
 
 export type MutationDeleteFrameArgs = {
   where: FrameWhereUniqueInput;
 };
 
-
 export type MutationDeleteFramesArgs = {
   where: Array<FrameWhereUniqueInput>;
 };
-
 
 export type MutationDeletePaletteArgs = {
   where: PaletteWhereUniqueInput;
 };
 
-
 export type MutationDeletePalettesArgs = {
   where: Array<PaletteWhereUniqueInput>;
 };
-
 
 export type MutationDeletePresaleArgs = {
   where: PresaleWhereUniqueInput;
 };
 
-
 export type MutationDeletePresalesArgs = {
   where: Array<PresaleWhereUniqueInput>;
 };
-
 
 export type MutationDeleteSaleArgs = {
   where: SaleWhereUniqueInput;
 };
 
-
 export type MutationDeleteSalesArgs = {
   where: Array<SaleWhereUniqueInput>;
 };
-
 
 export type MutationDeleteUserArgs = {
   where: UserWhereUniqueInput;
 };
 
-
 export type MutationDeleteUsersArgs = {
   where: Array<UserWhereUniqueInput>;
 };
-
 
 export type MutationUpdateColorArgs = {
   data: ColorUpdateInput;
   where: ColorWhereUniqueInput;
 };
 
-
 export type MutationUpdateColorsArgs = {
   data: Array<ColorUpdateArgs>;
 };
-
 
 export type MutationUpdateFrameArgs = {
   data: FrameUpdateInput;
   where: FrameWhereUniqueInput;
 };
 
-
 export type MutationUpdateFramesArgs = {
   data: Array<FrameUpdateArgs>;
 };
-
 
 export type MutationUpdatePaletteArgs = {
   data: PaletteUpdateInput;
   where: PaletteWhereUniqueInput;
 };
 
-
 export type MutationUpdatePalettesArgs = {
   data: Array<PaletteUpdateArgs>;
 };
-
 
 export type MutationUpdatePresaleArgs = {
   data: PresaleUpdateInput;
   where: PresaleWhereUniqueInput;
 };
 
-
 export type MutationUpdatePresalesArgs = {
   data: Array<PresaleUpdateArgs>;
 };
-
 
 export type MutationUpdateSaleArgs = {
   data: SaleUpdateInput;
   where: SaleWhereUniqueInput;
 };
 
-
 export type MutationUpdateSalesArgs = {
   data: Array<SaleUpdateArgs>;
 };
-
 
 export type MutationUpdateUserArgs = {
   data: UserUpdateInput;
   where: UserWhereUniqueInput;
 };
-
 
 export type MutationUpdateUsersArgs = {
   data: Array<UserUpdateArgs>;
@@ -541,7 +501,7 @@ export type NestedStringFilter = {
 
 export enum OrderDirection {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
 export type Palette = {
@@ -552,14 +512,12 @@ export type Palette = {
   name?: Maybe<Scalars['String']>;
 };
 
-
 export type PaletteColorsArgs = {
   orderBy?: Array<ColorOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
   where?: ColorWhereInput;
 };
-
 
 export type PaletteColorsCountArgs = {
   where?: ColorWhereInput;
@@ -663,11 +621,9 @@ export type Query = {
   usersCount?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryColorArgs = {
   where: ColorWhereUniqueInput;
 };
-
 
 export type QueryColorsArgs = {
   orderBy?: Array<ColorOrderByInput>;
@@ -676,16 +632,13 @@ export type QueryColorsArgs = {
   where?: ColorWhereInput;
 };
 
-
 export type QueryColorsCountArgs = {
   where?: ColorWhereInput;
 };
 
-
 export type QueryFrameArgs = {
   where: FrameWhereUniqueInput;
 };
-
 
 export type QueryFramesArgs = {
   orderBy?: Array<FrameOrderByInput>;
@@ -694,16 +647,13 @@ export type QueryFramesArgs = {
   where?: FrameWhereInput;
 };
 
-
 export type QueryFramesCountArgs = {
   where?: FrameWhereInput;
 };
 
-
 export type QueryPaletteArgs = {
   where: PaletteWhereUniqueInput;
 };
-
 
 export type QueryPalettesArgs = {
   orderBy?: Array<PaletteOrderByInput>;
@@ -712,16 +662,13 @@ export type QueryPalettesArgs = {
   where?: PaletteWhereInput;
 };
 
-
 export type QueryPalettesCountArgs = {
   where?: PaletteWhereInput;
 };
 
-
 export type QueryPresaleArgs = {
   where: PresaleWhereUniqueInput;
 };
-
 
 export type QueryPresalesArgs = {
   orderBy?: Array<PresaleOrderByInput>;
@@ -730,16 +677,13 @@ export type QueryPresalesArgs = {
   where?: PresaleWhereInput;
 };
 
-
 export type QueryPresalesCountArgs = {
   where?: PresaleWhereInput;
 };
 
-
 export type QuerySaleArgs = {
   where: SaleWhereUniqueInput;
 };
-
 
 export type QuerySalesArgs = {
   orderBy?: Array<SaleOrderByInput>;
@@ -748,16 +692,13 @@ export type QuerySalesArgs = {
   where?: SaleWhereInput;
 };
 
-
 export type QuerySalesCountArgs = {
   where?: SaleWhereInput;
 };
 
-
 export type QueryUserArgs = {
   where: UserWhereUniqueInput;
 };
-
 
 export type QueryUsersArgs = {
   orderBy?: Array<UserOrderByInput>;
@@ -766,14 +707,13 @@ export type QueryUsersArgs = {
   where?: UserWhereInput;
 };
 
-
 export type QueryUsersCountArgs = {
   where?: UserWhereInput;
 };
 
 export enum QueryMode {
   Default = 'default',
-  Insensitive = 'insensitive'
+  Insensitive = 'insensitive',
 }
 
 export type Sale = {
@@ -840,7 +780,9 @@ export type UserAuthenticationWithPasswordFailure = {
   message: Scalars['String'];
 };
 
-export type UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordFailure | UserAuthenticationWithPasswordSuccess;
+export type UserAuthenticationWithPasswordResult =
+  | UserAuthenticationWithPasswordFailure
+  | UserAuthenticationWithPasswordSuccess;
 
 export type UserAuthenticationWithPasswordSuccess = {
   __typename?: 'UserAuthenticationWithPasswordSuccess';
@@ -864,7 +806,7 @@ export type UserOrderByInput = {
 
 export enum UserRoleType {
   Admin = 'admin',
-  Manager = 'manager'
+  Manager = 'manager',
 }
 
 export type UserRoleTypeNullableFilter = {
@@ -901,15 +843,14 @@ export type UserWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
-
-
 export type ResolverTypeWrapper<T> = Promise<T> | T;
-
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ResolverFn<TResult, TParent, TContext, TArgs>
+  | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -932,7 +873,13 @@ export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
-export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
+export interface SubscriptionSubscriberObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> {
   subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
   resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
 }
@@ -946,7 +893,13 @@ export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, 
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+export type SubscriptionResolver<
+  TResult,
+  TKey extends string,
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> =
   | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
@@ -956,7 +909,11 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
+  obj: T,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
@@ -1040,7 +997,9 @@ export type ResolversTypes = {
   StringFilter: StringFilter;
   User: ResolverTypeWrapper<User>;
   UserAuthenticationWithPasswordFailure: ResolverTypeWrapper<UserAuthenticationWithPasswordFailure>;
-  UserAuthenticationWithPasswordResult: ResolversTypes['UserAuthenticationWithPasswordFailure'] | ResolversTypes['UserAuthenticationWithPasswordSuccess'];
+  UserAuthenticationWithPasswordResult:
+    | ResolversTypes['UserAuthenticationWithPasswordFailure']
+    | ResolversTypes['UserAuthenticationWithPasswordSuccess'];
   UserAuthenticationWithPasswordSuccess: ResolverTypeWrapper<UserAuthenticationWithPasswordSuccess>;
   UserCreateInput: UserCreateInput;
   UserOrderByInput: UserOrderByInput;
@@ -1118,7 +1077,9 @@ export type ResolversParentTypes = {
   StringFilter: StringFilter;
   User: User;
   UserAuthenticationWithPasswordFailure: UserAuthenticationWithPasswordFailure;
-  UserAuthenticationWithPasswordResult: ResolversParentTypes['UserAuthenticationWithPasswordFailure'] | ResolversParentTypes['UserAuthenticationWithPasswordSuccess'];
+  UserAuthenticationWithPasswordResult:
+    | ResolversParentTypes['UserAuthenticationWithPasswordFailure']
+    | ResolversParentTypes['UserAuthenticationWithPasswordSuccess'];
   UserAuthenticationWithPasswordSuccess: UserAuthenticationWithPasswordSuccess;
   UserCreateInput: UserCreateInput;
   UserOrderByInput: UserOrderByInput;
@@ -1129,11 +1090,17 @@ export type ResolversParentTypes = {
   UserWhereUniqueInput: UserWhereUniqueInput;
 };
 
-export type AuthenticatedItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthenticatedItem'] = ResolversParentTypes['AuthenticatedItem']> = {
+export type AuthenticatedItemResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['AuthenticatedItem'] = ResolversParentTypes['AuthenticatedItem']
+> = {
   __resolveType: TypeResolveFn<'User', ParentType, ContextType>;
 };
 
-export type ColorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Color'] = ResolversParentTypes['Color']> = {
+export type ColorResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Color'] = ResolversParentTypes['Color']
+> = {
   blue?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   green?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   hex?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1143,7 +1110,10 @@ export type ColorResolvers<ContextType = any, ParentType extends ResolversParent
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FrameResolvers<ContextType = any, ParentType extends ResolversParentTypes['Frame'] = ResolversParentTypes['Frame']> = {
+export type FrameResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Frame'] = ResolversParentTypes['Frame']
+> = {
   height?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1156,22 +1126,42 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'JSON';
 }
 
-export type KeystoneAdminMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeystoneAdminMeta'] = ResolversParentTypes['KeystoneAdminMeta']> = {
+export type KeystoneAdminMetaResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeystoneAdminMeta'] = ResolversParentTypes['KeystoneAdminMeta']
+> = {
   enableSessionItem?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   enableSignout?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  list?: Resolver<Maybe<ResolversTypes['KeystoneAdminUIListMeta']>, ParentType, ContextType, RequireFields<KeystoneAdminMetaListArgs, 'key'>>;
+  list?: Resolver<
+    Maybe<ResolversTypes['KeystoneAdminUIListMeta']>,
+    ParentType,
+    ContextType,
+    RequireFields<KeystoneAdminMetaListArgs, 'key'>
+  >;
   lists?: Resolver<Array<ResolversTypes['KeystoneAdminUIListMeta']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeystoneAdminUiFieldMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeystoneAdminUIFieldMeta'] = ResolversParentTypes['KeystoneAdminUIFieldMeta']> = {
-  createView?: Resolver<ResolversTypes['KeystoneAdminUIFieldMetaCreateView'], ParentType, ContextType>;
+export type KeystoneAdminUiFieldMetaResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeystoneAdminUIFieldMeta'] = ResolversParentTypes['KeystoneAdminUIFieldMeta']
+> = {
+  createView?: Resolver<
+    ResolversTypes['KeystoneAdminUIFieldMetaCreateView'],
+    ParentType,
+    ContextType
+  >;
   customViewsIndex?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   fieldMeta?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   isFilterable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isOrderable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  itemView?: Resolver<Maybe<ResolversTypes['KeystoneAdminUIFieldMetaItemView']>, ParentType, ContextType, Partial<KeystoneAdminUiFieldMetaItemViewArgs>>;
+  itemView?: Resolver<
+    Maybe<ResolversTypes['KeystoneAdminUIFieldMetaItemView']>,
+    ParentType,
+    ContextType,
+    Partial<KeystoneAdminUiFieldMetaItemViewArgs>
+  >;
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   listView?: Resolver<ResolversTypes['KeystoneAdminUIFieldMetaListView'], ParentType, ContextType>;
   path?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -1180,22 +1170,46 @@ export type KeystoneAdminUiFieldMetaResolvers<ContextType = any, ParentType exte
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeystoneAdminUiFieldMetaCreateViewResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeystoneAdminUIFieldMetaCreateView'] = ResolversParentTypes['KeystoneAdminUIFieldMetaCreateView']> = {
-  fieldMode?: Resolver<ResolversTypes['KeystoneAdminUIFieldMetaCreateViewFieldMode'], ParentType, ContextType>;
+export type KeystoneAdminUiFieldMetaCreateViewResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeystoneAdminUIFieldMetaCreateView'] = ResolversParentTypes['KeystoneAdminUIFieldMetaCreateView']
+> = {
+  fieldMode?: Resolver<
+    ResolversTypes['KeystoneAdminUIFieldMetaCreateViewFieldMode'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeystoneAdminUiFieldMetaItemViewResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeystoneAdminUIFieldMetaItemView'] = ResolversParentTypes['KeystoneAdminUIFieldMetaItemView']> = {
-  fieldMode?: Resolver<Maybe<ResolversTypes['KeystoneAdminUIFieldMetaItemViewFieldMode']>, ParentType, ContextType>;
+export type KeystoneAdminUiFieldMetaItemViewResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeystoneAdminUIFieldMetaItemView'] = ResolversParentTypes['KeystoneAdminUIFieldMetaItemView']
+> = {
+  fieldMode?: Resolver<
+    Maybe<ResolversTypes['KeystoneAdminUIFieldMetaItemViewFieldMode']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeystoneAdminUiFieldMetaListViewResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeystoneAdminUIFieldMetaListView'] = ResolversParentTypes['KeystoneAdminUIFieldMetaListView']> = {
-  fieldMode?: Resolver<ResolversTypes['KeystoneAdminUIFieldMetaListViewFieldMode'], ParentType, ContextType>;
+export type KeystoneAdminUiFieldMetaListViewResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeystoneAdminUIFieldMetaListView'] = ResolversParentTypes['KeystoneAdminUIFieldMetaListView']
+> = {
+  fieldMode?: Resolver<
+    ResolversTypes['KeystoneAdminUIFieldMetaListViewFieldMode'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeystoneAdminUiListMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeystoneAdminUIListMeta'] = ResolversParentTypes['KeystoneAdminUIListMeta']> = {
+export type KeystoneAdminUiListMetaResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeystoneAdminUIListMeta'] = ResolversParentTypes['KeystoneAdminUIListMeta']
+> = {
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   fields?: Resolver<Array<ResolversTypes['KeystoneAdminUIFieldMeta']>, ParentType, ContextType>;
   hideCreate?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -1215,108 +1229,425 @@ export type KeystoneAdminUiListMetaResolvers<ContextType = any, ParentType exten
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeystoneAdminUiSortResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeystoneAdminUISort'] = ResolversParentTypes['KeystoneAdminUISort']> = {
+export type KeystoneAdminUiSortResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeystoneAdminUISort'] = ResolversParentTypes['KeystoneAdminUISort']
+> = {
   direction?: Resolver<ResolversTypes['KeystoneAdminUISortDirection'], ParentType, ContextType>;
   field?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeystoneMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeystoneMeta'] = ResolversParentTypes['KeystoneMeta']> = {
+export type KeystoneMetaResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeystoneMeta'] = ResolversParentTypes['KeystoneMeta']
+> = {
   adminMeta?: Resolver<ResolversTypes['KeystoneAdminMeta'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  authenticateUserWithPassword?: Resolver<Maybe<ResolversTypes['UserAuthenticationWithPasswordResult']>, ParentType, ContextType, RequireFields<MutationAuthenticateUserWithPasswordArgs, 'email' | 'password'>>;
-  createColor?: Resolver<Maybe<ResolversTypes['Color']>, ParentType, ContextType, RequireFields<MutationCreateColorArgs, 'data'>>;
-  createColors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Color']>>>, ParentType, ContextType, RequireFields<MutationCreateColorsArgs, 'data'>>;
-  createFrame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType, RequireFields<MutationCreateFrameArgs, 'data'>>;
-  createFrames?: Resolver<Maybe<Array<Maybe<ResolversTypes['Frame']>>>, ParentType, ContextType, RequireFields<MutationCreateFramesArgs, 'data'>>;
-  createInitialUser?: Resolver<ResolversTypes['UserAuthenticationWithPasswordSuccess'], ParentType, ContextType, RequireFields<MutationCreateInitialUserArgs, 'data'>>;
-  createPalette?: Resolver<Maybe<ResolversTypes['Palette']>, ParentType, ContextType, RequireFields<MutationCreatePaletteArgs, 'data'>>;
-  createPalettes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Palette']>>>, ParentType, ContextType, RequireFields<MutationCreatePalettesArgs, 'data'>>;
-  createPresale?: Resolver<Maybe<ResolversTypes['Presale']>, ParentType, ContextType, RequireFields<MutationCreatePresaleArgs, 'data'>>;
-  createPresales?: Resolver<Maybe<Array<Maybe<ResolversTypes['Presale']>>>, ParentType, ContextType, RequireFields<MutationCreatePresalesArgs, 'data'>>;
-  createSale?: Resolver<Maybe<ResolversTypes['Sale']>, ParentType, ContextType, RequireFields<MutationCreateSaleArgs, 'data'>>;
-  createSales?: Resolver<Maybe<Array<Maybe<ResolversTypes['Sale']>>>, ParentType, ContextType, RequireFields<MutationCreateSalesArgs, 'data'>>;
-  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'data'>>;
-  createUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'data'>>;
-  deleteColor?: Resolver<Maybe<ResolversTypes['Color']>, ParentType, ContextType, RequireFields<MutationDeleteColorArgs, 'where'>>;
-  deleteColors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Color']>>>, ParentType, ContextType, RequireFields<MutationDeleteColorsArgs, 'where'>>;
-  deleteFrame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType, RequireFields<MutationDeleteFrameArgs, 'where'>>;
-  deleteFrames?: Resolver<Maybe<Array<Maybe<ResolversTypes['Frame']>>>, ParentType, ContextType, RequireFields<MutationDeleteFramesArgs, 'where'>>;
-  deletePalette?: Resolver<Maybe<ResolversTypes['Palette']>, ParentType, ContextType, RequireFields<MutationDeletePaletteArgs, 'where'>>;
-  deletePalettes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Palette']>>>, ParentType, ContextType, RequireFields<MutationDeletePalettesArgs, 'where'>>;
-  deletePresale?: Resolver<Maybe<ResolversTypes['Presale']>, ParentType, ContextType, RequireFields<MutationDeletePresaleArgs, 'where'>>;
-  deletePresales?: Resolver<Maybe<Array<Maybe<ResolversTypes['Presale']>>>, ParentType, ContextType, RequireFields<MutationDeletePresalesArgs, 'where'>>;
-  deleteSale?: Resolver<Maybe<ResolversTypes['Sale']>, ParentType, ContextType, RequireFields<MutationDeleteSaleArgs, 'where'>>;
-  deleteSales?: Resolver<Maybe<Array<Maybe<ResolversTypes['Sale']>>>, ParentType, ContextType, RequireFields<MutationDeleteSalesArgs, 'where'>>;
-  deleteUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'where'>>;
-  deleteUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, RequireFields<MutationDeleteUsersArgs, 'where'>>;
+export type MutationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
+> = {
+  authenticateUserWithPassword?: Resolver<
+    Maybe<ResolversTypes['UserAuthenticationWithPasswordResult']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationAuthenticateUserWithPasswordArgs, 'email' | 'password'>
+  >;
+  createColor?: Resolver<
+    Maybe<ResolversTypes['Color']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateColorArgs, 'data'>
+  >;
+  createColors?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Color']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateColorsArgs, 'data'>
+  >;
+  createFrame?: Resolver<
+    Maybe<ResolversTypes['Frame']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateFrameArgs, 'data'>
+  >;
+  createFrames?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Frame']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateFramesArgs, 'data'>
+  >;
+  createInitialUser?: Resolver<
+    ResolversTypes['UserAuthenticationWithPasswordSuccess'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateInitialUserArgs, 'data'>
+  >;
+  createPalette?: Resolver<
+    Maybe<ResolversTypes['Palette']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreatePaletteArgs, 'data'>
+  >;
+  createPalettes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Palette']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreatePalettesArgs, 'data'>
+  >;
+  createPresale?: Resolver<
+    Maybe<ResolversTypes['Presale']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreatePresaleArgs, 'data'>
+  >;
+  createPresales?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Presale']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreatePresalesArgs, 'data'>
+  >;
+  createSale?: Resolver<
+    Maybe<ResolversTypes['Sale']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateSaleArgs, 'data'>
+  >;
+  createSales?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Sale']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateSalesArgs, 'data'>
+  >;
+  createUser?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateUserArgs, 'data'>
+  >;
+  createUsers?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['User']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateUsersArgs, 'data'>
+  >;
+  deleteColor?: Resolver<
+    Maybe<ResolversTypes['Color']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteColorArgs, 'where'>
+  >;
+  deleteColors?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Color']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteColorsArgs, 'where'>
+  >;
+  deleteFrame?: Resolver<
+    Maybe<ResolversTypes['Frame']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteFrameArgs, 'where'>
+  >;
+  deleteFrames?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Frame']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteFramesArgs, 'where'>
+  >;
+  deletePalette?: Resolver<
+    Maybe<ResolversTypes['Palette']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeletePaletteArgs, 'where'>
+  >;
+  deletePalettes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Palette']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeletePalettesArgs, 'where'>
+  >;
+  deletePresale?: Resolver<
+    Maybe<ResolversTypes['Presale']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeletePresaleArgs, 'where'>
+  >;
+  deletePresales?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Presale']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeletePresalesArgs, 'where'>
+  >;
+  deleteSale?: Resolver<
+    Maybe<ResolversTypes['Sale']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteSaleArgs, 'where'>
+  >;
+  deleteSales?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Sale']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteSalesArgs, 'where'>
+  >;
+  deleteUser?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteUserArgs, 'where'>
+  >;
+  deleteUsers?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['User']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteUsersArgs, 'where'>
+  >;
   endSession?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  updateColor?: Resolver<Maybe<ResolversTypes['Color']>, ParentType, ContextType, RequireFields<MutationUpdateColorArgs, 'data' | 'where'>>;
-  updateColors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Color']>>>, ParentType, ContextType, RequireFields<MutationUpdateColorsArgs, 'data'>>;
-  updateFrame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType, RequireFields<MutationUpdateFrameArgs, 'data' | 'where'>>;
-  updateFrames?: Resolver<Maybe<Array<Maybe<ResolversTypes['Frame']>>>, ParentType, ContextType, RequireFields<MutationUpdateFramesArgs, 'data'>>;
-  updatePalette?: Resolver<Maybe<ResolversTypes['Palette']>, ParentType, ContextType, RequireFields<MutationUpdatePaletteArgs, 'data' | 'where'>>;
-  updatePalettes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Palette']>>>, ParentType, ContextType, RequireFields<MutationUpdatePalettesArgs, 'data'>>;
-  updatePresale?: Resolver<Maybe<ResolversTypes['Presale']>, ParentType, ContextType, RequireFields<MutationUpdatePresaleArgs, 'data' | 'where'>>;
-  updatePresales?: Resolver<Maybe<Array<Maybe<ResolversTypes['Presale']>>>, ParentType, ContextType, RequireFields<MutationUpdatePresalesArgs, 'data'>>;
-  updateSale?: Resolver<Maybe<ResolversTypes['Sale']>, ParentType, ContextType, RequireFields<MutationUpdateSaleArgs, 'data' | 'where'>>;
-  updateSales?: Resolver<Maybe<Array<Maybe<ResolversTypes['Sale']>>>, ParentType, ContextType, RequireFields<MutationUpdateSalesArgs, 'data'>>;
-  updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'data' | 'where'>>;
-  updateUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, RequireFields<MutationUpdateUsersArgs, 'data'>>;
+  updateColor?: Resolver<
+    Maybe<ResolversTypes['Color']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateColorArgs, 'data' | 'where'>
+  >;
+  updateColors?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Color']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateColorsArgs, 'data'>
+  >;
+  updateFrame?: Resolver<
+    Maybe<ResolversTypes['Frame']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateFrameArgs, 'data' | 'where'>
+  >;
+  updateFrames?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Frame']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateFramesArgs, 'data'>
+  >;
+  updatePalette?: Resolver<
+    Maybe<ResolversTypes['Palette']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdatePaletteArgs, 'data' | 'where'>
+  >;
+  updatePalettes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Palette']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdatePalettesArgs, 'data'>
+  >;
+  updatePresale?: Resolver<
+    Maybe<ResolversTypes['Presale']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdatePresaleArgs, 'data' | 'where'>
+  >;
+  updatePresales?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Presale']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdatePresalesArgs, 'data'>
+  >;
+  updateSale?: Resolver<
+    Maybe<ResolversTypes['Sale']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateSaleArgs, 'data' | 'where'>
+  >;
+  updateSales?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Sale']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateSalesArgs, 'data'>
+  >;
+  updateUser?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateUserArgs, 'data' | 'where'>
+  >;
+  updateUsers?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['User']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateUsersArgs, 'data'>
+  >;
 };
 
-export type PaletteResolvers<ContextType = any, ParentType extends ResolversParentTypes['Palette'] = ResolversParentTypes['Palette']> = {
-  colors?: Resolver<Maybe<Array<ResolversTypes['Color']>>, ParentType, ContextType, RequireFields<PaletteColorsArgs, 'orderBy' | 'skip' | 'where'>>;
-  colorsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<PaletteColorsCountArgs, 'where'>>;
+export type PaletteResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Palette'] = ResolversParentTypes['Palette']
+> = {
+  colors?: Resolver<
+    Maybe<Array<ResolversTypes['Color']>>,
+    ParentType,
+    ContextType,
+    RequireFields<PaletteColorsArgs, 'orderBy' | 'skip' | 'where'>
+  >;
+  colorsCount?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    RequireFields<PaletteColorsCountArgs, 'where'>
+  >;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PasswordStateResolvers<ContextType = any, ParentType extends ResolversParentTypes['PasswordState'] = ResolversParentTypes['PasswordState']> = {
+export type PasswordStateResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PasswordState'] = ResolversParentTypes['PasswordState']
+> = {
   isSet?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PresaleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Presale'] = ResolversParentTypes['Presale']> = {
+export type PresaleResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Presale'] = ResolversParentTypes['Presale']
+> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+export type QueryResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
+> = {
   authenticatedItem?: Resolver<Maybe<ResolversTypes['AuthenticatedItem']>, ParentType, ContextType>;
-  color?: Resolver<Maybe<ResolversTypes['Color']>, ParentType, ContextType, RequireFields<QueryColorArgs, 'where'>>;
-  colors?: Resolver<Maybe<Array<ResolversTypes['Color']>>, ParentType, ContextType, RequireFields<QueryColorsArgs, 'orderBy' | 'skip' | 'where'>>;
-  colorsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<QueryColorsCountArgs, 'where'>>;
-  frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType, RequireFields<QueryFrameArgs, 'where'>>;
-  frames?: Resolver<Maybe<Array<ResolversTypes['Frame']>>, ParentType, ContextType, RequireFields<QueryFramesArgs, 'orderBy' | 'skip' | 'where'>>;
-  framesCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<QueryFramesCountArgs, 'where'>>;
+  color?: Resolver<
+    Maybe<ResolversTypes['Color']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryColorArgs, 'where'>
+  >;
+  colors?: Resolver<
+    Maybe<Array<ResolversTypes['Color']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryColorsArgs, 'orderBy' | 'skip' | 'where'>
+  >;
+  colorsCount?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryColorsCountArgs, 'where'>
+  >;
+  frame?: Resolver<
+    Maybe<ResolversTypes['Frame']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryFrameArgs, 'where'>
+  >;
+  frames?: Resolver<
+    Maybe<Array<ResolversTypes['Frame']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryFramesArgs, 'orderBy' | 'skip' | 'where'>
+  >;
+  framesCount?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryFramesCountArgs, 'where'>
+  >;
   keystone?: Resolver<ResolversTypes['KeystoneMeta'], ParentType, ContextType>;
-  palette?: Resolver<Maybe<ResolversTypes['Palette']>, ParentType, ContextType, RequireFields<QueryPaletteArgs, 'where'>>;
-  palettes?: Resolver<Maybe<Array<ResolversTypes['Palette']>>, ParentType, ContextType, RequireFields<QueryPalettesArgs, 'orderBy' | 'skip' | 'where'>>;
-  palettesCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<QueryPalettesCountArgs, 'where'>>;
-  presale?: Resolver<Maybe<ResolversTypes['Presale']>, ParentType, ContextType, RequireFields<QueryPresaleArgs, 'where'>>;
-  presales?: Resolver<Maybe<Array<ResolversTypes['Presale']>>, ParentType, ContextType, RequireFields<QueryPresalesArgs, 'orderBy' | 'skip' | 'where'>>;
-  presalesCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<QueryPresalesCountArgs, 'where'>>;
-  sale?: Resolver<Maybe<ResolversTypes['Sale']>, ParentType, ContextType, RequireFields<QuerySaleArgs, 'where'>>;
-  sales?: Resolver<Maybe<Array<ResolversTypes['Sale']>>, ParentType, ContextType, RequireFields<QuerySalesArgs, 'orderBy' | 'skip' | 'where'>>;
-  salesCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<QuerySalesCountArgs, 'where'>>;
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'where'>>;
-  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'orderBy' | 'skip' | 'where'>>;
-  usersCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<QueryUsersCountArgs, 'where'>>;
+  palette?: Resolver<
+    Maybe<ResolversTypes['Palette']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPaletteArgs, 'where'>
+  >;
+  palettes?: Resolver<
+    Maybe<Array<ResolversTypes['Palette']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPalettesArgs, 'orderBy' | 'skip' | 'where'>
+  >;
+  palettesCount?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPalettesCountArgs, 'where'>
+  >;
+  presale?: Resolver<
+    Maybe<ResolversTypes['Presale']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPresaleArgs, 'where'>
+  >;
+  presales?: Resolver<
+    Maybe<Array<ResolversTypes['Presale']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPresalesArgs, 'orderBy' | 'skip' | 'where'>
+  >;
+  presalesCount?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPresalesCountArgs, 'where'>
+  >;
+  sale?: Resolver<
+    Maybe<ResolversTypes['Sale']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerySaleArgs, 'where'>
+  >;
+  sales?: Resolver<
+    Maybe<Array<ResolversTypes['Sale']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerySalesArgs, 'orderBy' | 'skip' | 'where'>
+  >;
+  salesCount?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerySalesCountArgs, 'where'>
+  >;
+  user?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUserArgs, 'where'>
+  >;
+  users?: Resolver<
+    Maybe<Array<ResolversTypes['User']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUsersArgs, 'orderBy' | 'skip' | 'where'>
+  >;
+  usersCount?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUsersCountArgs, 'where'>
+  >;
 };
 
-export type SaleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Sale'] = ResolversParentTypes['Sale']> = {
+export type SaleResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Sale'] = ResolversParentTypes['Sale']
+> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+export type UserResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']
+> = {
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1325,16 +1656,29 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserAuthenticationWithPasswordFailureResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserAuthenticationWithPasswordFailure'] = ResolversParentTypes['UserAuthenticationWithPasswordFailure']> = {
+export type UserAuthenticationWithPasswordFailureResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['UserAuthenticationWithPasswordFailure'] = ResolversParentTypes['UserAuthenticationWithPasswordFailure']
+> = {
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserAuthenticationWithPasswordResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserAuthenticationWithPasswordResult'] = ResolversParentTypes['UserAuthenticationWithPasswordResult']> = {
-  __resolveType: TypeResolveFn<'UserAuthenticationWithPasswordFailure' | 'UserAuthenticationWithPasswordSuccess', ParentType, ContextType>;
+export type UserAuthenticationWithPasswordResultResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['UserAuthenticationWithPasswordResult'] = ResolversParentTypes['UserAuthenticationWithPasswordResult']
+> = {
+  __resolveType: TypeResolveFn<
+    'UserAuthenticationWithPasswordFailure' | 'UserAuthenticationWithPasswordSuccess',
+    ParentType,
+    ContextType
+  >;
 };
 
-export type UserAuthenticationWithPasswordSuccessResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserAuthenticationWithPasswordSuccess'] = ResolversParentTypes['UserAuthenticationWithPasswordSuccess']> = {
+export type UserAuthenticationWithPasswordSuccessResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['UserAuthenticationWithPasswordSuccess'] = ResolversParentTypes['UserAuthenticationWithPasswordSuccess']
+> = {
   item?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   sessionToken?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1364,4 +1708,3 @@ export type Resolvers<ContextType = any> = {
   UserAuthenticationWithPasswordResult?: UserAuthenticationWithPasswordResultResolvers<ContextType>;
   UserAuthenticationWithPasswordSuccess?: UserAuthenticationWithPasswordSuccessResolvers<ContextType>;
 };
-

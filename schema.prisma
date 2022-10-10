@@ -37,11 +37,11 @@ model Palette {
 }
 
 model Frame {
-  id     String @id @default(cuid())
-  name   String @unique @default("")
-  width  Int
-  height Int
-  price  Float
+  id         String @id @default(cuid())
+  name       String @unique @default("")
+  horizontal Int
+  vertical   Int
+  price      Float
 }
 
 model Presale {

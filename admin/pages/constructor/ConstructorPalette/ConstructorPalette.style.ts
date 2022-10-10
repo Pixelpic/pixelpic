@@ -19,7 +19,12 @@ export const Content = styled(CommonContent)`
   justify-content: center;
 `;
 
-export const SourceImage = styled('img')``;
+export const SourceImage = styled('img')`
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+`;
 
 export const ResultCanvas = styled('canvas')`
   max-width: 100%;

@@ -1,80 +1,140 @@
-type PixelItRGB = [number, number, number];
-export type PixelItPalette = PixelItRGB[];
+/**
+ * pixelit - convert an image to Pixel Art, with/out grayscale and based on a color palette.
+ * @author José Moreira @ <https://github.com/giventofly/pixelit>
+ **/
+type PixelItColor = [number, number, number];
+type PixelItPalette = PixelItColor[];
 
-interface PixelItConfig {
-  to: HTMLCanvasElement;
-  from: HTMLImageElement;
-  palette: PixelItPalette;
-  scale: number;
-  maxHeight: number;
-  maxWidth: number;
+interface PixelItParams {
+  to?: HTMLCanvasElement;
+  from?: HTMLImageElement;
+  scale?: number;
+  palette?: PixelItPalette;
+  maxHeight?: number;
+  maxWidth?: number;
 }
 
 export class PixelIt {
-  private drawTo: HTMLCanvasElement;
-  private drawFrom: HTMLImageElement;
-  private palette: PixelItPalette;
+  private drawto: HTMLCanvasElement;
+  private drawfrom: HTMLImageElement;
   private scale: number;
-  private maxHeight: number;
-  private maxWidth: number;
+  private palette: PixelItPalette;
+  private maxHeight?: number;
+  private maxWidth?: number;
   private ctx: CanvasRenderingContext2D;
-  private endColorStats = {};
+  private endColorStats: any;
 
-  constructor({ to, palette, scale, from, maxHeight, maxWidth }: PixelItConfig) {
-    this.drawTo = to;
-    this.drawFrom = from;
-    this.scale = scale && scale > 0 && scale <= 50 ? scale * 0.01 : 8 * 0.01;
-    this.palette = palette;
-    this.maxHeight = maxHeight;
-    this.maxWidth = maxWidth;
-    this.ctx = this.drawTo.getContext('2d') as CanvasRenderingContext2D;
+  constructor(config: PixelItParams = {}) {
+    //target for canvas
+    this.drawto = config.to || (document.getElementById('pixelitcanvas') as HTMLCanvasElement);
+    //origin of uploaded image/src img
+    this.drawfrom = config.from || (document.getElementById('pixelitimg') as HTMLImageElement);
+    //hide image element
     this.hideFromImg();
+    //range between 0 to 100
+    this.scale =
+      config.scale && config.scale > 0 && config.scale <= 50 ? config.scale * 0.01 : 8 * 0.01;
+    this.palette = config.palette || [
+      [140, 143, 174],
+      [88, 69, 99],
+      [62, 33, 55],
+      [154, 99, 72],
+      [215, 155, 125],
+      [245, 237, 186],
+      [192, 199, 65],
+      [100, 125, 52],
+      [228, 148, 58],
+      [157, 48, 59],
+      [210, 100, 113],
+      [112, 55, 127],
+      [126, 196, 193],
+      [52, 133, 157],
+      [23, 67, 75],
+      [31, 14, 28],
+    ];
+    this.maxHeight = config.maxHeight;
+    this.maxWidth = config.maxWidth;
+    this.ctx = this.drawto.getContext('2d') as CanvasRenderingContext2D;
+    //save latest converted colors
+    this.endColorStats = {};
   }
 
-  private hideFromImg() {
-    this.drawFrom.style.visibility = 'hidden';
-    this.drawFrom.style.position = 'fixed';
-    this.drawFrom.style.top = '0';
-    this.drawFrom.style.left = '0';
+  /** hide from image */
+  hideFromImg() {
+    this.drawfrom.style.visibility = 'hidden';
+    this.drawfrom.style.position = 'fixed';
+    this.drawfrom.style.top = '0';
+    this.drawfrom.style.left = '0';
     return this;
   }
 
-  public setFromImgSource(src: string) {
-    this.drawFrom.src = src;
+  /**
+   * @param {string} src Change the src from the image element
+   */
+  setFromImgSource(src: string) {
+    this.drawfrom.src = src;
     return this;
   }
 
-  public setDrawFrom(elem: HTMLImageElement) {
-    this.drawFrom = elem;
+  /**
+   *
+   * @param {elem} elem set element to read image from
+   */
+  setDrawFrom(elem: HTMLImageElement) {
+    this.drawfrom = elem;
     return this;
   }
 
-  public setDrawTo(elem: HTMLCanvasElement) {
-    this.drawTo = elem;
+  /**
+   *
+   * @param {elem} elem set element canvas to write the image
+   */
+  setDrawTo(elem: HTMLCanvasElement) {
+    this.drawto = elem;
     return this;
   }
 
-  public setPalette(arr: PixelItPalette) {
+  /**
+   *
+   * @param {array} arr Array of rgb colors: [[int,int,int]]
+   */
+  setPalette(arr: PixelItPalette) {
     this.palette = arr;
     return this;
   }
 
-  public setMaxWidth(width: number) {
+  /**
+   *
+   * @param {int} width set canvas image maxWidth
+   */
+  setMaxWidth(width: number) {
     this.maxWidth = width;
     return this;
   }
 
-  public setMaxHeight(height: number) {
+  /**
+   *
+   * @param {int} Height set canvas image maxHeight
+   */
+  setMaxHeight(height: number) {
     this.maxHeight = height;
     return this;
   }
 
-  public setScale(scale: number) {
+  /**
+   *
+   * @param {int} scale set pixelate scale [0...50]
+   */
+  setScale(scale: number) {
     this.scale = scale > 0 && scale <= 50 ? scale * 0.01 : 8 * 0.01;
     return this;
   }
 
-  public getPalette() {
+  /**
+   * 
+    @return {arr} of current palette
+   */
+  getPalette() {
     return this.palette;
   }
 
@@ -85,7 +145,7 @@ export class PixelIt {
    * @returns {number} limits [0-441.6729559300637]
    */
 
-  private colorSim(rgbColor: PixelItRGB, compareColor: PixelItRGB) {
+  colorSim(rgbColor: PixelItColor, compareColor: PixelItColor) {
     let i;
     let max;
     let d = 0;
@@ -100,8 +160,8 @@ export class PixelIt {
    * @param {array} actualColor rgb color to compare [int,int,int]
    * @returns {array} aproximated rgb color
    */
-  private similarColor(actualColor: PixelItRGB): PixelItRGB {
-    let selectedColor: PixelItRGB = [0, 0, 0];
+  similarColor(actualColor: PixelItColor) {
+    let selectedColor: any[] = [];
     let currentSim = this.colorSim(actualColor, this.palette[0]);
     let nextColor;
     this.palette.forEach((color) => {
@@ -113,125 +173,124 @@ export class PixelIt {
     });
     return selectedColor;
   }
+  //TODO someday
+  /**
+   * After image is pixelated returns
+   * @returns {object} { color : quantity }
+   */
+  /*
+    getColorStats(){
+      return this.endColorStats;
+    }
+    */
+  /**
+   * Sets image last color stats
+   */
+  /*
+    _setColorStats(stats={}){
+      this.endColorStats = stats;
+    }
+    */
+  /**
+   * Auxiliar function to count colors
+   * @param {string,object} color, current object count
+   * @returns {object} {color : quantity}
+   */
+  /*
+  _countColor(color=null,colorCount={}){
+      if(!color){ return colorCount; }
+      if(colorCount[color]){
+        colorCount[color] += parseInt(colorCount[color]) + 1;
+      }
+      else {
+        colorCount[color] = 1;
+      }
+      return colorCount;
+  }
+  */
+  //TODO end
 
   /**
    * pixelate based on @author rogeriopvl <https://github.com/rogeriopvl/8bit>
    * Draws a pixelated version of an image in a given canvas
    */
-  public pixelate() {
-    this.drawTo.width = this.drawFrom.naturalWidth;
-    this.drawTo.height = this.drawFrom.naturalHeight;
-    let scaledW = this.drawTo.width * this.scale;
-    let scaledH = this.drawTo.height * this.scale;
+  pixelate() {
+    this.drawto.width = this.drawfrom.naturalWidth;
+    this.drawto.height = this.drawfrom.naturalHeight;
+    let scaledW = this.drawto.width * this.scale;
+    let scaledH = this.drawto.height * this.scale;
 
     //make temporary canvas to make new scaled copy
     const tempCanvas = document.createElement('canvas');
 
     // Set temp canvas width/height & hide (fixes higher scaled cutting off image bottom)
-    tempCanvas.width = this.drawTo.width;
-    tempCanvas.height = this.drawTo.height;
+    tempCanvas.width = this.drawto.width;
+    tempCanvas.height = this.drawto.height;
     tempCanvas.style.visibility = 'hidden';
     tempCanvas.style.position = 'fixed';
     tempCanvas.style.top = '0';
     tempCanvas.style.left = '0';
 
-    console.log(tempCanvas);
-
     //corner case of bigger images, increase the temporary canvas size to fit everything
-    if (this.drawTo.width > 900 || this.drawTo.height > 900) {
-      //fix scale to pixelate bigger images
+    if (this.drawto.width > 900 || this.drawto.height > 900) {
+      //fix sclae to pixelate bigger images
       this.scale *= 0.5;
-      scaledW = this.drawTo.width * this.scale;
-      scaledH = this.drawTo.height * this.scale;
+      scaledW = this.drawto.width * this.scale;
+      scaledH = this.drawto.height * this.scale;
       //make it big enough to fit
       tempCanvas.width = Math.max(scaledW, scaledH) + 50;
       tempCanvas.height = Math.max(scaledW, scaledH) + 50;
     }
     // get the context
-    const tempContext = tempCanvas.getContext('2d');
-
-    if (tempContext) {
-      tempContext.drawImage(this.drawFrom, 0, 0, scaledW, scaledH);
-      document.body.appendChild(tempCanvas);
-      //configs to pixelate
-      this.ctx.imageSmoothingEnabled = false;
-
-      //calculations to remove extra border
-      let finalWidth = this.drawFrom.naturalWidth;
-      if (this.drawFrom.naturalWidth > 300) {
-        finalWidth +=
-          this.drawFrom.naturalWidth > this.drawFrom.naturalHeight
-            ? parseInt(
-                (this.drawFrom.naturalWidth / (this.drawFrom.naturalWidth * this.scale)).toString()
-              ) / 1.5
-            : parseInt(
-                (this.drawFrom.naturalWidth / (this.drawFrom.naturalWidth * this.scale)).toString()
-              );
-      }
-      let finalHeight = this.drawFrom.naturalHeight;
-      if (this.drawFrom.naturalHeight > 300) {
-        finalHeight +=
-          this.drawFrom.naturalHeight > this.drawFrom.naturalWidth
-            ? parseInt(
-                (
-                  this.drawFrom.naturalHeight /
-                  (this.drawFrom.naturalHeight * this.scale)
-                ).toString()
-              ) / 1.5
-            : parseInt(
-                (
-                  this.drawFrom.naturalHeight /
-                  (this.drawFrom.naturalHeight * this.scale)
-                ).toString()
-              );
-      }
-      //draw to final canvas
-      //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
-      this.ctx.drawImage(
-        tempCanvas,
-        0,
-        0,
-        scaledW,
-        scaledH,
-        0,
-        0,
-        finalWidth, //+ Math.max(24, 25 * this.scale),
-        finalHeight //+ Math.max(24, 25 * this.scale)
-      );
-      //remove temp element
-      tempCanvas.remove();
-    }
+    const tempContext = tempCanvas.getContext('2d') as CanvasRenderingContext2D;
     // draw the image into the canvas
+    tempContext.drawImage(this.drawfrom, 0, 0, scaledW, scaledH);
+    document.body.appendChild(tempCanvas);
+    //configs to pixelate
 
-    return this;
-  }
+    this.ctx.imageSmoothingEnabled = false;
 
-  /**
-   * Converts image to grayscale
-   */
-  convertGrayscale() {
-    const w = this.drawTo.width;
-    const h = this.drawTo.height;
-    var imgPixels = this.ctx.getImageData(0, 0, w, h);
-    for (var y = 0; y < imgPixels.height; y++) {
-      for (var x = 0; x < imgPixels.width; x++) {
-        var i = y * 4 * imgPixels.width + x * 4;
-        var avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
-        imgPixels.data[i] = avg;
-        imgPixels.data[i + 1] = avg;
-        imgPixels.data[i + 2] = avg;
-      }
+    //calculations to remove extra border
+    let finalWidth = this.drawfrom.naturalWidth;
+    if (this.drawfrom.naturalWidth > 300) {
+      finalWidth +=
+        this.drawfrom.naturalWidth > this.drawfrom.naturalHeight
+          ? parseInt(this.drawfrom.naturalWidth / (this.drawfrom.naturalWidth * this.scale)) / 1.5
+          : parseInt(this.drawfrom.naturalWidth / (this.drawfrom.naturalWidth * this.scale));
     }
-    this.ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+    let finalHeight = this.drawfrom.naturalHeight;
+    if (this.drawfrom.naturalHeight > 300) {
+      finalHeight +=
+        this.drawfrom.naturalHeight > this.drawfrom.naturalWidth
+          ? parseInt(this.drawfrom.naturalHeight / (this.drawfrom.naturalHeight * this.scale)) / 1.5
+          : parseInt(this.drawfrom.naturalHeight / (this.drawfrom.naturalHeight * this.scale));
+    }
+    //draw to final canvas
+    //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
+    this.ctx.drawImage(
+      tempCanvas,
+      0,
+      0,
+      scaledW,
+      scaledH,
+      0,
+      0,
+      finalWidth, //+ Math.max(24, 25 * this.scale),
+      finalHeight //+ Math.max(24, 25 * this.scale)
+    );
+    //remove temp element
+    tempCanvas.remove();
+    this.convertPalette();
+
     return this;
   }
 
   /**
    * converts image to palette using the defined palette or default palette
    */
-  convertPalette() {
-    const w = this.drawTo.width;
-    const h = this.drawTo.height;
+  private convertPalette() {
+    const w = this.drawto.width;
+    const h = this.drawto.height;
     var imgPixels = this.ctx.getImageData(0, 0, w, h);
     for (var y = 0; y < imgPixels.height; y++) {
       for (var x = 0; x < imgPixels.width; x++) {
@@ -251,32 +310,35 @@ export class PixelIt {
     return this;
   }
 
-  public resizeImage() {
+  /**
+   * Resizes image proportionally according to a max width or max height
+   * height takes precedence if definied
+   */
+  resizeImage() {
+    //var ctx = canvas.getContext("2d")
+    const canvasCopy = document.createElement('canvas');
+    const copyContext = canvasCopy.getContext('2d') as CanvasRenderingContext2D;
+    let ratio = 1.0;
+
+    //if none defined skip
     if (!this.maxWidth && !this.maxHeight) {
       return 0;
     }
 
-    const canvasCopy = document.createElement('canvas');
-    const copyContext = canvasCopy.getContext('2d');
-    const ratio = (() => {
-      if (this.maxWidth && this.drawTo.width > this.maxWidth) {
-        return this.maxWidth / this.drawTo.width;
-      }
-      if (this.maxHeight && this.drawTo.height > this.maxHeight) {
-        return this.maxHeight / this.drawTo.height;
-      }
-      return 1.0;
-    })();
-
-    canvasCopy.width = this.drawTo.width;
-    canvasCopy.height = this.drawTo.height;
-
-    if (copyContext) {
-      copyContext.drawImage(this.drawTo, 0, 0);
+    if (this.maxWidth && this.drawto.width > this.maxWidth) {
+      ratio = this.maxWidth / this.drawto.width;
+    }
+    //max height overrides max width
+    if (this.maxHeight && this.drawto.height > this.maxHeight) {
+      ratio = this.maxHeight / this.drawto.height;
     }
 
-    this.drawTo.width = this.drawTo.width * ratio;
-    this.drawTo.height = this.drawTo.height * ratio;
+    canvasCopy.width = this.drawto.width;
+    canvasCopy.height = this.drawto.height;
+    copyContext.drawImage(this.drawto, 0, 0);
+
+    this.drawto.width = this.drawto.width * ratio;
+    this.drawto.height = this.drawto.height * ratio;
     this.ctx.drawImage(
       canvasCopy,
       0,
@@ -285,32 +347,40 @@ export class PixelIt {
       canvasCopy.height,
       0,
       0,
-      this.drawTo.width,
-      this.drawTo.height
+      this.drawto.width,
+      this.drawto.height
     );
 
     return this;
   }
 
-  public draw() {
-    this.drawTo.width = this.drawFrom.width;
-    this.drawTo.height = this.drawFrom.height;
-    this.ctx.drawImage(this.drawFrom, 0, 0);
+  /**
+   * draw to canvas from image source and resize
+   *
+   */
+  draw() {
+    //draw image to canvas
+    this.drawto.width = this.drawfrom.width;
+    this.drawto.height = this.drawfrom.height;
+    //draw
+    this.ctx.drawImage(this.drawfrom, 0, 0);
+    //resize is always done
     this.resizeImage();
     return this;
   }
 
-  public saveImage() {
-    const link = document.createElement('a');
-    link.download = 'pxArt.png';
-    link.href = this.drawTo.toDataURL('image/png').replace('image/png', 'image/octet-stream');
-    const el = document.querySelector('body');
-    if (el) {
-      el.appendChild(link);
-      link.click();
-      el.removeChild(link);
-    }
-  }
+  /**
+   * Save image from canvas
+   */
+
+  // saveImage() {
+  //   const link = document.createElement('a');
+  //   link.download = 'pxArt.png';
+  //   link.href = this.drawto.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+  //   document.querySelector('body').appendChild(link);
+  //   link.click();
+  //   document.querySelector('body').removeChild(link);
+  // }
 
   //end class
 }
