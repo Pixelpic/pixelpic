@@ -39,10 +39,14 @@ export default function Constructor() {
     dispatch(new Actions.SetStep(ConstructorStepId.FILE));
   };
 
+  const handleOnPalettePrev = () => {
+    dispatch(new Actions.SetStep(ConstructorStepId.CROP));
+  };
+
   return (
     <Root header={<Heading type="h3">Constructor</Heading>}>
       <ConstructorContext.Provider
-        value={{ source, cropped, frames: data?.frames, palettes: data?.palettes }}
+        value={{ source, cropped, frame, frames: data?.frames, palettes: data?.palettes }}
       >
         <Container>
           <Stepper nonLinear activeStep={active}>
@@ -59,7 +63,7 @@ export default function Constructor() {
             <ConstructorCrop onNext={handleOnCropNext} onBack={handleOnCropPrev} />
           )}
           {step === ConstructorStepId.PALETTE && (
-            <ConstructorPalette onNext={handleOnCropNext} onBack={handleOnCropPrev} />
+            <ConstructorPalette onNext={handleOnCropNext} onBack={handleOnPalettePrev} />
           )}
         </Container>
       </ConstructorContext.Provider>

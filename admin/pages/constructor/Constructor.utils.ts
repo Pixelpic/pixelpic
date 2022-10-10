@@ -9,4 +9,5 @@ export const isCompeted: Record<ConstructorStepId, IsCompleted> = {
   [ConstructorStepId.CROP]: ({ step, frame, cropped }) =>
     step !== ConstructorStepId.CROP && !!frame && !!cropped,
   [ConstructorStepId.PALETTE]: () => false,
+  [ConstructorStepId.PRESALE]: () => false,
 };

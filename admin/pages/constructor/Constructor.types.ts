@@ -4,6 +4,7 @@ export enum ConstructorStepId {
   FILE = 'file',
   CROP = 'crop',
   PALETTE = 'palette',
+  PRESALE = 'presale',
 }
 
 export interface ConstructorStep {

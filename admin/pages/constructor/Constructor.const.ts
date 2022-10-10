@@ -13,4 +13,8 @@ export const CONSTRUCTOR_STEPS: ConstructorStep[] = [
     id: ConstructorStepId.PALETTE,
     label: 'Choose palette',
   },
+  {
+    id: ConstructorStepId.PRESALE,
+    label: 'Presale',
+  },
 ];

@@ -15,7 +15,7 @@ interface ConstructorPaletteProps {
 }
 
 export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack }) => {
-  const { cropped, palettes } = useContext(ConstructorContext);
+  const { cropped, palettes, frame, frames } = useContext(ConstructorContext);
   const image = useRef<HTMLImageElement | null>(null);
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const pixelIt = useRef<PixelIt | null>(null);
@@ -34,6 +34,8 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
 
   const handleOnLoaded = () => {
     if (image.current && canvas.current && palettes) {
+      const { width = 0, height = 0 } = frames?.find(({ id }) => id === frame) || {};
+      console.log(width, height);
       pixelIt.current = new PixelIt({
         from: image.current,
         to: canvas.current,
@@ -75,7 +77,7 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
           </FormControl>
         </Controls>
         <Button variant="contained" disableElevation>
-          Save as Presale
+          Next
         </Button>
       </Footer>
     </Section>
