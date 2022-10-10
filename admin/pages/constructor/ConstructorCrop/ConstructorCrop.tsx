@@ -30,7 +30,7 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
     crop: { x: 0, y: 0 },
   });
 
-  const { width = 0, height = 0 } = frames?.find(({ id }) => id === frame) || {};
+  const { horizontal = 0, vertical = 0 } = frames?.find(({ id }) => id === frame) || {};
 
   const handleOnAspectChange = (v: string) => {
     dispatch(new Actions.SetFrame(v));
@@ -75,7 +75,7 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
           image={source}
           crop={crop}
           zoom={zoom}
-          aspect={width && height ? width / height : undefined}
+          aspect={horizontal && vertical ? horizontal / vertical : undefined}
           onCropChange={handleOnCropChange}
           onZoomChange={handelOnZoom}
           onCropComplete={(_, v) => handleOnCropComplete(v)}
@@ -93,10 +93,10 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
               label="Size"
               onChange={({ target: { value } }) => handleOnAspectChange(value)}
             >
-              {frames?.map(({ id, name, width, height }) => {
+              {frames?.map(({ id, name, horizontal, vertical }) => {
                 return (
                   <MenuItem key={id} value={id}>
-                    {name} ({width}x{height})
+                    {name} ({horizontal}x{vertical})
                   </MenuItem>
                 );
               })}

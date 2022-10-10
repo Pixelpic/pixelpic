@@ -40,7 +40,7 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
         maxHeight: 500,
         maxWidth: 500,
         palette: getColorPalette(palettes, palette),
-        scale: 120,
+        scale: 80,
       });
       pixelIt.current.draw().pixelate();
     }
