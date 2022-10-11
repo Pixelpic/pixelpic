@@ -37,16 +37,21 @@ model Palette {
 }
 
 model Frame {
-  id         String @id @default(cuid())
-  name       String @unique @default("")
-  horizontal Int
-  vertical   Int
-  price      Float
+  id                 String    @id @default(cuid())
+  name               String    @unique @default("")
+  horizontal         Int
+  vertical           Int
+  price              Float
+  from_Presale_frame Presale[] @relation("Presale_frame")
 }
 
 model Presale {
-  id   String @id @default(cuid())
-  name String @default("")
+  id      String  @id @default(cuid())
+  frame   Frame?  @relation("Presale_frame", fields: [frameId], references: [id])
+  frameId String? @map("frame")
+  colors  String  @default("")
+
+  @@index([frameId])
 }
 
 model Sale {

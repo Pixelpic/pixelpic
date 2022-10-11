@@ -1,8 +1,8 @@
 import { createContext } from 'react';
-import { noop } from 'lodash';
 import { DTO } from '@admin/api';
 
 interface ConstructorContextProps {
+  saving: boolean;
   source: File[];
   cropped: string;
   frame: string;
@@ -11,6 +11,7 @@ interface ConstructorContextProps {
 }
 
 export const ConstructorContext = createContext<ConstructorContextProps>({
+  saving: false,
   cropped: '',
   frame: '',
   source: [],

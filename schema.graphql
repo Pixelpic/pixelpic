@@ -307,7 +307,8 @@ input FrameCreateInput {
 
 type Presale {
   id: ID!
-  name: String
+  frame: Frame
+  colors: String
 }
 
 input PresaleWhereUniqueInput {
@@ -319,16 +320,24 @@ input PresaleWhereInput {
   OR: [PresaleWhereInput!]
   NOT: [PresaleWhereInput!]
   id: IDFilter
-  name: StringFilter
+  frame: FrameWhereInput
+  colors: StringFilter
 }
 
 input PresaleOrderByInput {
   id: OrderDirection
-  name: OrderDirection
+  colors: OrderDirection
 }
 
 input PresaleUpdateInput {
-  name: String
+  frame: FrameRelateToOneForUpdateInput
+  colors: String
+}
+
+input FrameRelateToOneForUpdateInput {
+  create: FrameCreateInput
+  connect: FrameWhereUniqueInput
+  disconnect: Boolean
 }
 
 input PresaleUpdateArgs {
@@ -337,7 +346,13 @@ input PresaleUpdateArgs {
 }
 
 input PresaleCreateInput {
-  name: String
+  frame: FrameRelateToOneForCreateInput
+  colors: String
+}
+
+input FrameRelateToOneForCreateInput {
+  create: FrameCreateInput
+  connect: FrameWhereUniqueInput
 }
 
 type Sale {

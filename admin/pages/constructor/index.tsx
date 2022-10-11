@@ -1,8 +1,9 @@
 import React, { useState, useReducer } from 'react';
 import { Heading } from '@keystone-ui/core';
 import { Step, StepLabel } from '@mui/material';
-import { useQuery } from '@keystone-6/core/admin-ui/apollo';
+import { useQuery, useMutation } from '@keystone-6/core/admin-ui/apollo';
 import { DTO } from '@admin/api';
+import { PixelItColors } from '../../services';
 import { ConstructorFile } from './ConstructorFile/ConstructorFile';
 import { ConstructorCrop } from './ConstructorCrop/ConstructorCrop';
 import { ConstructorPalette } from './ConstructorPalette/ConstructorPalette';
@@ -11,7 +12,7 @@ import { CONSTRUCTOR_STEPS } from './Constructor.const';
 import { ConstructorStepId } from './Constructor.types';
 import { ConstructorContext } from './Constructor.context';
 import { isCompeted } from './Constructor.utils';
-import { GET_ALL_FRAMES } from './Constructor.gql';
+import { GET_ALL_FRAMES, SAVE_PRESALE } from './Constructor.gql';
 import { constructorReducer } from './Constructor.reducer';
 import { ConstructorActions as Actions } from './Constructor.actions';
 
@@ -24,6 +25,8 @@ export default function Constructor() {
   });
 
   const { data } = useQuery<DTO.Query>(GET_ALL_FRAMES);
+
+  const [save, { loading: saving, data: presale }] = useMutation<DTO.Mutation>(SAVE_PRESALE);
 
   const active = CONSTRUCTOR_STEPS.findIndex(({ id }) => id === step);
 
@@ -43,10 +46,19 @@ export default function Constructor() {
     dispatch(new Actions.SetStep(ConstructorStepId.CROP));
   };
 
+  const handleOnPaletteNext = ({ colors }: { colors: PixelItColors }) => {
+    save({
+      variables: {
+        frame,
+        colors: JSON.stringify(colors),
+      },
+    });
+  };
+
   return (
     <Root header={<Heading type="h3">Constructor</Heading>}>
       <ConstructorContext.Provider
-        value={{ source, cropped, frame, frames: data?.frames, palettes: data?.palettes }}
+        value={{ saving, source, cropped, frame, frames: data?.frames, palettes: data?.palettes }}
       >
         <Container>
           <Stepper nonLinear activeStep={active}>
@@ -63,7 +75,7 @@ export default function Constructor() {
             <ConstructorCrop onNext={handleOnCropNext} onBack={handleOnCropPrev} />
           )}
           {step === ConstructorStepId.PALETTE && (
-            <ConstructorPalette onNext={handleOnCropNext} onBack={handleOnPalettePrev} />
+            <ConstructorPalette onNext={handleOnPaletteNext} onBack={handleOnPalettePrev} />
           )}
         </Container>
       </ConstructorContext.Provider>

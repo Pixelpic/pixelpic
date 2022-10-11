@@ -1,21 +1,23 @@
-import React, { FC, useContext, useReducer, useRef, useLayoutEffect } from 'react';
-import { get } from 'lodash';
+import React, { FC, useContext, useReducer, useRef } from 'react';
+import { get, toNumber } from 'lodash';
+import { LoadingButton } from '@mui/lab';
 import { FormControl, Button, Select, MenuItem, InputLabel } from '@mui/material';
+import { FRAME } from '../../../constants';
+import { PixelIt, PixelItColors } from '../../../services';
 import { Section, Footer } from '../Constructor.style';
 import { ConstructorContext } from '../Constructor.context';
 import { Controls, Content, SourceImage, ResultCanvas } from './ConstructorPalette.style';
 import { constructorPaletteReducer } from './ConstructorPalette.reducer';
 import { ConstructorPaletteActions as Actions } from './ConstructorPalette.actions';
-import { PixelIt } from './ConstructorPalette.services';
 import { getColorPalette } from './ConstructorPalette.utils';
 
 interface ConstructorPaletteProps {
-  onNext: (v: { frame: string; image: string }) => void;
+  onNext: (v: { colors: PixelItColors }) => void;
   onBack: () => void;
 }
 
 export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack }) => {
-  const { cropped, palettes, frame, frames } = useContext(ConstructorContext);
+  const { saving, cropped, palettes, frame, frames } = useContext(ConstructorContext);
   const image = useRef<HTMLImageElement | null>(null);
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const pixelIt = useRef<PixelIt | null>(null);
@@ -23,6 +25,8 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
   const [{ palette }, dispatch] = useReducer(constructorPaletteReducer, {
     palette: get(palettes, ['0', 'id'], ''),
   });
+
+  const { width, height } = frames?.find(({ id }) => id === frame) || {};
 
   const handleOnPaletteChange = (v: string) => {
     dispatch(new Actions.SetPalette(v));
@@ -34,9 +38,10 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
 
   const handleOnLoaded = () => {
     if (image.current && canvas.current && palettes) {
-      const { width = 0, height = 0 } = frames?.find(({ id }) => id === frame) || {};
-      console.log(width, height);
       pixelIt.current = new PixelIt({
+        brick: FRAME.BRICK_SIZE,
+        width: toNumber(width),
+        height: toNumber(height),
         from: image.current,
         to: canvas.current,
         maxHeight: 500,
@@ -48,14 +53,26 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
     }
   };
 
+  const handleOnNext = () => {
+    if (pixelIt.current) {
+      onNext({ colors: pixelIt.current.getColors() });
+    }
+  };
+
   return (
     <Section>
       <Content>
-        <SourceImage src={cropped} ref={image} onLoad={handleOnLoaded} />
-        <ResultCanvas ref={canvas} />
+        <SourceImage
+          ref={image}
+          src={cropped}
+          width={toNumber(width)}
+          height={toNumber(height)}
+          onLoad={handleOnLoaded}
+        />
+        <ResultCanvas ref={canvas} width={toNumber(width)} height={toNumber(height)} />
       </Content>
       <Footer justify="space-between">
-        <Button variant="outlined" onClick={onBack} disableElevation>
+        <Button disableElevation disabled={saving} variant="outlined" onClick={onBack}>
           Back
         </Button>
         <Controls>
@@ -76,9 +93,9 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
             </Select>
           </FormControl>
         </Controls>
-        <Button variant="contained" disableElevation>
+        <LoadingButton disableElevation loading={saving} variant="contained" onClick={handleOnNext}>
           Next
-        </Button>
+        </LoadingButton>
       </Footer>
     </Section>
   );

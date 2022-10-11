@@ -136,6 +136,17 @@ export type FrameOrderByInput = {
   vertical?: InputMaybe<OrderDirection>;
 };
 
+export type FrameRelateToOneForCreateInput = {
+  connect?: InputMaybe<FrameWhereUniqueInput>;
+  create?: InputMaybe<FrameCreateInput>;
+};
+
+export type FrameRelateToOneForUpdateInput = {
+  connect?: InputMaybe<FrameWhereUniqueInput>;
+  create?: InputMaybe<FrameCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type FrameUpdateArgs = {
   data: FrameUpdateInput;
   where: FrameWhereUniqueInput;
@@ -607,17 +618,19 @@ export type PasswordState = {
 
 export type Presale = {
   __typename?: 'Presale';
+  colors?: Maybe<Scalars['String']>;
+  frame?: Maybe<Frame>;
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
 };
 
 export type PresaleCreateInput = {
-  name?: InputMaybe<Scalars['String']>;
+  colors?: InputMaybe<Scalars['String']>;
+  frame?: InputMaybe<FrameRelateToOneForCreateInput>;
 };
 
 export type PresaleOrderByInput = {
+  colors?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
-  name?: InputMaybe<OrderDirection>;
 };
 
 export type PresaleUpdateArgs = {
@@ -626,15 +639,17 @@ export type PresaleUpdateArgs = {
 };
 
 export type PresaleUpdateInput = {
-  name?: InputMaybe<Scalars['String']>;
+  colors?: InputMaybe<Scalars['String']>;
+  frame?: InputMaybe<FrameRelateToOneForUpdateInput>;
 };
 
 export type PresaleWhereInput = {
   AND?: InputMaybe<Array<PresaleWhereInput>>;
   NOT?: InputMaybe<Array<PresaleWhereInput>>;
   OR?: InputMaybe<Array<PresaleWhereInput>>;
+  colors?: InputMaybe<StringFilter>;
+  frame?: InputMaybe<FrameWhereInput>;
   id?: InputMaybe<IdFilter>;
-  name?: InputMaybe<StringFilter>;
 };
 
 export type PresaleWhereUniqueInput = {
@@ -990,6 +1005,8 @@ export type ResolversTypes = {
   Frame: ResolverTypeWrapper<Frame>;
   FrameCreateInput: FrameCreateInput;
   FrameOrderByInput: FrameOrderByInput;
+  FrameRelateToOneForCreateInput: FrameRelateToOneForCreateInput;
+  FrameRelateToOneForUpdateInput: FrameRelateToOneForUpdateInput;
   FrameUpdateArgs: FrameUpdateArgs;
   FrameUpdateInput: FrameUpdateInput;
   FrameWhereInput: FrameWhereInput;
@@ -1074,6 +1091,8 @@ export type ResolversParentTypes = {
   Frame: Frame;
   FrameCreateInput: FrameCreateInput;
   FrameOrderByInput: FrameOrderByInput;
+  FrameRelateToOneForCreateInput: FrameRelateToOneForCreateInput;
+  FrameRelateToOneForUpdateInput: FrameRelateToOneForUpdateInput;
   FrameUpdateArgs: FrameUpdateArgs;
   FrameUpdateInput: FrameUpdateInput;
   FrameWhereInput: FrameWhereInput;
@@ -1286,8 +1305,9 @@ export type PasswordStateResolvers<ContextType = any, ParentType extends Resolve
 };
 
 export type PresaleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Presale'] = ResolversParentTypes['Presale']> = {
+  colors?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
