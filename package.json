@@ -25,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-easy-crop": "^4.5.1",
     "react-material-file-upload": "^0.0.4",
+    "react-router": "^6.4.2",
     "typescript": "^4.7.4"
   },
   "// npm": "this is a temporary workaround for npm users, see https://github.com/keystonejs/create-keystone-app/pull/350",

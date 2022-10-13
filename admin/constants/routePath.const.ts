@@ -1,4 +1,4 @@
 export enum RoutePath {
   CONSTRUCTOR = '/constructor',
-  SHARE = '/share/:id',
+  PREVIEW = '/preview/:id',
 }
