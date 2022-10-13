@@ -1,1 +1,2 @@
-export { PixelIt, PixelItColor, PixelItColors, PixelItPalette } from './PixelIt/PixelIt';
+export { PixelIt } from './PixelIt/PixelIt';
+export type { PixelItColor, PixelItColors, PixelItPalette } from './PixelIt/PixelIt';
