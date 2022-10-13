@@ -309,6 +309,7 @@ type Presale {
   id: ID!
   frame: Frame
   image: Image
+  share: String
 }
 
 input PresaleWhereUniqueInput {
