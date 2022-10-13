@@ -13,9 +13,63 @@ export type Scalars = {
   Int: number;
   Float: number;
   JSON: any;
+  Upload: any;
 };
 
 export type AuthenticatedItem = User;
+
+/**
+ * Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+ * All options are strings as they ultimately end up in a URL.
+ */
+export type CloudinaryImageFormat = {
+  angle?: InputMaybe<Scalars['String']>;
+  aspect_ratio?: InputMaybe<Scalars['String']>;
+  background?: InputMaybe<Scalars['String']>;
+  border?: InputMaybe<Scalars['String']>;
+  color?: InputMaybe<Scalars['String']>;
+  color_space?: InputMaybe<Scalars['String']>;
+  crop?: InputMaybe<Scalars['String']>;
+  default_image?: InputMaybe<Scalars['String']>;
+  delay?: InputMaybe<Scalars['String']>;
+  density?: InputMaybe<Scalars['String']>;
+  dpr?: InputMaybe<Scalars['String']>;
+  effect?: InputMaybe<Scalars['String']>;
+  fetch_format?: InputMaybe<Scalars['String']>;
+  flags?: InputMaybe<Scalars['String']>;
+  format?: InputMaybe<Scalars['String']>;
+  gravity?: InputMaybe<Scalars['String']>;
+  height?: InputMaybe<Scalars['String']>;
+  opacity?: InputMaybe<Scalars['String']>;
+  overlay?: InputMaybe<Scalars['String']>;
+  page?: InputMaybe<Scalars['String']>;
+  /**  Rewrites the filename to be this pretty string. Do not include `/` or `.` */
+  prettyName?: InputMaybe<Scalars['String']>;
+  quality?: InputMaybe<Scalars['String']>;
+  radius?: InputMaybe<Scalars['String']>;
+  transformation?: InputMaybe<Scalars['String']>;
+  underlay?: InputMaybe<Scalars['String']>;
+  width?: InputMaybe<Scalars['String']>;
+  x?: InputMaybe<Scalars['String']>;
+  y?: InputMaybe<Scalars['String']>;
+  zoom?: InputMaybe<Scalars['String']>;
+};
+
+export type CloudinaryImage_File = {
+  __typename?: 'CloudinaryImage_File';
+  encoding?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  mimetype?: Maybe<Scalars['String']>;
+  originalFilename?: Maybe<Scalars['String']>;
+  publicUrl?: Maybe<Scalars['String']>;
+  publicUrlTransformed?: Maybe<Scalars['String']>;
+};
+
+
+export type CloudinaryImage_FilePublicUrlTransformedArgs = {
+  transformation?: InputMaybe<CloudinaryImageFormat>;
+};
 
 export type Color = {
   __typename?: 'Color';
@@ -136,6 +190,17 @@ export type FrameOrderByInput = {
   vertical?: InputMaybe<OrderDirection>;
 };
 
+export type FrameRelateToOneForCreateInput = {
+  connect?: InputMaybe<FrameWhereUniqueInput>;
+  create?: InputMaybe<FrameCreateInput>;
+};
+
+export type FrameRelateToOneForUpdateInput = {
+  connect?: InputMaybe<FrameWhereUniqueInput>;
+  create?: InputMaybe<FrameCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type FrameUpdateArgs = {
   data: FrameUpdateInput;
   where: FrameWhereUniqueInput;
@@ -173,6 +238,51 @@ export type IdFilter = {
   lte?: InputMaybe<Scalars['ID']>;
   not?: InputMaybe<IdFilter>;
   notIn?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export type Image = {
+  __typename?: 'Image';
+  id: Scalars['ID'];
+  image?: Maybe<CloudinaryImage_File>;
+};
+
+export type ImageCreateInput = {
+  image?: InputMaybe<Scalars['Upload']>;
+};
+
+export type ImageOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+};
+
+export type ImageRelateToOneForCreateInput = {
+  connect?: InputMaybe<ImageWhereUniqueInput>;
+  create?: InputMaybe<ImageCreateInput>;
+};
+
+export type ImageRelateToOneForUpdateInput = {
+  connect?: InputMaybe<ImageWhereUniqueInput>;
+  create?: InputMaybe<ImageCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type ImageUpdateArgs = {
+  data: ImageUpdateInput;
+  where: ImageWhereUniqueInput;
+};
+
+export type ImageUpdateInput = {
+  image?: InputMaybe<Scalars['Upload']>;
+};
+
+export type ImageWhereInput = {
+  AND?: InputMaybe<Array<ImageWhereInput>>;
+  NOT?: InputMaybe<Array<ImageWhereInput>>;
+  OR?: InputMaybe<Array<ImageWhereInput>>;
+  id?: InputMaybe<IdFilter>;
+};
+
+export type ImageWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type IntFilter = {
@@ -294,6 +404,8 @@ export type Mutation = {
   createColors?: Maybe<Array<Maybe<Color>>>;
   createFrame?: Maybe<Frame>;
   createFrames?: Maybe<Array<Maybe<Frame>>>;
+  createImage?: Maybe<Image>;
+  createImages?: Maybe<Array<Maybe<Image>>>;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
   createPalette?: Maybe<Palette>;
   createPalettes?: Maybe<Array<Maybe<Palette>>>;
@@ -307,6 +419,8 @@ export type Mutation = {
   deleteColors?: Maybe<Array<Maybe<Color>>>;
   deleteFrame?: Maybe<Frame>;
   deleteFrames?: Maybe<Array<Maybe<Frame>>>;
+  deleteImage?: Maybe<Image>;
+  deleteImages?: Maybe<Array<Maybe<Image>>>;
   deletePalette?: Maybe<Palette>;
   deletePalettes?: Maybe<Array<Maybe<Palette>>>;
   deletePresale?: Maybe<Presale>;
@@ -320,6 +434,8 @@ export type Mutation = {
   updateColors?: Maybe<Array<Maybe<Color>>>;
   updateFrame?: Maybe<Frame>;
   updateFrames?: Maybe<Array<Maybe<Frame>>>;
+  updateImage?: Maybe<Image>;
+  updateImages?: Maybe<Array<Maybe<Image>>>;
   updatePalette?: Maybe<Palette>;
   updatePalettes?: Maybe<Array<Maybe<Palette>>>;
   updatePresale?: Maybe<Presale>;
@@ -354,6 +470,16 @@ export type MutationCreateFrameArgs = {
 
 export type MutationCreateFramesArgs = {
   data: Array<FrameCreateInput>;
+};
+
+
+export type MutationCreateImageArgs = {
+  data: ImageCreateInput;
+};
+
+
+export type MutationCreateImagesArgs = {
+  data: Array<ImageCreateInput>;
 };
 
 
@@ -422,6 +548,16 @@ export type MutationDeleteFramesArgs = {
 };
 
 
+export type MutationDeleteImageArgs = {
+  where: ImageWhereUniqueInput;
+};
+
+
+export type MutationDeleteImagesArgs = {
+  where: Array<ImageWhereUniqueInput>;
+};
+
+
 export type MutationDeletePaletteArgs = {
   where: PaletteWhereUniqueInput;
 };
@@ -481,6 +617,17 @@ export type MutationUpdateFrameArgs = {
 
 export type MutationUpdateFramesArgs = {
   data: Array<FrameUpdateArgs>;
+};
+
+
+export type MutationUpdateImageArgs = {
+  data: ImageUpdateInput;
+  where: ImageWhereUniqueInput;
+};
+
+
+export type MutationUpdateImagesArgs = {
+  data: Array<ImageUpdateArgs>;
 };
 
 
@@ -607,17 +754,18 @@ export type PasswordState = {
 
 export type Presale = {
   __typename?: 'Presale';
+  frame?: Maybe<Frame>;
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
+  image?: Maybe<Image>;
 };
 
 export type PresaleCreateInput = {
-  name?: InputMaybe<Scalars['String']>;
+  frame?: InputMaybe<FrameRelateToOneForCreateInput>;
+  image?: InputMaybe<ImageRelateToOneForCreateInput>;
 };
 
 export type PresaleOrderByInput = {
   id?: InputMaybe<OrderDirection>;
-  name?: InputMaybe<OrderDirection>;
 };
 
 export type PresaleUpdateArgs = {
@@ -626,15 +774,17 @@ export type PresaleUpdateArgs = {
 };
 
 export type PresaleUpdateInput = {
-  name?: InputMaybe<Scalars['String']>;
+  frame?: InputMaybe<FrameRelateToOneForUpdateInput>;
+  image?: InputMaybe<ImageRelateToOneForUpdateInput>;
 };
 
 export type PresaleWhereInput = {
   AND?: InputMaybe<Array<PresaleWhereInput>>;
   NOT?: InputMaybe<Array<PresaleWhereInput>>;
   OR?: InputMaybe<Array<PresaleWhereInput>>;
+  frame?: InputMaybe<FrameWhereInput>;
   id?: InputMaybe<IdFilter>;
-  name?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageWhereInput>;
 };
 
 export type PresaleWhereUniqueInput = {
@@ -650,6 +800,9 @@ export type Query = {
   frame?: Maybe<Frame>;
   frames?: Maybe<Array<Frame>>;
   framesCount?: Maybe<Scalars['Int']>;
+  image?: Maybe<Image>;
+  images?: Maybe<Array<Image>>;
+  imagesCount?: Maybe<Scalars['Int']>;
   keystone: KeystoneMeta;
   palette?: Maybe<Palette>;
   palettes?: Maybe<Array<Palette>>;
@@ -699,6 +852,24 @@ export type QueryFramesArgs = {
 
 export type QueryFramesCountArgs = {
   where?: FrameWhereInput;
+};
+
+
+export type QueryImageArgs = {
+  where: ImageWhereUniqueInput;
+};
+
+
+export type QueryImagesArgs = {
+  orderBy?: Array<ImageOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: ImageWhereInput;
+};
+
+
+export type QueryImagesCountArgs = {
+  where?: ImageWhereInput;
 };
 
 
@@ -974,6 +1145,8 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   AuthenticatedItem: ResolversTypes['User'];
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  CloudinaryImageFormat: CloudinaryImageFormat;
+  CloudinaryImage_File: ResolverTypeWrapper<CloudinaryImage_File>;
   Color: ResolverTypeWrapper<Color>;
   ColorCreateInput: ColorCreateInput;
   ColorManyRelationFilter: ColorManyRelationFilter;
@@ -990,12 +1163,23 @@ export type ResolversTypes = {
   Frame: ResolverTypeWrapper<Frame>;
   FrameCreateInput: FrameCreateInput;
   FrameOrderByInput: FrameOrderByInput;
+  FrameRelateToOneForCreateInput: FrameRelateToOneForCreateInput;
+  FrameRelateToOneForUpdateInput: FrameRelateToOneForUpdateInput;
   FrameUpdateArgs: FrameUpdateArgs;
   FrameUpdateInput: FrameUpdateInput;
   FrameWhereInput: FrameWhereInput;
   FrameWhereUniqueInput: FrameWhereUniqueInput;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   IDFilter: IdFilter;
+  Image: ResolverTypeWrapper<Image>;
+  ImageCreateInput: ImageCreateInput;
+  ImageOrderByInput: ImageOrderByInput;
+  ImageRelateToOneForCreateInput: ImageRelateToOneForCreateInput;
+  ImageRelateToOneForUpdateInput: ImageRelateToOneForUpdateInput;
+  ImageUpdateArgs: ImageUpdateArgs;
+  ImageUpdateInput: ImageUpdateInput;
+  ImageWhereInput: ImageWhereInput;
+  ImageWhereUniqueInput: ImageWhereUniqueInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   IntFilter: IntFilter;
   JSON: ResolverTypeWrapper<Scalars['JSON']>;
@@ -1040,6 +1224,7 @@ export type ResolversTypes = {
   SaleWhereUniqueInput: SaleWhereUniqueInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   StringFilter: StringFilter;
+  Upload: ResolverTypeWrapper<Scalars['Upload']>;
   User: ResolverTypeWrapper<User>;
   UserAuthenticationWithPasswordFailure: ResolverTypeWrapper<UserAuthenticationWithPasswordFailure>;
   UserAuthenticationWithPasswordResult: ResolversTypes['UserAuthenticationWithPasswordFailure'] | ResolversTypes['UserAuthenticationWithPasswordSuccess'];
@@ -1058,6 +1243,8 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   AuthenticatedItem: ResolversParentTypes['User'];
   Boolean: Scalars['Boolean'];
+  CloudinaryImageFormat: CloudinaryImageFormat;
+  CloudinaryImage_File: CloudinaryImage_File;
   Color: Color;
   ColorCreateInput: ColorCreateInput;
   ColorManyRelationFilter: ColorManyRelationFilter;
@@ -1074,12 +1261,23 @@ export type ResolversParentTypes = {
   Frame: Frame;
   FrameCreateInput: FrameCreateInput;
   FrameOrderByInput: FrameOrderByInput;
+  FrameRelateToOneForCreateInput: FrameRelateToOneForCreateInput;
+  FrameRelateToOneForUpdateInput: FrameRelateToOneForUpdateInput;
   FrameUpdateArgs: FrameUpdateArgs;
   FrameUpdateInput: FrameUpdateInput;
   FrameWhereInput: FrameWhereInput;
   FrameWhereUniqueInput: FrameWhereUniqueInput;
   ID: Scalars['ID'];
   IDFilter: IdFilter;
+  Image: Image;
+  ImageCreateInput: ImageCreateInput;
+  ImageOrderByInput: ImageOrderByInput;
+  ImageRelateToOneForCreateInput: ImageRelateToOneForCreateInput;
+  ImageRelateToOneForUpdateInput: ImageRelateToOneForUpdateInput;
+  ImageUpdateArgs: ImageUpdateArgs;
+  ImageUpdateInput: ImageUpdateInput;
+  ImageWhereInput: ImageWhereInput;
+  ImageWhereUniqueInput: ImageWhereUniqueInput;
   Int: Scalars['Int'];
   IntFilter: IntFilter;
   JSON: Scalars['JSON'];
@@ -1118,6 +1316,7 @@ export type ResolversParentTypes = {
   SaleWhereUniqueInput: SaleWhereUniqueInput;
   String: Scalars['String'];
   StringFilter: StringFilter;
+  Upload: Scalars['Upload'];
   User: User;
   UserAuthenticationWithPasswordFailure: UserAuthenticationWithPasswordFailure;
   UserAuthenticationWithPasswordResult: ResolversParentTypes['UserAuthenticationWithPasswordFailure'] | ResolversParentTypes['UserAuthenticationWithPasswordSuccess'];
@@ -1133,6 +1332,17 @@ export type ResolversParentTypes = {
 
 export type AuthenticatedItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthenticatedItem'] = ResolversParentTypes['AuthenticatedItem']> = {
   __resolveType: TypeResolveFn<'User', ParentType, ContextType>;
+};
+
+export type CloudinaryImage_FileResolvers<ContextType = any, ParentType extends ResolversParentTypes['CloudinaryImage_File'] = ResolversParentTypes['CloudinaryImage_File']> = {
+  encoding?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  filename?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  mimetype?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  originalFilename?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  publicUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  publicUrlTransformed?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<CloudinaryImage_FilePublicUrlTransformedArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ColorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Color'] = ResolversParentTypes['Color']> = {
@@ -1153,6 +1363,12 @@ export type FrameResolvers<ContextType = any, ParentType extends ResolversParent
   price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   vertical?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   width?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ImageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Image'] = ResolversParentTypes['Image']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['CloudinaryImage_File']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1236,6 +1452,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createColors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Color']>>>, ParentType, ContextType, RequireFields<MutationCreateColorsArgs, 'data'>>;
   createFrame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType, RequireFields<MutationCreateFrameArgs, 'data'>>;
   createFrames?: Resolver<Maybe<Array<Maybe<ResolversTypes['Frame']>>>, ParentType, ContextType, RequireFields<MutationCreateFramesArgs, 'data'>>;
+  createImage?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType, RequireFields<MutationCreateImageArgs, 'data'>>;
+  createImages?: Resolver<Maybe<Array<Maybe<ResolversTypes['Image']>>>, ParentType, ContextType, RequireFields<MutationCreateImagesArgs, 'data'>>;
   createInitialUser?: Resolver<ResolversTypes['UserAuthenticationWithPasswordSuccess'], ParentType, ContextType, RequireFields<MutationCreateInitialUserArgs, 'data'>>;
   createPalette?: Resolver<Maybe<ResolversTypes['Palette']>, ParentType, ContextType, RequireFields<MutationCreatePaletteArgs, 'data'>>;
   createPalettes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Palette']>>>, ParentType, ContextType, RequireFields<MutationCreatePalettesArgs, 'data'>>;
@@ -1249,6 +1467,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteColors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Color']>>>, ParentType, ContextType, RequireFields<MutationDeleteColorsArgs, 'where'>>;
   deleteFrame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType, RequireFields<MutationDeleteFrameArgs, 'where'>>;
   deleteFrames?: Resolver<Maybe<Array<Maybe<ResolversTypes['Frame']>>>, ParentType, ContextType, RequireFields<MutationDeleteFramesArgs, 'where'>>;
+  deleteImage?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType, RequireFields<MutationDeleteImageArgs, 'where'>>;
+  deleteImages?: Resolver<Maybe<Array<Maybe<ResolversTypes['Image']>>>, ParentType, ContextType, RequireFields<MutationDeleteImagesArgs, 'where'>>;
   deletePalette?: Resolver<Maybe<ResolversTypes['Palette']>, ParentType, ContextType, RequireFields<MutationDeletePaletteArgs, 'where'>>;
   deletePalettes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Palette']>>>, ParentType, ContextType, RequireFields<MutationDeletePalettesArgs, 'where'>>;
   deletePresale?: Resolver<Maybe<ResolversTypes['Presale']>, ParentType, ContextType, RequireFields<MutationDeletePresaleArgs, 'where'>>;
@@ -1262,6 +1482,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   updateColors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Color']>>>, ParentType, ContextType, RequireFields<MutationUpdateColorsArgs, 'data'>>;
   updateFrame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType, RequireFields<MutationUpdateFrameArgs, 'data' | 'where'>>;
   updateFrames?: Resolver<Maybe<Array<Maybe<ResolversTypes['Frame']>>>, ParentType, ContextType, RequireFields<MutationUpdateFramesArgs, 'data'>>;
+  updateImage?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType, RequireFields<MutationUpdateImageArgs, 'data' | 'where'>>;
+  updateImages?: Resolver<Maybe<Array<Maybe<ResolversTypes['Image']>>>, ParentType, ContextType, RequireFields<MutationUpdateImagesArgs, 'data'>>;
   updatePalette?: Resolver<Maybe<ResolversTypes['Palette']>, ParentType, ContextType, RequireFields<MutationUpdatePaletteArgs, 'data' | 'where'>>;
   updatePalettes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Palette']>>>, ParentType, ContextType, RequireFields<MutationUpdatePalettesArgs, 'data'>>;
   updatePresale?: Resolver<Maybe<ResolversTypes['Presale']>, ParentType, ContextType, RequireFields<MutationUpdatePresaleArgs, 'data' | 'where'>>;
@@ -1286,8 +1508,9 @@ export type PasswordStateResolvers<ContextType = any, ParentType extends Resolve
 };
 
 export type PresaleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Presale'] = ResolversParentTypes['Presale']> = {
+  frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1299,6 +1522,9 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType, RequireFields<QueryFrameArgs, 'where'>>;
   frames?: Resolver<Maybe<Array<ResolversTypes['Frame']>>, ParentType, ContextType, RequireFields<QueryFramesArgs, 'orderBy' | 'skip' | 'where'>>;
   framesCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<QueryFramesCountArgs, 'where'>>;
+  image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType, RequireFields<QueryImageArgs, 'where'>>;
+  images?: Resolver<Maybe<Array<ResolversTypes['Image']>>, ParentType, ContextType, RequireFields<QueryImagesArgs, 'orderBy' | 'skip' | 'where'>>;
+  imagesCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<QueryImagesCountArgs, 'where'>>;
   keystone?: Resolver<ResolversTypes['KeystoneMeta'], ParentType, ContextType>;
   palette?: Resolver<Maybe<ResolversTypes['Palette']>, ParentType, ContextType, RequireFields<QueryPaletteArgs, 'where'>>;
   palettes?: Resolver<Maybe<Array<ResolversTypes['Palette']>>, ParentType, ContextType, RequireFields<QueryPalettesArgs, 'orderBy' | 'skip' | 'where'>>;
@@ -1319,6 +1545,10 @@ export type SaleResolvers<ContextType = any, ParentType extends ResolversParentT
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
+
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload';
+}
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1346,8 +1576,10 @@ export type UserAuthenticationWithPasswordSuccessResolvers<ContextType = any, Pa
 
 export type Resolvers<ContextType = any> = {
   AuthenticatedItem?: AuthenticatedItemResolvers<ContextType>;
+  CloudinaryImage_File?: CloudinaryImage_FileResolvers<ContextType>;
   Color?: ColorResolvers<ContextType>;
   Frame?: FrameResolvers<ContextType>;
+  Image?: ImageResolvers<ContextType>;
   JSON?: GraphQLScalarType;
   KeystoneAdminMeta?: KeystoneAdminMetaResolvers<ContextType>;
   KeystoneAdminUIFieldMeta?: KeystoneAdminUiFieldMetaResolvers<ContextType>;
@@ -1363,6 +1595,7 @@ export type Resolvers<ContextType = any> = {
   Presale?: PresaleResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Sale?: SaleResolvers<ContextType>;
+  Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserAuthenticationWithPasswordFailure?: UserAuthenticationWithPasswordFailureResolvers<ContextType>;
   UserAuthenticationWithPasswordResult?: UserAuthenticationWithPasswordResultResolvers<ContextType>;

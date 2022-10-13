@@ -18,6 +18,7 @@ interface ConstructorCropProps {
 
 export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) => {
   const {
+    frame: selected,
     source: [file],
     frames,
   } = useContext(ConstructorContext);
@@ -26,7 +27,7 @@ export const ConstructorCrop: FC<ConstructorCropProps> = ({ onNext, onBack }) =>
     zoom: 1,
     area: null,
     source: DEFAULT_IMAGE,
-    frame: get(frames, ['0', 'id'], ''),
+    frame: selected || get(frames, ['0', 'id'], ''),
     crop: { x: 0, y: 0 },
   });
 
