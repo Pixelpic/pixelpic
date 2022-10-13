@@ -24,29 +24,30 @@ export default function Constructor() {
 
   const [saveImage, { loading: savingImage }] = useMutation<DTO.Mutation>(SAVE_IMAGE);
 
-  const [{ source, step, frame, cropped }, dispatch] = useReducer(constructorReducer, {
+  const [state, dispatch] = useReducer(constructorReducer, {
     step: ConstructorStepId.FILE,
     source: [],
-    cropped: '',
-    frame: '',
   });
 
-  const active = CONSTRUCTOR_STEPS.findIndex(({ id }) => id === step);
+  const active = CONSTRUCTOR_STEPS.findIndex(({ id }) => id === state.step);
 
-  const handleOnFileNext = (v: File[]) => {
-    dispatch(new Actions.SetImage(v));
+  const handleOnFileNext = (source: File[]) => {
+    dispatch(
+      new Actions.SetState({
+        source,
+        step: ConstructorStepId.CROP,
+      })
+    );
   };
 
   const handleOnCropNext = ({ frame, image }: { frame: string; image: string }) => {
-    dispatch(new Actions.SetCrop(frame, image));
-  };
-
-  const handleOnCropPrev = () => {
-    dispatch(new Actions.SetStep(ConstructorStepId.FILE));
-  };
-
-  const handleOnPalettePrev = () => {
-    dispatch(new Actions.SetStep(ConstructorStepId.CROP));
+    dispatch(
+      new Actions.SetState({
+        frame,
+        cropped: image,
+        step: ConstructorStepId.PALETTE,
+      })
+    );
   };
 
   const handleOnPaletteNext = ({ image }: { image: File }) => {
@@ -56,12 +57,37 @@ export default function Constructor() {
       .then(({ data }) =>
         savePresale({
           variables: {
-            frame,
+            frame: state.frame,
             image: data?.createImage?.id,
           },
         })
       )
-      .then(() => dispatch(new Actions.SetStep(ConstructorStepId.PRESALE)));
+      .then(({ data }) =>
+        dispatch(
+          new Actions.SetState({
+            step: ConstructorStepId.PRESALE,
+            presale: data?.createPresale?.id,
+          })
+        )
+      );
+  };
+
+  const handleOnCropPrev = () => {
+    dispatch(
+      new Actions.SetState({
+        step: ConstructorStepId.FILE,
+        cropped: undefined,
+        frame: undefined,
+      })
+    );
+  };
+
+  const handleOnPalettePrev = () => {
+    dispatch(
+      new Actions.SetState({
+        step: ConstructorStepId.CROP,
+      })
+    );
   };
 
   const saving = savingImage || savingPresale;
@@ -71,41 +97,29 @@ export default function Constructor() {
       <ConstructorContext.Provider
         value={{
           saving,
-          source,
-          cropped,
-          frame,
           frames: data?.frames,
           palettes: data?.palettes,
-          presale: presale?.createPresale,
+          ...state,
         }}
       >
         <Container>
           <Stepper nonLinear activeStep={active}>
             {CONSTRUCTOR_STEPS.map(({ label, id }) => {
               return (
-                <Step
-                  key={id}
-                  completed={isCompeted[id]({
-                    step,
-                    source: source && !!source.length,
-                    frame: !!frame,
-                    cropped: !!cropped,
-                    presale: !!presale,
-                  })}
-                >
+                <Step key={id} completed={isCompeted[id](state)}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
               );
             })}
           </Stepper>
-          {step === ConstructorStepId.FILE && <ConstructorFile onNext={handleOnFileNext} />}
-          {step === ConstructorStepId.CROP && (
+          {state.step === ConstructorStepId.FILE && <ConstructorFile onNext={handleOnFileNext} />}
+          {state.step === ConstructorStepId.CROP && (
             <ConstructorCrop onNext={handleOnCropNext} onBack={handleOnCropPrev} />
           )}
-          {step === ConstructorStepId.PALETTE && (
+          {state.step === ConstructorStepId.PALETTE && (
             <ConstructorPalette onNext={handleOnPaletteNext} onBack={handleOnPalettePrev} />
           )}
-          {step === ConstructorStepId.PRESALE && <ConstructorPresale />}
+          {state.step === ConstructorStepId.PRESALE && <ConstructorPresale />}
         </Container>
       </ConstructorContext.Provider>
     </Root>

@@ -1,20 +1,16 @@
 import { createContext } from 'react';
 import { DTO } from '@admin/api';
+import { ConstructorStepId, ConstructorState } from './Constructor.types';
 
-interface ConstructorContextProps {
+interface ConstructorContextProps extends ConstructorState {
   saving: boolean;
-  source: File[];
-  cropped: string;
-  frame: string;
   frames?: DTO.Query['frames'];
   palettes?: DTO.Query['palettes'];
-  presale?: DTO.Query['presale'];
 }
 
 export const ConstructorContext = createContext<ConstructorContextProps>({
+  step: ConstructorStepId.FILE,
   saving: false,
-  cropped: '',
-  frame: '',
   source: [],
   palettes: [],
   frames: [],

@@ -1,4 +1,4 @@
-import { ConstructorStepId } from './Constructor.types';
+import { ConstructorStepId, ConstructorState } from './Constructor.types';
 
 export namespace ConstructorActions {
   interface Action<T> {
@@ -9,6 +9,7 @@ export namespace ConstructorActions {
     SET_STEP,
     SET_IMAGE,
     SET_CROP,
+    SET_STATE,
   }
 
   export class SetStep implements Action<Types> {
@@ -26,5 +27,10 @@ export namespace ConstructorActions {
     constructor(public frame: string, public cropped: string) {}
   }
 
-  export type All = SetStep | SetImage | SetCrop;
+  export class SetState implements Action<Types> {
+    public readonly type = Types.SET_STATE;
+    constructor(public state: Partial<ConstructorState>) {}
+  }
+
+  export type All = SetStep | SetImage | SetCrop | SetState;
 }

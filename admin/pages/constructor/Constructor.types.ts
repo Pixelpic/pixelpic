@@ -1,4 +1,4 @@
-import {} from './Constructor.const';
+import { DTO } from '@admin/api';
 
 export enum ConstructorStepId {
   FILE = 'file',
@@ -10,4 +10,12 @@ export enum ConstructorStepId {
 export interface ConstructorStep {
   id: ConstructorStepId;
   label: string;
+}
+
+export interface ConstructorState {
+  step: ConstructorStepId;
+  source?: File[];
+  cropped?: string;
+  frame?: string;
+  presale?: string;
 }

@@ -1,5 +1,4 @@
 import React, { FC, useContext } from 'react';
-import { Link } from '@keystone-6/core/admin-ui/router';
 import { Card, Typography, Button } from '@mui/material';
 import { Share } from '@mui/icons-material';
 import { Section, Content } from '../Constructor.style';
@@ -18,11 +17,14 @@ export const ConstructorPresale: FC = () => {
             <Typography variant="caption" align="center">
               Image had been saved as presale. Use 'Share' to share it with the client
             </Typography>
-            <Link href="/" target="">
-              <Button variant="contained" disableElevation>
-                Share
-              </Button>
-            </Link>
+            <Button
+              disableElevation
+              variant="contained"
+              href={`preview/${presale}`}
+              target="_blank"
+            >
+              Share
+            </Button>
           </Container>
         </Card>
       </Content>
