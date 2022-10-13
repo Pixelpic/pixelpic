@@ -254,6 +254,17 @@ export type ImageOrderByInput = {
   id?: InputMaybe<OrderDirection>;
 };
 
+export type ImageRelateToOneForCreateInput = {
+  connect?: InputMaybe<ImageWhereUniqueInput>;
+  create?: InputMaybe<ImageCreateInput>;
+};
+
+export type ImageRelateToOneForUpdateInput = {
+  connect?: InputMaybe<ImageWhereUniqueInput>;
+  create?: InputMaybe<ImageCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type ImageUpdateArgs = {
   data: ImageUpdateInput;
   where: ImageWhereUniqueInput;
@@ -743,18 +754,17 @@ export type PasswordState = {
 
 export type Presale = {
   __typename?: 'Presale';
-  colors?: Maybe<Scalars['String']>;
   frame?: Maybe<Frame>;
   id: Scalars['ID'];
+  image?: Maybe<Image>;
 };
 
 export type PresaleCreateInput = {
-  colors?: InputMaybe<Scalars['String']>;
   frame?: InputMaybe<FrameRelateToOneForCreateInput>;
+  image?: InputMaybe<ImageRelateToOneForCreateInput>;
 };
 
 export type PresaleOrderByInput = {
-  colors?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
 };
 
@@ -764,17 +774,17 @@ export type PresaleUpdateArgs = {
 };
 
 export type PresaleUpdateInput = {
-  colors?: InputMaybe<Scalars['String']>;
   frame?: InputMaybe<FrameRelateToOneForUpdateInput>;
+  image?: InputMaybe<ImageRelateToOneForUpdateInput>;
 };
 
 export type PresaleWhereInput = {
   AND?: InputMaybe<Array<PresaleWhereInput>>;
   NOT?: InputMaybe<Array<PresaleWhereInput>>;
   OR?: InputMaybe<Array<PresaleWhereInput>>;
-  colors?: InputMaybe<StringFilter>;
   frame?: InputMaybe<FrameWhereInput>;
   id?: InputMaybe<IdFilter>;
+  image?: InputMaybe<ImageWhereInput>;
 };
 
 export type PresaleWhereUniqueInput = {
@@ -1164,6 +1174,8 @@ export type ResolversTypes = {
   Image: ResolverTypeWrapper<Image>;
   ImageCreateInput: ImageCreateInput;
   ImageOrderByInput: ImageOrderByInput;
+  ImageRelateToOneForCreateInput: ImageRelateToOneForCreateInput;
+  ImageRelateToOneForUpdateInput: ImageRelateToOneForUpdateInput;
   ImageUpdateArgs: ImageUpdateArgs;
   ImageUpdateInput: ImageUpdateInput;
   ImageWhereInput: ImageWhereInput;
@@ -1260,6 +1272,8 @@ export type ResolversParentTypes = {
   Image: Image;
   ImageCreateInput: ImageCreateInput;
   ImageOrderByInput: ImageOrderByInput;
+  ImageRelateToOneForCreateInput: ImageRelateToOneForCreateInput;
+  ImageRelateToOneForUpdateInput: ImageRelateToOneForUpdateInput;
   ImageUpdateArgs: ImageUpdateArgs;
   ImageUpdateInput: ImageUpdateInput;
   ImageWhereInput: ImageWhereInput;
@@ -1494,9 +1508,9 @@ export type PasswordStateResolvers<ContextType = any, ParentType extends Resolve
 };
 
 export type PresaleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Presale'] = ResolversParentTypes['Presale']> = {
-  colors?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
