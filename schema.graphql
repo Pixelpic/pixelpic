@@ -310,6 +310,7 @@ type Presale {
   frame: Frame
   image: Image
   share: String
+  convertToSale: String
 }
 
 input PresaleWhereUniqueInput {

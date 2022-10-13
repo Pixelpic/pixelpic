@@ -25,11 +25,23 @@ export const Presale = list({
         listView: { fieldMode: 'read' },
       },
     }),
+    convertToSale: virtual({
+      field: graphql.field({
+        type: graphql.String,
+        resolve: (item) => get(item, 'id', ''),
+      }),
+      ui: {
+        views: join(__dirname, './convertToSale/Views'),
+        createView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'read' },
+      },
+    }),
   },
   ui: {
     hideCreate: true,
     listView: {
-      initialColumns: ['id', 'image', 'frame', 'share'],
+      initialColumns: ['id', 'image', 'frame', 'share', 'convertToSale'],
     },
   },
 });
