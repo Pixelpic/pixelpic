@@ -6,14 +6,13 @@ export const Presale = list({
     frame: relationship({
       ref: 'Frame',
     }),
-    colors: text({
-      defaultValue: '',
-      validation: { isRequired: true },
+    image: relationship({
+      ref: 'Image',
     }),
   },
   ui: {
     listView: {
-      initialColumns: ['id', 'frame'],
+      initialColumns: ['id', 'image', 'frame'],
     },
   },
 });

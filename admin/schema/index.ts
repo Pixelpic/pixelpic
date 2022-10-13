@@ -4,6 +4,7 @@ import { Palette } from './Palette/Palette';
 import { Frame } from './Frame/Frame';
 import { Presale } from './Presale/Presale';
 import { Sale } from './Sale/Sale';
+import { Image } from './Image/Image';
 
 export const lists = {
   User,
@@ -12,4 +13,5 @@ export const lists = {
   Frame,
   Presale,
   Sale,
+  Image,
 };

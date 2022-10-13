@@ -1,5 +1,6 @@
 import React, { FC, useContext, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Card, CardContent, Typography } from '@mui/material';
+import { Share } from '@mui/icons-material';
 import FileUpload from 'react-material-file-upload';
 import { Section, Content, Footer } from '../Constructor.style';
 import { ConstructorContext } from '../Constructor.context';

@@ -276,6 +276,19 @@ export class PixelIt {
     return this;
   }
 
+  public toFile() {
+    return new Promise<File>((resolve, reject) => {
+      this.to.toBlob((blob) => {
+        if (blob) {
+          const file = new File([blob], `${Date.now()}.jpg`, { type: 'image/jpeg' });
+          resolve(file);
+        } else {
+          reject();
+        }
+      });
+    });
+  }
+
   /**
    * Save image from canvas
    */

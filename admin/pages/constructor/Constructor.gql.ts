@@ -23,8 +23,18 @@ export const GET_ALL_FRAMES = gql`
 `;
 
 export const SAVE_PRESALE = gql`
-  mutation CreatePresale($frame: ID!, $colors: String!) {
-    createPresale(data: { frame: { connect: { id: $frame } }, colors: $colors }) {
+  mutation CreatePresale($frame: ID!, $image: ID!) {
+    createPresale(
+      data: { frame: { connect: { id: $frame } }, image: { connect: { id: $image } } }
+    ) {
+      id
+    }
+  }
+`;
+
+export const SAVE_IMAGE = gql`
+  mutation SaveImage($image: Upload!) {
+    createImage(data: { image: $image }) {
       id
     }
   }

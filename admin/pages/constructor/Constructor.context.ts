@@ -8,6 +8,7 @@ interface ConstructorContextProps {
   frame: string;
   frames?: DTO.Query['frames'];
   palettes?: DTO.Query['palettes'];
+  presale?: DTO.Query['presale'];
 }
 
 export const ConstructorContext = createContext<ConstructorContextProps>({

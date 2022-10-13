@@ -1,7 +1,10 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@keystone-ui/core';
-import { NavigationProps, NavigationContainer, NavItem, ListNavItems } from '@keystone-6/core/admin-ui/components';
+import React from 'react';
+import {
+  NavigationProps,
+  NavigationContainer,
+  NavItem,
+  ListNavItems,
+} from '@keystone-6/core/admin-ui/components';
 import { RoutePath } from '../../constants';
 import { NavItemSectionTitle } from './Navigation.style';
 
@@ -15,6 +18,8 @@ export const Navigation = ({ lists, authenticatedItem }: NavigationProps) => {
       <ListNavItems lists={lists} include={['Color', 'Palette', 'Frame']} />
       <NavItemSectionTitle>CONTACTS</NavItemSectionTitle>
       <ListNavItems lists={lists} include={['User']} />
+      <NavItemSectionTitle>META</NavItemSectionTitle>
+      <ListNavItems lists={lists} include={['Image']} />
     </NavigationContainer>
   );
 };

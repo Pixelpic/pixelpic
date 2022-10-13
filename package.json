@@ -13,6 +13,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@keystone-6/auth": "^4.0.0",
+    "@keystone-6/cloudinary": "^4.0.1",
     "@keystone-6/core": "^2.1.0",
     "@keystone-6/fields-document": "^4.0.1",
     "@mui/icons-material": "^5.10.6",

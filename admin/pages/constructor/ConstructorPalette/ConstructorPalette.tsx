@@ -3,7 +3,7 @@ import { get, toNumber } from 'lodash';
 import { LoadingButton } from '@mui/lab';
 import { FormControl, Button, Select, MenuItem, InputLabel } from '@mui/material';
 import { FRAME } from '../../../constants';
-import { PixelIt, PixelItColors } from '../../../services';
+import { PixelIt } from '../../../services';
 import { Section, Footer } from '../Constructor.style';
 import { ConstructorContext } from '../Constructor.context';
 import { Controls, Content, SourceImage, ResultCanvas } from './ConstructorPalette.style';
@@ -12,7 +12,7 @@ import { ConstructorPaletteActions as Actions } from './ConstructorPalette.actio
 import { getColorPalette } from './ConstructorPalette.utils';
 
 interface ConstructorPaletteProps {
-  onNext: (v: { colors: PixelItColors }) => void;
+  onNext: (v: { image: File }) => void;
   onBack: () => void;
 }
 
@@ -55,7 +55,8 @@ export const ConstructorPalette: FC<ConstructorPaletteProps> = ({ onNext, onBack
 
   const handleOnNext = () => {
     if (pixelIt.current) {
-      onNext({ colors: pixelIt.current.getColors() });
+      pixelIt.current.toFile().then((image) => onNext({ image }));
+      // onNext({ colors: pixelIt.current.getColors() });
     }
   };
 
