@@ -2,7 +2,7 @@ import { get } from 'lodash';
 import { join } from 'path';
 import { generatePath } from 'react-router';
 import { list, graphql } from '@keystone-6/core';
-import { relationship, virtual } from '@keystone-6/core/fields';
+import { relationship, virtual, timestamp } from '@keystone-6/core/fields';
 import { RoutePath } from '../../constants';
 
 export const Presale = list({
