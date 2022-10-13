@@ -6,7 +6,7 @@ import { useRouter } from '@keystone-6/core/admin-ui/router';
 import { Root, Image } from './Preview.style';
 import { GET_PRESALE } from './Preview.gql';
 
-const Preview: FC = () => {
+export const Preview: FC = () => {
   const {
     query: { id },
   } = useRouter();
@@ -26,5 +26,3 @@ const Preview: FC = () => {
     </Root>
   );
 };
-
-export default Preview;
