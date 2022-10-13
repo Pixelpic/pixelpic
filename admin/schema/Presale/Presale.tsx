@@ -22,7 +22,7 @@ export const Presale = list({
         views: join(__dirname, './share/Views'),
         createView: { fieldMode: 'hidden' },
         itemView: { fieldMode: 'hidden' },
-        // listView: { fieldMode: 'read' },
+        listView: { fieldMode: 'read' },
       },
     }),
   },
