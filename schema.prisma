@@ -43,6 +43,7 @@ model Frame {
   vertical           Int
   price              Float
   from_Presale_frame Presale[] @relation("Presale_frame")
+  from_Sale_frame    Sale[]    @relation("Sale_frame")
 }
 
 model Presale {
@@ -57,12 +58,21 @@ model Presale {
 }
 
 model Sale {
-  id   String @id @default(cuid())
-  name String @default("")
+  id      String    @id @default(cuid())
+  created DateTime? @default(now())
+  frame   Frame?    @relation("Sale_frame", fields: [frameId], references: [id])
+  frameId String?   @map("frame")
+  image   Image?    @relation("Sale_image", fields: [imageId], references: [id])
+  imageId String?   @map("image")
+  price   Float
+
+  @@index([frameId])
+  @@index([imageId])
 }
 
 model Image {
   id                 String    @id @default(cuid())
   image              String?
   from_Presale_image Presale[] @relation("Presale_image")
+  from_Sale_image    Sale[]    @relation("Sale_image")
 }

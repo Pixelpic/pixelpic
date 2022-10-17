@@ -310,6 +310,7 @@ type Presale {
   frame: Frame
   image: Image
   share: String
+  convertToSale: String
 }
 
 input PresaleWhereUniqueInput {
@@ -368,8 +369,14 @@ input ImageRelateToOneForCreateInput {
 
 type Sale {
   id: ID!
-  name: String
+  created: DateTime
+  frame: Frame
+  image: Image
+  price: Float
 }
+
+scalar DateTime
+  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input SaleWhereUniqueInput {
   id: ID
@@ -380,16 +387,34 @@ input SaleWhereInput {
   OR: [SaleWhereInput!]
   NOT: [SaleWhereInput!]
   id: IDFilter
-  name: StringFilter
+  created: DateTimeNullableFilter
+  frame: FrameWhereInput
+  image: ImageWhereInput
+  price: FloatFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
 }
 
 input SaleOrderByInput {
   id: OrderDirection
-  name: OrderDirection
+  created: OrderDirection
+  price: OrderDirection
 }
 
 input SaleUpdateInput {
-  name: String
+  created: DateTime
+  frame: FrameRelateToOneForUpdateInput
+  image: ImageRelateToOneForUpdateInput
+  price: Float
 }
 
 input SaleUpdateArgs {
@@ -398,7 +423,10 @@ input SaleUpdateArgs {
 }
 
 input SaleCreateInput {
-  name: String
+  created: DateTime
+  frame: FrameRelateToOneForCreateInput
+  image: ImageRelateToOneForCreateInput
+  price: Float
 }
 
 type Image {
