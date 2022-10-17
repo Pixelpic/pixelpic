@@ -12,6 +12,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
   JSON: any;
   Upload: any;
 };
@@ -151,6 +152,17 @@ export type CreateInitialUserInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+};
+
+export type DateTimeNullableFilter = {
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<DateTimeNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
 export type FloatFilter = {
@@ -754,9 +766,11 @@ export type PasswordState = {
 
 export type Presale = {
   __typename?: 'Presale';
+  convertToSale?: Maybe<Scalars['String']>;
   frame?: Maybe<Frame>;
   id: Scalars['ID'];
   image?: Maybe<Image>;
+  share?: Maybe<Scalars['String']>;
 };
 
 export type PresaleCreateInput = {
@@ -951,17 +965,24 @@ export enum QueryMode {
 
 export type Sale = {
   __typename?: 'Sale';
+  created?: Maybe<Scalars['DateTime']>;
+  frame?: Maybe<Frame>;
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
+  image?: Maybe<Image>;
+  price?: Maybe<Scalars['Float']>;
 };
 
 export type SaleCreateInput = {
-  name?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  frame?: InputMaybe<FrameRelateToOneForCreateInput>;
+  image?: InputMaybe<ImageRelateToOneForCreateInput>;
+  price?: InputMaybe<Scalars['Float']>;
 };
 
 export type SaleOrderByInput = {
+  created?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
-  name?: InputMaybe<OrderDirection>;
+  price?: InputMaybe<OrderDirection>;
 };
 
 export type SaleUpdateArgs = {
@@ -970,15 +991,21 @@ export type SaleUpdateArgs = {
 };
 
 export type SaleUpdateInput = {
-  name?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  frame?: InputMaybe<FrameRelateToOneForUpdateInput>;
+  image?: InputMaybe<ImageRelateToOneForUpdateInput>;
+  price?: InputMaybe<Scalars['Float']>;
 };
 
 export type SaleWhereInput = {
   AND?: InputMaybe<Array<SaleWhereInput>>;
   NOT?: InputMaybe<Array<SaleWhereInput>>;
   OR?: InputMaybe<Array<SaleWhereInput>>;
+  created?: InputMaybe<DateTimeNullableFilter>;
+  frame?: InputMaybe<FrameWhereInput>;
   id?: InputMaybe<IdFilter>;
-  name?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageWhereInput>;
+  price?: InputMaybe<FloatFilter>;
 };
 
 export type SaleWhereUniqueInput = {
@@ -1158,6 +1185,8 @@ export type ResolversTypes = {
   ColorWhereInput: ColorWhereInput;
   ColorWhereUniqueInput: ColorWhereUniqueInput;
   CreateInitialUserInput: CreateInitialUserInput;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  DateTimeNullableFilter: DateTimeNullableFilter;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   FloatFilter: FloatFilter;
   Frame: ResolverTypeWrapper<Frame>;
@@ -1256,6 +1285,8 @@ export type ResolversParentTypes = {
   ColorWhereInput: ColorWhereInput;
   ColorWhereUniqueInput: ColorWhereUniqueInput;
   CreateInitialUserInput: CreateInitialUserInput;
+  DateTime: Scalars['DateTime'];
+  DateTimeNullableFilter: DateTimeNullableFilter;
   Float: Scalars['Float'];
   FloatFilter: FloatFilter;
   Frame: Frame;
@@ -1354,6 +1385,10 @@ export type ColorResolvers<ContextType = any, ParentType extends ResolversParent
   red?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
 
 export type FrameResolvers<ContextType = any, ParentType extends ResolversParentTypes['Frame'] = ResolversParentTypes['Frame']> = {
   height?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -1508,9 +1543,11 @@ export type PasswordStateResolvers<ContextType = any, ParentType extends Resolve
 };
 
 export type PresaleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Presale'] = ResolversParentTypes['Presale']> = {
+  convertToSale?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
+  share?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1541,8 +1578,11 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type SaleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Sale'] = ResolversParentTypes['Sale']> = {
+  created?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
+  price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1578,6 +1618,7 @@ export type Resolvers<ContextType = any> = {
   AuthenticatedItem?: AuthenticatedItemResolvers<ContextType>;
   CloudinaryImage_File?: CloudinaryImage_FileResolvers<ContextType>;
   Color?: ColorResolvers<ContextType>;
+  DateTime?: GraphQLScalarType;
   Frame?: FrameResolvers<ContextType>;
   Image?: ImageResolvers<ContextType>;
   JSON?: GraphQLScalarType;

@@ -2,7 +2,7 @@ import { get } from 'lodash';
 import { join } from 'path';
 import { generatePath } from 'react-router';
 import { list, graphql } from '@keystone-6/core';
-import { relationship, virtual } from '@keystone-6/core/fields';
+import { relationship, virtual, timestamp } from '@keystone-6/core/fields';
 import { RoutePath } from '../../constants';
 
 export const Presale = list({
@@ -25,11 +25,23 @@ export const Presale = list({
         listView: { fieldMode: 'read' },
       },
     }),
+    convertToSale: virtual({
+      field: graphql.field({
+        type: graphql.String,
+        resolve: (item) => get(item, 'id', ''),
+      }),
+      ui: {
+        views: join(__dirname, './convertToSale/Views'),
+        createView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'read' },
+      },
+    }),
   },
   ui: {
     hideCreate: true,
     listView: {
-      initialColumns: ['id', 'image', 'frame', 'share'],
+      initialColumns: ['id', 'image', 'frame', 'share', 'convertToSale'],
     },
   },
 });
