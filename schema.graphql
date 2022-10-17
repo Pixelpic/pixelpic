@@ -373,6 +373,8 @@ type Sale {
   frame: Frame
   image: Image
   price: Float
+  boxManual: String
+  userManual: String
 }
 
 scalar DateTime
