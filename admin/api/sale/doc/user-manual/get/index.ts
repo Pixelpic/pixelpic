@@ -50,7 +50,7 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
           i++, posX += BRICK_SIZE
         ) {
           for (
-            let j = y * BRICK_COUNT, posY = 0;
+            let j = y * BRICK_COUNT, posY = offsetX;
             j < y * BRICK_COUNT + BRICK_COUNT;
             j++, posY += BRICK_SIZE
           ) {
