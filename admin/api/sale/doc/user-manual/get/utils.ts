@@ -1,11 +1,24 @@
-import axios from 'axios';
+import jimp from 'jimp';
+import { set } from 'lodash';
+import { FRAME } from '../../../../../constants';
 
-export const loadImage = async (url?: string | null) => {
+type Matrix = [number, number, number][][];
+const { BRICK_SIZE } = FRAME;
+
+export const getColorsMatrix = async (url?: string | null): Promise<Matrix> => {
   if (url) {
-    const { data } = await axios.get(url, {
-      responseType: 'arraybuffer',
-    });
-    return Buffer.from(data, 'utf-8');
+    const res: Matrix = [];
+    const image = await jimp.read(url);
+    const width = image.getWidth();
+    const height = image.getHeight();
+    for (let x = 0; x <= width; x = x + BRICK_SIZE) {
+      for (let y = 0; y <= height; y = y + BRICK_SIZE) {
+        const int = image.getPixelColor(x, y);
+        const { r, g, b } = jimp.intToRGBA(int);
+        set(res, `${x / BRICK_SIZE}.${y / BRICK_SIZE}`, [r, g, b]);
+      }
+    }
+    return res;
   }
   return Promise.reject();
 };

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { get } from './get';
+import { getController } from './get';
 
 export const UserManualRouter = Router({
   mergeParams: true,
-}).get('/', get);
+}).get('/', getController);
