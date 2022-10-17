@@ -1,9 +1,6 @@
 import { Router } from 'express';
+import { get } from './get';
 
-const UserManualRouter = Router();
-
-UserManualRouter.get('/', (req, res) => {
-  res.send('123');
-});
-
-export { UserManualRouter };
+export const UserManualRouter = Router({
+  mergeParams: true,
+}).get('/', get);
