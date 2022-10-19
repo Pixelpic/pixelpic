@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { jsPDF } from 'jspdf';
 import { get } from 'lodash';
 import { Context } from '.keystone/types';
-import { Sale } from '../../../../dto';
+import { Sale, Color } from '../../../../dto';
 import { loadImage } from './utils';
 import { FRAME } from '../../../../../constants';
 
@@ -27,6 +27,14 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
       where: { id },
       query: 'id, frame { id, horizontal, vertical }, image { image { publicUrl } }',
     })) as Sale;
+
+    const colors = (await context.query.Color.findMany({
+      query: 'id, name, rgb',
+    })) as Color[];
+
+    const colorsMap: Record<string, string> = colors.reduce((res, { rgb, name }) => {
+      return { ...res, [rgb]: name };
+    }, {});
 
     const { matrix, base64 } = await loadImage(sale.image?.image?.publicUrl);
 
@@ -82,9 +90,19 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
             j++, posY += BRICK_SIZE
           ) {
             const color = get(matrix, [i, j]);
+            const label = colorsMap[color.join('/')];
             doc.setDrawColor(0);
+            doc.saveGraphicsState();
+            doc.setGState(doc.GState({ opacity: 0.85 }));
             doc.setFillColor(...color);
             doc.rect(posX, posY, BRICK_SIZE, BRICK_SIZE, 'FD');
+            doc.restoreGraphicsState();
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(10);
+            doc.text(label, posX + 8, posY + 11, {
+              align: 'center',
+              maxWidth: BRICK_SIZE,
+            });
           }
         }
       }
