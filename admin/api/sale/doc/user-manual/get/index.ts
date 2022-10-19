@@ -3,7 +3,7 @@ import { jsPDF } from 'jspdf';
 import { get } from 'lodash';
 import { Context } from '.keystone/types';
 import { Sale } from '../../../../dto';
-import { getColorsMatrix } from './utils';
+import { loadImage } from './utils';
 import { FRAME } from '../../../../../constants';
 
 interface RequestParams {
@@ -28,7 +28,7 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
       query: 'id, frame { id, horizontal, vertical }, image { image { publicUrl } }',
     })) as Sale;
 
-    const matrix = await getColorsMatrix(sale.image?.image?.publicUrl);
+    const { matrix, base64 } = await loadImage(sale.image?.image?.publicUrl);
 
     const { horizontal = 0, vertical = 0 } = sale.frame || {};
 
@@ -37,20 +37,26 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
       unit: 'px',
     });
 
-    const offsetX = (doc.internal.pageSize.getWidth() - BRICK_SIZE * BRICK_COUNT) / 2;
-
-    console.log(offsetX);
+    const baseOffsetX = (doc.internal.pageSize.getWidth() - BRICK_SIZE * BRICK_COUNT) / 2;
+    const baseOffsetY = (doc.internal.pageSize.getWidth() - BRICK_SIZE * BRICK_COUNT) / 2;
+    const previewOffsetX = baseOffsetX / 2;
+    const previewOffsetY = baseOffsetY / 2;
+    const previewHeight = 100;
+    const previewWidth = vertical && horizontal ? (previewHeight / vertical) * horizontal : 0;
+    const frameOffsetX = baseOffsetX;
+    const frameOffsetY = previewOffsetY + previewHeight + baseOffsetY;
 
     for (let y = 0; y < (vertical || 0); y = y + 1) {
       for (let x = 0; x < (horizontal || 0); x = x + 1) {
         doc.addPage();
+        doc.addImage(base64, 'PNG', previewOffsetX, previewOffsetY, previewWidth, previewHeight);
         for (
-          let i = x * BRICK_COUNT, posX = offsetX;
+          let i = x * BRICK_COUNT, posX = frameOffsetX;
           i < x * BRICK_COUNT + BRICK_COUNT;
           i++, posX += BRICK_SIZE
         ) {
           for (
-            let j = y * BRICK_COUNT, posY = offsetX;
+            let j = y * BRICK_COUNT, posY = frameOffsetY;
             j < y * BRICK_COUNT + BRICK_COUNT;
             j++, posY += BRICK_SIZE
           ) {
@@ -65,7 +71,9 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
 
     doc.deletePage(1);
 
-    res.set('Content-Type', 'application/pdf').send(doc.output());
+    const response = Buffer.from(doc.output('arraybuffer'));
+
+    res.set('Content-Type', 'application/pdf').send(response);
   } catch (e) {
     res.status(500).send(e);
   }
