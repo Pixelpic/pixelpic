@@ -25,7 +25,7 @@ export const Color = list({
       ui: {
         views: join(__dirname, './Color.views.tsx'),
         createView: { fieldMode: 'hidden' },
-        itemView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'read' },
         listView: { fieldMode: 'read' },
       },
     }),
