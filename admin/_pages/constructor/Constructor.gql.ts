@@ -33,8 +33,8 @@ export const SAVE_PRESALE = gql`
 `;
 
 export const SAVE_IMAGE = gql`
-  mutation SaveImage($image: Upload!) {
-    createImage(data: { image: $image }) {
+  mutation SaveImage($image: Upload!, $name: String!) {
+    createImage(data: { image: $image, name: $name }) {
       id
     }
   }

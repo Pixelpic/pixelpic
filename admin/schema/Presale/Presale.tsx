@@ -7,6 +7,11 @@ import { RoutePath } from '../../constants';
 
 export const Presale = list({
   fields: {
+    created: timestamp({
+      defaultValue: {
+        kind: 'now',
+      },
+    }),
     frame: relationship({
       ref: 'Frame',
     }),
@@ -41,7 +46,11 @@ export const Presale = list({
   ui: {
     hideCreate: true,
     listView: {
-      initialColumns: ['id', 'image', 'frame', 'share', 'convertToSale'],
+      initialSort: {
+        field: 'created',
+        direction: 'DESC',
+      },
+      initialColumns: ['created', 'image', 'frame', 'share', 'convertToSale'],
     },
   },
 });

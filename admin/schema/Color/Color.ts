@@ -1,25 +1,29 @@
 import { get } from 'lodash';
+import { join } from 'path';
 import { list, graphql } from '@keystone-6/core';
-import { text, integer, virtual } from '@keystone-6/core/fields';
+import { text, virtual } from '@keystone-6/core/fields';
 
 export const Color = list({
   fields: {
-    name: text({ validation: { isRequired: true }, isIndexed: 'unique' }),
-    red: integer({ validation: { isRequired: true } }),
-    green: integer({ validation: { isRequired: true } }),
-    blue: integer({ validation: { isRequired: true } }),
-    hex: text({ validation: { isRequired: true }, isIndexed: 'unique' }),
-    rgb: virtual({
+    name: text({
+      validation: { isRequired: true },
+      isIndexed: 'unique',
+    }),
+    HEX: text({
+      validation: { isRequired: true },
+      isIndexed: 'unique',
+    }),
+    RGB: virtual({
       field: graphql.field({
-        type: graphql.String,
-        resolve: (item) => {
-          const red = get(item, 'red');
-          const green = get(item, 'green');
-          const blue = get(item, 'blue');
-          return `${red}/${green}/${blue}`;
+        type: graphql.list(graphql.Int),
+        resolve: async (item) => {
+          const hex = get(item, 'HEX');
+          const { default: hexToRgb } = await import('hex-rgb');
+          return hexToRgb(hex, { format: 'array' });
         },
       }),
       ui: {
+        views: join(__dirname, './Color.views.tsx'),
         createView: { fieldMode: 'hidden' },
         itemView: { fieldMode: 'hidden' },
         listView: { fieldMode: 'read' },
@@ -28,7 +32,7 @@ export const Color = list({
   },
   ui: {
     listView: {
-      initialColumns: ['name', 'hex', 'rgb'],
+      initialColumns: ['name', 'HEX', 'RGB'],
     },
   },
 });

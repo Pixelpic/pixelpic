@@ -257,14 +257,17 @@ export type Image = {
   __typename?: 'Image';
   id: Scalars['ID'];
   image?: Maybe<CloudinaryImage_File>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type ImageCreateInput = {
   image?: InputMaybe<Scalars['Upload']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type ImageOrderByInput = {
   id?: InputMaybe<OrderDirection>;
+  name?: InputMaybe<OrderDirection>;
 };
 
 export type ImageRelateToOneForCreateInput = {
@@ -285,6 +288,7 @@ export type ImageUpdateArgs = {
 
 export type ImageUpdateInput = {
   image?: InputMaybe<Scalars['Upload']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type ImageWhereInput = {
@@ -292,6 +296,7 @@ export type ImageWhereInput = {
   NOT?: InputMaybe<Array<ImageWhereInput>>;
   OR?: InputMaybe<Array<ImageWhereInput>>;
   id?: InputMaybe<IdFilter>;
+  name?: InputMaybe<StringFilter>;
 };
 
 export type ImageWhereUniqueInput = {
@@ -1408,6 +1413,7 @@ export type FrameResolvers<ContextType = any, ParentType extends ResolversParent
 export type ImageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Image'] = ResolversParentTypes['Image']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['CloudinaryImage_File']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

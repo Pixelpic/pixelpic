@@ -1,5 +1,5 @@
 import { list } from '@keystone-6/core';
-import { text, relationship, password, select } from '@keystone-6/core/fields';
+import { text, password, select } from '@keystone-6/core/fields';
 import { UserRole } from '../../constants';
 
 export const User = list({
@@ -12,6 +12,7 @@ export const User = list({
     }),
     role: select({
       type: 'enum',
+      validation: { isRequired: true },
       options: [UserRole.ADMIN, UserRole.MANAGER],
     }),
     password: password({ validation: { isRequired: true } }),

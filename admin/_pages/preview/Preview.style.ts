@@ -9,4 +9,7 @@ export const Root = styled(Box)`
   height: 100vh;
 `;
 
-export const Image = styled('img')``;
+export const Image = styled('img')`
+  max-width: 100%;
+  max-height: 100%;
+`;

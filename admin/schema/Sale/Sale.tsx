@@ -49,6 +49,10 @@ export const Sale = list({
   ui: {
     hideCreate: true,
     listView: {
+      initialSort: {
+        field: 'created',
+        direction: 'DESC',
+      },
       initialColumns: ['created', 'frame', 'image', 'price', 'boxManual', 'userManual'],
     },
   },
