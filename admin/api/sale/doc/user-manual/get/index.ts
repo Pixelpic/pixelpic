@@ -29,8 +29,7 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
     })) as Color[];
 
     const colorsMap: Record<string, string> = colors.reduce((res, { rgb, name }) => {
-      if (rgb) return { ...res, [rgb]: name };
-      return res;
+      return rgb ? { ...res, [rgb]: name } : res;
     }, {});
 
     const { matrix, base64 } = await loadImage(sale.image?.image?.publicUrl);
