@@ -80,6 +80,7 @@ export type Color = {
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   red?: Maybe<Scalars['Int']>;
+  rgb?: Maybe<Scalars['String']>;
 };
 
 export type ColorCreateInput = {
@@ -965,11 +966,13 @@ export enum QueryMode {
 
 export type Sale = {
   __typename?: 'Sale';
+  boxManual?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
   frame?: Maybe<Frame>;
   id: Scalars['ID'];
   image?: Maybe<Image>;
   price?: Maybe<Scalars['Float']>;
+  userManual?: Maybe<Scalars['String']>;
 };
 
 export type SaleCreateInput = {
@@ -1383,6 +1386,7 @@ export type ColorResolvers<ContextType = any, ParentType extends ResolversParent
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   red?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  rgb?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1578,11 +1582,13 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type SaleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Sale'] = ResolversParentTypes['Sale']> = {
+  boxManual?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
   price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  userManual?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

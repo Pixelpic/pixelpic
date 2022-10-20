@@ -36,6 +36,9 @@ export const Frame = list({
       }),
       ui: {
         description: 'Width in pixels',
+        createView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
       },
     }),
     height: virtual({
@@ -45,6 +48,9 @@ export const Frame = list({
       }),
       ui: {
         description: 'Height in pixels',
+        createView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
       },
     }),
   },

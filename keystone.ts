@@ -1,8 +1,8 @@
 import { config } from '@keystone-6/core';
 import { lists } from './admin/schema';
 import { insertColors, insertPalette, insertFrames } from './admin/data';
-
 import { withAuth, session } from './auth';
+import { router as ApiRouter } from './admin/api';
 
 export default withAuth(
   config({
@@ -26,6 +26,18 @@ export default withAuth(
     experimental: {
       generateNodeAPI: true,
       generateNextGraphqlAPI: true,
+    },
+    server: {
+      extendExpressApp: (app, createContext) => {
+        app.use(
+          '/api',
+          async (req, res, next) => {
+            (req as any).context = await createContext(req, res);
+            next();
+          },
+          ApiRouter
+        );
+      },
     },
   })
 );
