@@ -1,9 +1,6 @@
 import { Router } from 'express';
+import { getController } from './get';
 
-const BoxManualRouter = Router();
-
-BoxManualRouter.get('/', (req, res) => {
-  res.send('123');
-});
-
-export { BoxManualRouter };
+export const BoxManualRouter = Router({
+  mergeParams: true,
+}).get('/', getController);

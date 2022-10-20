@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { Context } from '.keystone/types';
 
-export interface RequestWithContext<P = {}> extends Request<P> {
+export interface RequestWithContext<T> extends Request<T> {
   context: Context;
 }

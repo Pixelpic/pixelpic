@@ -1,7 +1,7 @@
 import jimp from 'jimp';
 import { set } from 'lodash';
 import { DTO } from '@admin/api';
-import { FRAME } from '../../../../../constants';
+import { FRAME } from '../../../constants';
 
 type Matrix = [number, number, number][][];
 const { BRICK_SIZE } = FRAME;
