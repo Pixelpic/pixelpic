@@ -25,10 +25,12 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
     })) as Sale;
 
     const colors = (await context.query.Color.findMany({
-      query: 'id, name, rgb',
+      query: 'id, name, RGB',
     })) as Color[];
 
-    const colorsMap: Record<string, string> = colors.reduce((res, { rgb, name }) => {
+    const map: Record<string, string> = colors.reduce((res, { RGB, name }) => {
+      const [r, g, b] = RGB || [];
+      const rgb = [r, g, b].join('/');
       return rgb ? { ...res, [rgb]: name } : res;
     }, {});
 
@@ -86,7 +88,7 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
             j++, posY += BRICK_SIZE
           ) {
             const color = get(matrix, [i, j]);
-            const label = colorsMap[color.join('/')];
+            const label = map[color.join('/')];
             doc.setDrawColor(0);
             doc.saveGraphicsState();
             doc.setGState(doc.GState({ opacity: 0.85 }));
@@ -110,6 +112,7 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
 
     res.set('Content-Type', 'application/pdf').send(response);
   } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 };

@@ -55,7 +55,13 @@ input StringFilter {
   contains: String
   startsWith: String
   endsWith: String
+  mode: QueryMode
   not: NestedStringFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 input NestedStringFilter {
@@ -293,6 +299,7 @@ input FrameCreateInput {
 
 type Presale {
   id: ID!
+  number: Int
   created: DateTime
   frame: Frame
   image: Image
@@ -312,6 +319,7 @@ input PresaleWhereInput {
   OR: [PresaleWhereInput!]
   NOT: [PresaleWhereInput!]
   id: IDFilter
+  number: IntFilter
   created: DateTimeNullableFilter
   frame: FrameWhereInput
   image: ImageWhereInput
@@ -330,10 +338,12 @@ input DateTimeNullableFilter {
 
 input PresaleOrderByInput {
   id: OrderDirection
+  number: OrderDirection
   created: OrderDirection
 }
 
 input PresaleUpdateInput {
+  number: Int
   created: DateTime
   frame: FrameRelateToOneForUpdateInput
   image: ImageRelateToOneForUpdateInput
@@ -357,6 +367,7 @@ input PresaleUpdateArgs {
 }
 
 input PresaleCreateInput {
+  number: Int
   created: DateTime
   frame: FrameRelateToOneForCreateInput
   image: ImageRelateToOneForCreateInput
@@ -374,6 +385,7 @@ input ImageRelateToOneForCreateInput {
 
 type Sale {
   id: ID!
+  number: Int
   created: DateTime
   frame: Frame
   image: Image
@@ -391,6 +403,7 @@ input SaleWhereInput {
   OR: [SaleWhereInput!]
   NOT: [SaleWhereInput!]
   id: IDFilter
+  number: IntFilter
   created: DateTimeNullableFilter
   frame: FrameWhereInput
   image: ImageWhereInput
@@ -399,11 +412,13 @@ input SaleWhereInput {
 
 input SaleOrderByInput {
   id: OrderDirection
+  number: OrderDirection
   created: OrderDirection
   price: OrderDirection
 }
 
 input SaleUpdateInput {
+  number: Int
   created: DateTime
   frame: FrameRelateToOneForUpdateInput
   image: ImageRelateToOneForUpdateInput
@@ -416,6 +431,7 @@ input SaleUpdateArgs {
 }
 
 input SaleCreateInput {
+  number: Int
   created: DateTime
   frame: FrameRelateToOneForCreateInput
   image: ImageRelateToOneForCreateInput
@@ -735,11 +751,6 @@ enum KeystoneAdminUIFieldMetaItemViewFieldMode {
   edit
   read
   hidden
-}
-
-enum QueryMode {
-  default
-  insensitive
 }
 
 type KeystoneAdminUISort {

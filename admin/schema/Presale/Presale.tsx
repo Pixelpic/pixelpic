@@ -2,11 +2,16 @@ import { get } from 'lodash';
 import { join } from 'path';
 import { generatePath } from 'react-router';
 import { list, graphql } from '@keystone-6/core';
-import { relationship, virtual, timestamp } from '@keystone-6/core/fields';
+import { relationship, virtual, timestamp, integer } from '@keystone-6/core/fields';
 import { RoutePath } from '../../constants';
 
 export const Presale = list({
   fields: {
+    number: integer({
+      validation: { isRequired: true },
+      defaultValue: { kind: 'autoincrement' },
+      label: '#',
+    }),
     created: timestamp({
       defaultValue: {
         kind: 'now',
@@ -44,13 +49,14 @@ export const Presale = list({
     }),
   },
   ui: {
+    labelField: 'number',
     hideCreate: true,
     listView: {
       initialSort: {
         field: 'created',
         direction: 'DESC',
       },
-      initialColumns: ['created', 'image', 'frame', 'share', 'convertToSale'],
+      initialColumns: ['number', 'created', 'image', 'frame', 'share', 'convertToSale'],
     },
   },
 });

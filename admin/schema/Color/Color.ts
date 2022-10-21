@@ -19,7 +19,8 @@ export const Color = list({
         resolve: async (item) => {
           const hex = get(item, 'HEX');
           const { default: hexToRgb } = await import('hex-rgb');
-          return hexToRgb(hex, { format: 'array' });
+          const { red, green, blue } = hexToRgb(hex);
+          return [red, green, blue];
         },
       }),
       ui: {

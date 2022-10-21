@@ -14,9 +14,7 @@ export const GET_ALL_FRAMES = gql`
       id
       name
       colors {
-        red
-        green
-        blue
+        RGB
       }
     }
   }

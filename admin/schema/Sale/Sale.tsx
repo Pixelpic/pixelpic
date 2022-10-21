@@ -2,24 +2,44 @@ import { join } from 'path';
 import { get } from 'lodash';
 import { generatePath } from 'react-router';
 import { list, graphql } from '@keystone-6/core';
-import { relationship, float, timestamp, virtual } from '@keystone-6/core/fields';
+import { relationship, float, timestamp, virtual, integer } from '@keystone-6/core/fields';
 import { ApiPath } from '../../constants';
 
 export const Sale = list({
   fields: {
+    number: integer({
+      label: '#',
+      validation: { isRequired: true },
+      defaultValue: { kind: 'autoincrement' },
+      ui: {
+        itemView: { fieldMode: 'read' },
+      },
+    }),
     created: timestamp({
       defaultValue: {
         kind: 'now',
       },
+      ui: {
+        itemView: { fieldMode: 'read' },
+      },
     }),
     frame: relationship({
       ref: 'Frame',
+      ui: {
+        itemView: { fieldMode: 'read' },
+      },
     }),
     image: relationship({
       ref: 'Image',
+      ui: {
+        itemView: { fieldMode: 'read' },
+      },
     }),
     price: float({
       validation: { isRequired: true },
+      ui: {
+        itemView: { fieldMode: 'read' },
+      },
     }),
     boxManual: virtual({
       field: graphql.field({
@@ -47,13 +67,14 @@ export const Sale = list({
     }),
   },
   ui: {
+    labelField: 'number',
     hideCreate: true,
     listView: {
       initialSort: {
         field: 'created',
         direction: 'DESC',
       },
-      initialColumns: ['created', 'frame', 'image', 'price', 'boxManual', 'userManual'],
+      initialColumns: ['number', 'created', 'frame', 'image', 'price', 'boxManual', 'userManual'],
     },
   },
 });
