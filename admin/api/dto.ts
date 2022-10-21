@@ -74,21 +74,15 @@ export type CloudinaryImage_FilePublicUrlTransformedArgs = {
 
 export type Color = {
   __typename?: 'Color';
-  blue?: Maybe<Scalars['Int']>;
-  green?: Maybe<Scalars['Int']>;
-  hex?: Maybe<Scalars['String']>;
+  HEX?: Maybe<Scalars['String']>;
+  RGB?: Maybe<Array<Maybe<Scalars['Int']>>>;
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
-  red?: Maybe<Scalars['Int']>;
-  rgb?: Maybe<Scalars['String']>;
 };
 
 export type ColorCreateInput = {
-  blue?: InputMaybe<Scalars['Int']>;
-  green?: InputMaybe<Scalars['Int']>;
-  hex?: InputMaybe<Scalars['String']>;
+  HEX?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  red?: InputMaybe<Scalars['Int']>;
 };
 
 export type ColorManyRelationFilter = {
@@ -98,12 +92,9 @@ export type ColorManyRelationFilter = {
 };
 
 export type ColorOrderByInput = {
-  blue?: InputMaybe<OrderDirection>;
-  green?: InputMaybe<OrderDirection>;
-  hex?: InputMaybe<OrderDirection>;
+  HEX?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
-  red?: InputMaybe<OrderDirection>;
 };
 
 export type ColorRelateToManyForCreateInput = {
@@ -124,27 +115,21 @@ export type ColorUpdateArgs = {
 };
 
 export type ColorUpdateInput = {
-  blue?: InputMaybe<Scalars['Int']>;
-  green?: InputMaybe<Scalars['Int']>;
-  hex?: InputMaybe<Scalars['String']>;
+  HEX?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  red?: InputMaybe<Scalars['Int']>;
 };
 
 export type ColorWhereInput = {
   AND?: InputMaybe<Array<ColorWhereInput>>;
+  HEX?: InputMaybe<StringFilter>;
   NOT?: InputMaybe<Array<ColorWhereInput>>;
   OR?: InputMaybe<Array<ColorWhereInput>>;
-  blue?: InputMaybe<IntFilter>;
-  green?: InputMaybe<IntFilter>;
-  hex?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   name?: InputMaybe<StringFilter>;
-  red?: InputMaybe<IntFilter>;
 };
 
 export type ColorWhereUniqueInput = {
-  hex?: InputMaybe<Scalars['String']>;
+  HEX?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
 };
@@ -153,6 +138,7 @@ export type CreateInitialUserInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<UserRoleType>;
 };
 
 export type DateTimeNullableFilter = {
@@ -257,14 +243,17 @@ export type Image = {
   __typename?: 'Image';
   id: Scalars['ID'];
   image?: Maybe<CloudinaryImage_File>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type ImageCreateInput = {
   image?: InputMaybe<Scalars['Upload']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type ImageOrderByInput = {
   id?: InputMaybe<OrderDirection>;
+  name?: InputMaybe<OrderDirection>;
 };
 
 export type ImageRelateToOneForCreateInput = {
@@ -285,6 +274,7 @@ export type ImageUpdateArgs = {
 
 export type ImageUpdateInput = {
   image?: InputMaybe<Scalars['Upload']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type ImageWhereInput = {
@@ -292,6 +282,7 @@ export type ImageWhereInput = {
   NOT?: InputMaybe<Array<ImageWhereInput>>;
   OR?: InputMaybe<Array<ImageWhereInput>>;
   id?: InputMaybe<IdFilter>;
+  name?: InputMaybe<StringFilter>;
 };
 
 export type ImageWhereUniqueInput = {
@@ -768,6 +759,7 @@ export type PasswordState = {
 export type Presale = {
   __typename?: 'Presale';
   convertToSale?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
   frame?: Maybe<Frame>;
   id: Scalars['ID'];
   image?: Maybe<Image>;
@@ -775,11 +767,13 @@ export type Presale = {
 };
 
 export type PresaleCreateInput = {
+  created?: InputMaybe<Scalars['DateTime']>;
   frame?: InputMaybe<FrameRelateToOneForCreateInput>;
   image?: InputMaybe<ImageRelateToOneForCreateInput>;
 };
 
 export type PresaleOrderByInput = {
+  created?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
 };
 
@@ -789,6 +783,7 @@ export type PresaleUpdateArgs = {
 };
 
 export type PresaleUpdateInput = {
+  created?: InputMaybe<Scalars['DateTime']>;
   frame?: InputMaybe<FrameRelateToOneForUpdateInput>;
   image?: InputMaybe<ImageRelateToOneForUpdateInput>;
 };
@@ -797,6 +792,7 @@ export type PresaleWhereInput = {
   AND?: InputMaybe<Array<PresaleWhereInput>>;
   NOT?: InputMaybe<Array<PresaleWhereInput>>;
   OR?: InputMaybe<Array<PresaleWhereInput>>;
+  created?: InputMaybe<DateTimeNullableFilter>;
   frame?: InputMaybe<FrameWhereInput>;
   id?: InputMaybe<IdFilter>;
   image?: InputMaybe<ImageWhereInput>;
@@ -1380,13 +1376,10 @@ export type CloudinaryImage_FileResolvers<ContextType = any, ParentType extends 
 };
 
 export type ColorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Color'] = ResolversParentTypes['Color']> = {
-  blue?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  green?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  hex?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  HEX?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  RGB?: Resolver<Maybe<Array<Maybe<ResolversTypes['Int']>>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  red?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  rgb?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1408,6 +1401,7 @@ export type FrameResolvers<ContextType = any, ParentType extends ResolversParent
 export type ImageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Image'] = ResolversParentTypes['Image']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['CloudinaryImage_File']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1548,6 +1542,7 @@ export type PasswordStateResolvers<ContextType = any, ParentType extends Resolve
 
 export type PresaleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Presale'] = ResolversParentTypes['Presale']> = {
   convertToSale?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;

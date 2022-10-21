@@ -51,8 +51,9 @@ export const Constructor: FC = () => {
   };
 
   const handleOnPaletteNext = ({ image }: { image: File }) => {
+    if (!state.source?.length) return;
     saveImage({
-      variables: { image },
+      variables: { image, name: state.source[0].name },
     })
       .then(({ data }) =>
         savePresale({

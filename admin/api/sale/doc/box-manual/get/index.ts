@@ -36,19 +36,9 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
       return rgb ? { ...res, [rgb]: name } : res;
     }, {});
 
-    // console.log(map);
-
     const { matrix, base64 } = await loadImage(sale.image?.image?.publicUrl);
 
     const groups = groupBy(matrix.flat(1), ([a, b, c]) => `${a}/${b}/${c}`);
-
-    // console.log(flat.length);
-
-    // matrix.forEach((i) => {
-    //   console.log(i.length);
-    // });
-
-    console.log(matrix.flat().length);
 
     const entries = orderBy(Object.entries(groups), ([key]) => map[key]);
 
@@ -88,8 +78,6 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
       });
       doc.setFontSize(11);
       doc.text(`${value.length}`, posX + BRICK_SIZE + 5, posY + 11, {});
-
-      // console.log(rgb);
     }
 
     const response = Buffer.from(doc.output('arraybuffer'));
