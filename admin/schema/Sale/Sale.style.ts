@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { CellLink } from '@keystone-6/core/admin-ui/components';
 
-export const Root = styled(CellLink)`
+export const Link = styled(CellLink)`
   display: flex;
   align-items: center;
   font-weight: 600;

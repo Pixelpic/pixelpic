@@ -11,10 +11,9 @@ export const Presale = list({
     operation: {
       create: listOperationAccessControl<'create'>([UserRole.ADMIN, UserRole.MANAGER]),
       update: listOperationAccessControl<'update'>([UserRole.ADMIN, UserRole.MANAGER]),
-      query: () => true,
-      delete: () => true,
+      query: listOperationAccessControl<'query'>([UserRole.ADMIN, UserRole.MANAGER]),
+      delete: listOperationAccessControl<'delete'>([UserRole.ADMIN, UserRole.MANAGER]),
     },
-    item: {},
   },
   fields: {
     number: integer({

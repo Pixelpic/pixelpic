@@ -26,6 +26,6 @@ export const listOperationAccessControl = <T extends Operation>(
       data: { role: currentRole },
     },
   }) => {
-    return role === currentRole;
+    return castArray(role).includes(currentRole);
   };
 };
