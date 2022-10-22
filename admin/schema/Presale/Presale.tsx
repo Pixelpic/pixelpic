@@ -3,30 +3,55 @@ import { join } from 'path';
 import { generatePath } from 'react-router';
 import { list, graphql } from '@keystone-6/core';
 import { relationship, virtual, timestamp, integer } from '@keystone-6/core/fields';
-import { RoutePath } from '../../constants';
+import { RoutePath, UserRole } from '../../constants';
+import { listOperationAccessControl } from '../schema.utils';
 
 export const Presale = list({
+  access: {
+    operation: {
+      create: listOperationAccessControl<'create'>([UserRole.ADMIN, UserRole.MANAGER]),
+      update: listOperationAccessControl<'update'>([UserRole.ADMIN, UserRole.MANAGER]),
+      query: () => true,
+      delete: () => true,
+    },
+    item: {},
+  },
   fields: {
     number: integer({
       validation: { isRequired: true },
       defaultValue: { kind: 'autoincrement' },
       label: '#',
+      ui: {
+        itemView: { fieldMode: 'read' },
+      },
     }),
     created: timestamp({
       defaultValue: {
         kind: 'now',
       },
+      ui: {
+        itemView: { fieldMode: 'read' },
+      },
     }),
     frame: relationship({
       ref: 'Frame',
+      ui: {
+        itemView: { fieldMode: 'read' },
+      },
     }),
     image: relationship({
       ref: 'Image',
+      ui: {
+        itemView: { fieldMode: 'read' },
+      },
     }),
     share: virtual({
       field: graphql.field({
         type: graphql.String,
-        resolve: (item) => generatePath(RoutePath.PREVIEW, { id: get(item, 'id', '') }),
+        resolve: (item) =>
+          generatePath(RoutePath.PREVIEW, {
+            id: get(item, 'id', '').toString(),
+          }),
       }),
       ui: {
         views: join(__dirname, './share/Views'),
@@ -38,7 +63,7 @@ export const Presale = list({
     convertToSale: virtual({
       field: graphql.field({
         type: graphql.String,
-        resolve: (item) => get(item, 'id', ''),
+        resolve: (item) => get(item, 'id', '').toString(),
       }),
       ui: {
         views: join(__dirname, './convertToSale/Views'),
