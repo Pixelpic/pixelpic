@@ -29,10 +29,12 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
     })) as Sale;
 
     const colors = (await context.query.Color.findMany({
-      query: 'id, name, rgb',
+      query: 'id, name, RGB',
     })) as Color[];
 
-    const map: Record<string, string> = colors.reduce((res, { rgb, name }) => {
+    const map: Record<string, string> = colors.reduce((res, { RGB, name }) => {
+      const [r, g, b] = RGB || [];
+      const rgb = [r, g, b].join('/');
       return rgb ? { ...res, [rgb]: name } : res;
     }, {});
 
