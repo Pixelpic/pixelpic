@@ -2,7 +2,7 @@ import { get } from 'lodash';
 import { join } from 'path';
 import { list, graphql } from '@keystone-6/core';
 import { text, virtual } from '@keystone-6/core/fields';
-import { isAdmin, listOperationAccessControl } from '../schema.utils';
+import { isAdmin, listOperationAccessControl, fieldMode } from '../schema.utils';
 import { UserRole } from '../../constants';
 
 export const Color = list({
@@ -19,18 +19,27 @@ export const Color = list({
       validation: { isRequired: true },
       isIndexed: 'unique',
       ui: {
-        itemView: { fieldMode: 'read' },
+        itemView: fieldMode({
+          [UserRole.MANAGER]: 'read',
+          [UserRole.ADMIN]: 'edit',
+        }),
       },
     }),
     HEX: text({
       validation: { isRequired: true },
       isIndexed: 'unique',
+      ui: {
+        itemView: fieldMode({
+          [UserRole.MANAGER]: 'read',
+          [UserRole.ADMIN]: 'edit',
+        }),
+      },
     }),
     RGB: virtual({
       field: graphql.field({
         type: graphql.list(graphql.Int),
         resolve: async (item) => {
-          const hex = get(item, 'HEX', '');
+          const hex = get(item, 'HEX', '') as string;
           const { default: hexToRgb } = await import('hex-rgb');
           const { red, green, blue } = hexToRgb(hex);
           return [red, green, blue];

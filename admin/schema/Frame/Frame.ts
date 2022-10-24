@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import { FRAME } from '../../constants';
 import { list, graphql } from '@keystone-6/core';
-import { text, virtual, select, float } from '@keystone-6/core/fields';
+import { text, virtual, select, float, integer } from '@keystone-6/core/fields';
 import { OPTIONS } from './Frame.const';
 
 export const Frame = list({
@@ -10,17 +10,13 @@ export const Frame = list({
       validation: { isRequired: true },
       isIndexed: 'unique',
     }),
-    horizontal: select({
-      type: 'integer',
-      options: OPTIONS,
+    horizontal: integer({
       validation: { isRequired: true },
       ui: {
         description: 'Horizontal number of plates',
       },
     }),
-    vertical: select({
-      type: 'integer',
-      options: OPTIONS,
+    vertical: integer({
       validation: { isRequired: true },
       ui: {
         description: 'Vertical number of plates',
