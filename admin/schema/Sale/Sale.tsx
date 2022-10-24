@@ -3,9 +3,18 @@ import { get } from 'lodash';
 import { generatePath } from 'react-router';
 import { list, graphql } from '@keystone-6/core';
 import { relationship, float, timestamp, virtual, integer } from '@keystone-6/core/fields';
-import { ApiPath } from '../../constants';
+import { ApiPath, UserRole } from '../../constants';
+import { isAdmin, listOperationAccessControl } from '../schema.utils';
 
 export const Sale = list({
+  access: {
+    operation: {
+      create: listOperationAccessControl<'create'>([UserRole.ADMIN, UserRole.MANAGER]),
+      update: listOperationAccessControl<'update'>([UserRole.ADMIN]),
+      query: listOperationAccessControl<'query'>([UserRole.ADMIN, UserRole.MANAGER]),
+      delete: listOperationAccessControl<'delete'>([UserRole.ADMIN]),
+    },
+  },
   fields: {
     number: integer({
       label: '#',
@@ -44,24 +53,30 @@ export const Sale = list({
     boxManual: virtual({
       field: graphql.field({
         type: graphql.String,
-        resolve: (item) => generatePath(ApiPath.SALE_DOC_BOX_MANUAL, { id: get(item, 'id', '') }),
+        resolve: (item) =>
+          generatePath(ApiPath.SALE_DOC_BOX_MANUAL, {
+            id: get(item, 'id', '').toString(),
+          }),
       }),
       ui: {
-        views: join(__dirname, './boxManual/Views'),
+        views: join(__dirname, './boxManual/boxManual.views'),
         createView: { fieldMode: 'hidden' },
-        itemView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'read' },
         listView: { fieldMode: 'read' },
       },
     }),
     userManual: virtual({
       field: graphql.field({
         type: graphql.String,
-        resolve: (item) => generatePath(ApiPath.SALE_DOC_USER_MANUAL, { id: get(item, 'id', '') }),
+        resolve: (item) =>
+          generatePath(ApiPath.SALE_DOC_USER_MANUAL, {
+            id: get(item, 'id', '').toString(),
+          }),
       }),
       ui: {
-        views: join(__dirname, './userManual/Views'),
+        views: join(__dirname, './userManual/userManual.views'),
         createView: { fieldMode: 'hidden' },
-        itemView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'read' },
         listView: { fieldMode: 'read' },
       },
     }),
@@ -69,6 +84,7 @@ export const Sale = list({
   ui: {
     labelField: 'number',
     hideCreate: true,
+    hideDelete: isAdmin(false),
     listView: {
       initialSort: {
         field: 'created',

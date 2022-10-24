@@ -18,6 +18,13 @@ export const User = list({
     password: password({ validation: { isRequired: true } }),
   },
   ui: {
+    isHidden: ({
+      session: {
+        data: { role },
+      },
+    }) => {
+      return role !== UserRole.ADMIN;
+    },
     listView: {
       initialColumns: ['name', 'role'],
     },
