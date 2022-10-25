@@ -16,4 +16,4 @@ jobs:
       - name: Build app
         run: |
           yarn
-          yarn build
+          yarn compile
