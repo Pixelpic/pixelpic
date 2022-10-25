@@ -3,13 +3,14 @@ import { lists } from './admin/schema';
 import { insertColors, insertPalette, insertFrames } from './admin/data';
 import { withAuth, session } from './admin/auth';
 import { router as ApiRouter } from './admin/api';
+import { DATABASE_URL } from './admin/configs';
 
 export default withAuth(
   config({
     // the db sets the database provider - we're using sqlite for the fastest startup experience
     db: {
       provider: 'postgresql',
-      url: 'postgres://am:password@localhost:5432/pixipic',
+      url: DATABASE_URL,
       onConnect: async (context) => {
         await insertColors(context);
         await insertPalette(context);

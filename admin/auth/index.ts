@@ -1,12 +1,6 @@
 import { createAuth } from '@keystone-6/auth';
 import { statelessSessions } from '@keystone-6/core/session';
-
-const SESSION_SECRET = (() => {
-  if (process.env.NODE_ENV === 'production') {
-    return process.env.SESSION_SECRET;
-  }
-  return '-- DEV COOKIE SECRET; CHANGE ME --';
-})();
+import { SESSION_SECRET } from '../configs';
 
 if (!SESSION_SECRET && process.env.NODE_ENV === 'production') {
   throw new Error('The SESSION_SECRET environment variable must be set in production');
