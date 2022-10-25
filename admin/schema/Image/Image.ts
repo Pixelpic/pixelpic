@@ -16,7 +16,10 @@ export const Image = list({
       },
     }),
     image: cloudinaryImage({
-      cloudinary: { ...CLOUDINARY_CONFIG },
+      cloudinary: {
+        ...CLOUDINARY_CONFIG,
+        folder: 'mosaics',
+      },
       ui: {
         itemView: fieldMode({
           [UserRole.ADMIN]: 'edit',
