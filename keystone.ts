@@ -11,6 +11,7 @@ export default withAuth(
     db: {
       provider: 'postgresql',
       url: DATABASE_URL,
+      useMigrations: true,
       onConnect: async (context) => {
         await insertColors(context);
         await insertPalette(context);
