@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "keystone dev",
+    "dev": "keystone prisma migrate deploy && keystone dev",
     "start": "keystone start",
-    "build": "keystone build && keystone prisma migrate deploy",
+    "build": "keystone build",
     "compile": "keystone build",
     "postinstall": "keystone postinstall",
     "codegen": "graphql-codegen --config codegen.yml"
