@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "keystone prisma migrate deploy && keystone dev",
-    "start": "keystone start",
+    "dev": "keystone dev",
+    "start": "keystone prisma migrate deploy && keystone start",
     "build": "keystone build",
     "compile": "keystone build",
     "postinstall": "keystone postinstall",
