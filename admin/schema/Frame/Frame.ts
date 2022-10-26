@@ -1,14 +1,20 @@
 import { get } from 'lodash';
 import { FRAME } from '../../constants';
 import { list, graphql } from '@keystone-6/core';
-import { text, virtual, select, float, integer } from '@keystone-6/core/fields';
-import { OPTIONS } from './Frame.const';
+import { virtual, float, integer } from '@keystone-6/core/fields';
 
 export const Frame = list({
   fields: {
-    name: text({
-      validation: { isRequired: true },
-      isIndexed: 'unique',
+    name: virtual({
+      field: graphql.field({
+        type: graphql.String,
+        resolve: (item) => `${get(item, 'horizontal')}x${get(item, 'vertical')}`,
+      }),
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'read' },
+        listView: { fieldMode: 'read' },
+      },
     }),
     horizontal: integer({
       validation: { isRequired: true },
@@ -51,6 +57,7 @@ export const Frame = list({
     }),
   },
   ui: {
+    labelField: 'name',
     listView: {
       initialColumns: ['name', 'horizontal', 'vertical'],
     },

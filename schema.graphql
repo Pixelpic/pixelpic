@@ -234,7 +234,6 @@ type Frame {
 
 input FrameWhereUniqueInput {
   id: ID
-  name: String
 }
 
 input FrameWhereInput {
@@ -242,7 +241,6 @@ input FrameWhereInput {
   OR: [FrameWhereInput!]
   NOT: [FrameWhereInput!]
   id: IDFilter
-  name: StringFilter
   horizontal: IntFilter
   vertical: IntFilter
   price: FloatFilter
@@ -272,14 +270,12 @@ input FloatFilter {
 
 input FrameOrderByInput {
   id: OrderDirection
-  name: OrderDirection
   horizontal: OrderDirection
   vertical: OrderDirection
   price: OrderDirection
 }
 
 input FrameUpdateInput {
-  name: String
   horizontal: Int
   vertical: Int
   price: Float
@@ -291,7 +287,6 @@ input FrameUpdateArgs {
 }
 
 input FrameCreateInput {
-  name: String
   horizontal: Int
   vertical: Int
   price: Float

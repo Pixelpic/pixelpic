@@ -4,6 +4,7 @@ export const GET_PRESALE = gql`
   query GetPresale($id: ID!) {
     presale(where: { id: $id }) {
       id
+      number
       frame {
         id
         price
@@ -25,6 +26,7 @@ export const CREATE_SALE = gql`
       }
     ) {
       id
+      number
     }
   }
 `;
