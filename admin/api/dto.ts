@@ -176,7 +176,6 @@ export type Frame = {
 
 export type FrameCreateInput = {
   horizontal?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['Float']>;
   vertical?: InputMaybe<Scalars['Int']>;
 };
@@ -184,7 +183,6 @@ export type FrameCreateInput = {
 export type FrameOrderByInput = {
   horizontal?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
-  name?: InputMaybe<OrderDirection>;
   price?: InputMaybe<OrderDirection>;
   vertical?: InputMaybe<OrderDirection>;
 };
@@ -207,7 +205,6 @@ export type FrameUpdateArgs = {
 
 export type FrameUpdateInput = {
   horizontal?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['Float']>;
   vertical?: InputMaybe<Scalars['Int']>;
 };
@@ -218,14 +215,12 @@ export type FrameWhereInput = {
   OR?: InputMaybe<Array<FrameWhereInput>>;
   horizontal?: InputMaybe<IntFilter>;
   id?: InputMaybe<IdFilter>;
-  name?: InputMaybe<StringFilter>;
   price?: InputMaybe<FloatFilter>;
   vertical?: InputMaybe<IntFilter>;
 };
 
 export type FrameWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
-  name?: InputMaybe<Scalars['String']>;
 };
 
 export type IdFilter = {
@@ -763,6 +758,7 @@ export type Presale = {
   frame?: Maybe<Frame>;
   id: Scalars['ID'];
   image?: Maybe<Image>;
+  number?: Maybe<Scalars['Int']>;
   share?: Maybe<Scalars['String']>;
 };
 
@@ -770,11 +766,13 @@ export type PresaleCreateInput = {
   created?: InputMaybe<Scalars['DateTime']>;
   frame?: InputMaybe<FrameRelateToOneForCreateInput>;
   image?: InputMaybe<ImageRelateToOneForCreateInput>;
+  number?: InputMaybe<Scalars['Int']>;
 };
 
 export type PresaleOrderByInput = {
   created?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
+  number?: InputMaybe<OrderDirection>;
 };
 
 export type PresaleUpdateArgs = {
@@ -786,6 +784,7 @@ export type PresaleUpdateInput = {
   created?: InputMaybe<Scalars['DateTime']>;
   frame?: InputMaybe<FrameRelateToOneForUpdateInput>;
   image?: InputMaybe<ImageRelateToOneForUpdateInput>;
+  number?: InputMaybe<Scalars['Int']>;
 };
 
 export type PresaleWhereInput = {
@@ -796,6 +795,7 @@ export type PresaleWhereInput = {
   frame?: InputMaybe<FrameWhereInput>;
   id?: InputMaybe<IdFilter>;
   image?: InputMaybe<ImageWhereInput>;
+  number?: InputMaybe<IntFilter>;
 };
 
 export type PresaleWhereUniqueInput = {
@@ -967,6 +967,7 @@ export type Sale = {
   frame?: Maybe<Frame>;
   id: Scalars['ID'];
   image?: Maybe<Image>;
+  number?: Maybe<Scalars['Int']>;
   price?: Maybe<Scalars['Float']>;
   userManual?: Maybe<Scalars['String']>;
 };
@@ -975,12 +976,14 @@ export type SaleCreateInput = {
   created?: InputMaybe<Scalars['DateTime']>;
   frame?: InputMaybe<FrameRelateToOneForCreateInput>;
   image?: InputMaybe<ImageRelateToOneForCreateInput>;
+  number?: InputMaybe<Scalars['Int']>;
   price?: InputMaybe<Scalars['Float']>;
 };
 
 export type SaleOrderByInput = {
   created?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
+  number?: InputMaybe<OrderDirection>;
   price?: InputMaybe<OrderDirection>;
 };
 
@@ -993,6 +996,7 @@ export type SaleUpdateInput = {
   created?: InputMaybe<Scalars['DateTime']>;
   frame?: InputMaybe<FrameRelateToOneForUpdateInput>;
   image?: InputMaybe<ImageRelateToOneForUpdateInput>;
+  number?: InputMaybe<Scalars['Int']>;
   price?: InputMaybe<Scalars['Float']>;
 };
 
@@ -1004,6 +1008,7 @@ export type SaleWhereInput = {
   frame?: InputMaybe<FrameWhereInput>;
   id?: InputMaybe<IdFilter>;
   image?: InputMaybe<ImageWhereInput>;
+  number?: InputMaybe<IntFilter>;
   price?: InputMaybe<FloatFilter>;
 };
 
@@ -1020,6 +1025,7 @@ export type StringFilter = {
   in?: InputMaybe<Array<Scalars['String']>>;
   lt?: InputMaybe<Scalars['String']>;
   lte?: InputMaybe<Scalars['String']>;
+  mode?: InputMaybe<QueryMode>;
   not?: InputMaybe<NestedStringFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Scalars['String']>;
@@ -1546,6 +1552,7 @@ export type PresaleResolvers<ContextType = any, ParentType extends ResolversPare
   frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
+  number?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   share?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1582,6 +1589,7 @@ export type SaleResolvers<ContextType = any, ParentType extends ResolversParentT
   frame?: Resolver<Maybe<ResolversTypes['Frame']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
+  number?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   userManual?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
