@@ -59,7 +59,7 @@ export const Frame = list({
   ui: {
     labelField: 'name',
     listView: {
-      initialColumns: ['name', 'horizontal', 'vertical'],
+      initialColumns: ['name', 'price'],
     },
   },
 });
