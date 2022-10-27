@@ -32,7 +32,6 @@ CREATE TABLE "Palette" (
 -- CreateTable
 CREATE TABLE "Frame" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL DEFAULT E'',
     "horizontal" INTEGER NOT NULL,
     "vertical" INTEGER NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
@@ -86,9 +85,6 @@ CREATE UNIQUE INDEX "Color_name_key" ON "Color"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Color_HEX_key" ON "Color"("HEX");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Frame_name_key" ON "Frame"("name");
 
 -- CreateIndex
 CREATE INDEX "Presale_frame_idx" ON "Presale"("frame");
