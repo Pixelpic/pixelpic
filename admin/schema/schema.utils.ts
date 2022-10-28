@@ -4,7 +4,6 @@ import {
   BaseListTypeInfo,
   ListOperationAccessControl,
   MaybeItemFunction,
-  MaybePromise,
 } from '@keystone-6/core/types';
 import { UserRole } from '../constants';
 

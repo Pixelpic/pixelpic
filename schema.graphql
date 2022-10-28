@@ -5,6 +5,7 @@ type User {
   id: ID!
   name: String
   email: String
+  phone: String
   role: UserRoleType
   password: PasswordState
 }
@@ -30,6 +31,7 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
+  phone: StringFilter
   role: UserRoleTypeNullableFilter
 }
 
@@ -89,6 +91,7 @@ input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  phone: OrderDirection
   role: OrderDirection
 }
 
@@ -100,6 +103,7 @@ enum OrderDirection {
 input UserUpdateInput {
   name: String
   email: String
+  phone: String
   role: UserRoleType
   password: String
 }
@@ -112,6 +116,7 @@ input UserUpdateArgs {
 input UserCreateInput {
   name: String
   email: String
+  phone: String
   role: UserRoleType
   password: String
 }
