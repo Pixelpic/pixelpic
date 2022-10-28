@@ -9,7 +9,7 @@ if (!SESSION_SECRET && process.env.NODE_ENV === 'production') {
 const { withAuth } = createAuth({
   listKey: 'User',
   identityField: 'email',
-  sessionData: 'name, role',
+  sessionData: 'id, name, role',
   secretField: 'password',
   initFirstItem: {
     fields: ['name', 'email', 'role', 'password'],
