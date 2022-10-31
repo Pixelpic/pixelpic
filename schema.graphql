@@ -124,6 +124,7 @@ input UserCreateInput {
 type Color {
   id: ID!
   name: String
+  brick: [Int]
   HEX: String
   RGB: [Int]
 }

@@ -4,6 +4,7 @@ import { list, graphql } from '@keystone-6/core';
 import { text, virtual } from '@keystone-6/core/fields';
 import { isAdmin, listOperationAccessControl, fieldMode } from '../schema.utils';
 import { UserRole } from '../../constants';
+import { getRgbColor } from './Color.utils';
 
 export const Color = list({
   access: {
@@ -25,6 +26,18 @@ export const Color = list({
         }),
       },
     }),
+    brick: virtual({
+      field: graphql.field({
+        type: graphql.list(graphql.Int),
+        resolve: getRgbColor,
+      }),
+      ui: {
+        views: join(__dirname, './brick/brick.views.tsx'),
+        createView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'read' },
+        listView: { fieldMode: 'read' },
+      },
+    }),
     HEX: text({
       validation: { isRequired: true },
       isIndexed: 'unique',
@@ -38,12 +51,7 @@ export const Color = list({
     RGB: virtual({
       field: graphql.field({
         type: graphql.list(graphql.Int),
-        resolve: async (item) => {
-          const hex = get(item, 'HEX', '') as string;
-          const { default: hexToRgb } = await import('hex-rgb');
-          const { red, green, blue } = hexToRgb(hex);
-          return [red, green, blue];
-        },
+        resolve: getRgbColor,
       }),
       ui: {
         views: join(__dirname, './rgb/rgb.views.tsx'),
@@ -57,7 +65,7 @@ export const Color = list({
     hideCreate: isAdmin(false),
     hideDelete: isAdmin(false),
     listView: {
-      initialColumns: ['name', 'HEX', 'RGB'],
+      initialColumns: ['name', 'brick', 'HEX', 'RGB'],
     },
   },
 });

@@ -1,4 +1,7 @@
 import { set } from 'lodash';
+// import rgbToHex from 'rgb-hex';
+// import hexToRgb from 'hex-rgb';
+// import ColorFinder from '@sunpietro/color-finder';
 
 /**
  * pixelit - convert an image to Pixel Art, with/out grayscale and based on a color palette.
@@ -31,8 +34,12 @@ export class PixelIt {
   private maxWidth?: number;
   private ctx: CanvasRenderingContext2D;
   private brick: number;
+  // private finder: ReturnType<typeof ColorFinder>;
 
   constructor(config: PixelItParams) {
+    // const hexs = config.palette.map((rgb) => {
+    //   return `#${rgbToHex(...rgb)}`;
+    // });
     this.to = config.to;
     this.from = config.from;
     //range between 0 to 100
@@ -45,6 +52,7 @@ export class PixelIt {
     this.height = config.height;
     this.brick = config.brick;
     this.ctx = this.to.getContext('2d') as CanvasRenderingContext2D;
+    // this.finder = ColorFinder(hexs);
   }
 
   /**
@@ -64,13 +72,10 @@ export class PixelIt {
    */
 
   private colorSim(rgbColor: PixelItColor, compareColor: PixelItColor) {
-    let i;
-    let max;
-    let d = 0;
-    for (i = 0, max = rgbColor.length; i < max; i++) {
-      d += (rgbColor[i] - compareColor[i]) * (rgbColor[i] - compareColor[i]);
-    }
-    return Math.sqrt(d);
+    const distance = rgbColor.reduce((res, _, index) => {
+      return res + Math.pow(rgbColor[index] - compareColor[index], 2);
+    }, 0);
+    return Math.sqrt(distance);
   }
 
   /**
@@ -81,15 +86,20 @@ export class PixelIt {
   private similarColor(actualColor: PixelItColor) {
     let selectedColor: any[] = [];
     let currentSim = this.colorSim(actualColor, this.palette[0]);
-    let nextColor;
     this.palette.forEach((color) => {
-      nextColor = this.colorSim(actualColor, color);
+      const nextColor = this.colorSim(actualColor, color);
       if (nextColor <= currentSim) {
         selectedColor = color;
         currentSim = nextColor;
       }
     });
     return selectedColor;
+    // const hex = rgbToHex(...actualColor);
+    // const closest = this.finder.findClosestColor(hex);
+    // // console.log(closest);
+    // const [r, g, b] = hexToRgb(closest, { format: 'array' });
+    // // console.log(r, g, b);
+    // return [r, g, b];
   }
 
   private createCanvas({
@@ -178,11 +188,9 @@ export class PixelIt {
    * converts image to palette using the defined palette or default palette
    */
   private convertPalette() {
-    const w = this.to.width;
-    const h = this.to.height;
-    var imgPixels = this.ctx.getImageData(0, 0, w, h);
-    for (var y = 0; y < imgPixels.height; y++) {
-      for (var x = 0; x < imgPixels.width; x++) {
+    var imgPixels = this.ctx.getImageData(0, 0, this.to.width, this.to.height);
+    for (let y = 0; y < imgPixels.height; y++) {
+      for (let x = 0; x < imgPixels.width; x++) {
         var i = y * 4 * imgPixels.width + x * 4;
         //var avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
         const finalColor = this.similarColor([
