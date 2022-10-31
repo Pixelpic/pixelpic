@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import { DTO } from '@admin/api';
 import { PixelItPalette } from '../../../services';
 
@@ -5,11 +6,10 @@ export const getColorPalette = (palettes: DTO.Palette[] = [], palette: string): 
   const { colors } = palettes.find(({ id }) => id === palette) || {};
   return (
     colors?.reduce((res, { RGB }) => {
-      const [red, green, blue] = RGB || [];
-      if (red && green && blue) {
-        return [...res, [red, green, blue]];
-      }
-      return res;
+      const red = get(RGB, '0', 0);
+      const green = get(RGB, '1', 0);
+      const blue = get(RGB, '2', 0);
+      return [...res, [red, green, blue]];
     }, [] as PixelItPalette) || []
   );
 };
