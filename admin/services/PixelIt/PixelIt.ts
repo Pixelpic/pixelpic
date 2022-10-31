@@ -64,13 +64,10 @@ export class PixelIt {
    */
 
   private colorSim(rgbColor: PixelItColor, compareColor: PixelItColor) {
-    let i;
-    let max;
-    let d = 0;
-    for (i = 0, max = rgbColor.length; i < max; i++) {
-      d += (rgbColor[i] - compareColor[i]) * (rgbColor[i] - compareColor[i]);
-    }
-    return Math.sqrt(d);
+    const distance = rgbColor.reduce((res, _, index) => {
+      return res + Math.pow(rgbColor[index] - compareColor[index], 2);
+    }, 0);
+    return Math.sqrt(distance);
   }
 
   /**
@@ -81,9 +78,8 @@ export class PixelIt {
   private similarColor(actualColor: PixelItColor) {
     let selectedColor: any[] = [];
     let currentSim = this.colorSim(actualColor, this.palette[0]);
-    let nextColor;
     this.palette.forEach((color) => {
-      nextColor = this.colorSim(actualColor, color);
+      const nextColor = this.colorSim(actualColor, color);
       if (nextColor <= currentSim) {
         selectedColor = color;
         currentSim = nextColor;
@@ -178,11 +174,10 @@ export class PixelIt {
    * converts image to palette using the defined palette or default palette
    */
   private convertPalette() {
-    const w = this.to.width;
-    const h = this.to.height;
-    var imgPixels = this.ctx.getImageData(0, 0, w, h);
-    for (var y = 0; y < imgPixels.height; y++) {
-      for (var x = 0; x < imgPixels.width; x++) {
+    var imgPixels = this.ctx.getImageData(0, 0, this.to.width, this.to.height);
+    console.log(imgPixels);
+    for (let y = 0; y < imgPixels.height; y++) {
+      for (let x = 0; x < imgPixels.width; x++) {
         var i = y * 4 * imgPixels.width + x * 4;
         //var avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
         const finalColor = this.similarColor([
