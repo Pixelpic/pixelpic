@@ -1,4 +1,7 @@
 import { set } from 'lodash';
+// import rgbToHex from 'rgb-hex';
+// import hexToRgb from 'hex-rgb';
+// import ColorFinder from '@sunpietro/color-finder';
 
 /**
  * pixelit - convert an image to Pixel Art, with/out grayscale and based on a color palette.
@@ -31,8 +34,12 @@ export class PixelIt {
   private maxWidth?: number;
   private ctx: CanvasRenderingContext2D;
   private brick: number;
+  // private finder: ReturnType<typeof ColorFinder>;
 
   constructor(config: PixelItParams) {
+    // const hexs = config.palette.map((rgb) => {
+    //   return `#${rgbToHex(...rgb)}`;
+    // });
     this.to = config.to;
     this.from = config.from;
     //range between 0 to 100
@@ -45,6 +52,7 @@ export class PixelIt {
     this.height = config.height;
     this.brick = config.brick;
     this.ctx = this.to.getContext('2d') as CanvasRenderingContext2D;
+    // this.finder = ColorFinder(hexs);
   }
 
   /**
@@ -86,6 +94,12 @@ export class PixelIt {
       }
     });
     return selectedColor;
+    // const hex = rgbToHex(...actualColor);
+    // const closest = this.finder.findClosestColor(hex);
+    // // console.log(closest);
+    // const [r, g, b] = hexToRgb(closest, { format: 'array' });
+    // // console.log(r, g, b);
+    // return [r, g, b];
   }
 
   private createCanvas({
@@ -175,7 +189,6 @@ export class PixelIt {
    */
   private convertPalette() {
     var imgPixels = this.ctx.getImageData(0, 0, this.to.width, this.to.height);
-    console.log(imgPixels);
     for (let y = 0; y < imgPixels.height; y++) {
       for (let x = 0; x < imgPixels.width; x++) {
         var i = y * 4 * imgPixels.width + x * 4;
