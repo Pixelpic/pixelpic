@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
 import { jsPDF } from 'jspdf';
 import { get } from 'lodash';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 import { Sale, Color } from '../../../../dto';
 import { loadImage } from '../../doc.utils';
 import { FRAME } from '../../../../../constants';
 import { RequestWithContext } from '../../../../api.types';
+
+const LOGO_PATH = resolve(process.cwd(), './admin/assets/images/logo.png');
 
 interface RequestParams {
   id: string;
@@ -38,6 +42,10 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
 
     const { horizontal: h = 0, vertical: v = 0 } = sale.frame || {};
 
+    const logo = readFileSync(LOGO_PATH).toString('base64');
+
+    console.log(logo);
+
     const doc = new jsPDF({
       format: 'a5',
       unit: 'px',
@@ -53,6 +61,9 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
     const previewWidth = (previewHeight / vertical) * horizontal;
     const frameOffsetX = baseOffsetX;
     const frameOffsetY = previewOffsetY + previewHeight + baseOffsetY;
+    const logoDimension = doc.internal.pageSize.getWidth() - baseOffsetX * 4;
+
+    doc.addImage(logo, 'PNG', baseOffsetX * 2, 100, logoDimension, logoDimension);
 
     for (let y = 0; y < vertical; y = y + 1) {
       for (let x = 0; x < horizontal; x = x + 1) {
@@ -97,16 +108,31 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
             doc.restoreGraphicsState();
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(10);
+            doc.setTextColor('black');
             doc.text(label, posX + 8, posY + 11, {
               align: 'center',
               maxWidth: BRICK_SIZE,
             });
+            if (posY === frameOffsetY) {
+              const col = (posX - frameOffsetX) / BRICK_SIZE + 1;
+              doc.setTextColor('gray');
+              doc.text(`${col}`, posX + 8, posY - 6, {
+                align: 'center',
+                maxWidth: BRICK_SIZE,
+              });
+            }
+            if (posX === frameOffsetX) {
+              const row = parseInt(`${(posY - frameOffsetY) / BRICK_SIZE + 1}`);
+              doc.setTextColor('gray');
+              doc.text(`${row}`, posX - 6, posY + 11, {
+                align: 'right',
+                maxWidth: BRICK_SIZE,
+              });
+            }
           }
         }
       }
     }
-
-    doc.deletePage(1);
 
     const response = Buffer.from(doc.output('arraybuffer'));
 
