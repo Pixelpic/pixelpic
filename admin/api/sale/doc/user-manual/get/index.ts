@@ -7,6 +7,7 @@ import { Sale, Color } from '../../../../dto';
 import { loadImage } from '../../doc.utils';
 import { FRAME } from '../../../../../constants';
 import { RequestWithContext } from '../../../../api.types';
+import { PAGE_LOGO_SIZE } from './get.const';
 
 const LOGO_PATH = resolve(process.cwd(), './admin/assets/images/logo.png');
 
@@ -53,22 +54,28 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
 
     const horizontal = h || 0;
     const vertical = v || 0;
-    const baseOffsetX = (doc.internal.pageSize.getWidth() - BRICK_SIZE * BRICK_COUNT) / 2;
-    const baseOffsetY = (doc.internal.pageSize.getWidth() - BRICK_SIZE * BRICK_COUNT) / 2;
+    const docWidth = doc.internal.pageSize.getWidth();
+    const baseOffsetX = (docWidth - BRICK_SIZE * BRICK_COUNT) / 2;
+    const baseOffsetY = (docWidth - BRICK_SIZE * BRICK_COUNT) / 2;
     const previewOffsetX = baseOffsetX / 2;
     const previewOffsetY = baseOffsetY / 2;
     const previewHeight = 120;
     const previewWidth = (previewHeight / vertical) * horizontal;
     const frameOffsetX = baseOffsetX;
     const frameOffsetY = previewOffsetY + previewHeight + baseOffsetY;
-    const logoDimension = doc.internal.pageSize.getWidth() - baseOffsetX * 4;
-
-    doc.addImage(logo, 'PNG', baseOffsetX * 2, 100, logoDimension, logoDimension);
 
     for (let y = 0; y < vertical; y = y + 1) {
       for (let x = 0; x < horizontal; x = x + 1) {
         doc.addPage();
         doc.addImage(base64, 'PNG', previewOffsetX, previewOffsetY, previewWidth, previewHeight);
+        doc.addImage(
+          logo,
+          'PNG',
+          docWidth - PAGE_LOGO_SIZE - previewOffsetX,
+          0,
+          PAGE_LOGO_SIZE,
+          PAGE_LOGO_SIZE
+        );
         for (
           let j = 0, posY = previewOffsetY;
           j < vertical;
@@ -133,6 +140,8 @@ export const getController = async (req: Request<RequestParams>, res: Response) 
         }
       }
     }
+
+    doc.deletePage(1);
 
     const response = Buffer.from(doc.output('arraybuffer'));
 
