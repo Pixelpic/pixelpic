@@ -6,8 +6,8 @@ const ALPHABET = ALPHA.map((x) => String.fromCharCode(x));
 
 export const COLORS: Required<ColorCreateInput>[] = [
   { HEX: '#f7f0e3' },
-  { HEX: '#C9C3BF' },
-  { HEX: '#959C9A' },
+  { HEX: '#bfc3c9' },
+  { HEX: '#959ba3' },
   { HEX: '#7e7a85' },
   { HEX: '#4b4c50' },
   { HEX: '#302e32' },
@@ -63,6 +63,7 @@ export const COLORS: Required<ColorCreateInput>[] = [
   { HEX: '#96accb' },
   { HEX: '#778b98' },
   { HEX: '#576c7a' },
+  { HEX: '#ffae11' }
 ].map(({ HEX }, index) => {
   const int = Math.trunc(index / ALPHABET.length);
   const name = (() => {
